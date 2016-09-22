@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <!-- 添加搜索关键字 -->
+  <meta name="keywords" content="武燕飞,https://wuyanfeigithub.github.io/Sendoh-Akira/">
+
+  <title>Android的消息机制 | Sendoh Akira</title>
+  <meta name="description" content="  Android的消息机制是怎样的呢?我们今天一起来看一下">
+
+  
+  <link rel="stylesheet" href="/Sendoh-Akira/assets/css/bootstrap.css">
+  <link rel="stylesheet" href="/Sendoh-Akira/assets/css/font-awesome.css">
+  <link rel="stylesheet" href="/Sendoh-Akira/assets/js/fancybox/jquery.fancybox.css" media="screen">
+  <link rel="stylesheet" href="/Sendoh-Akira/assets/css/main.css" >
+  <link rel="stylesheet" href="/Sendoh-Akira/assets/js/prettify/prettify.css">
+  <link rel="shortcut icon" href="/Sendoh-Akira/assets/img/favicon_2.png" />
+  <link rel="canonical" href="https://wuyanfeigithub.github.io/Sendoh-Akira/Sendoh-Akira/2015/11/24/android-messagehandler.html">
+  <link rel="alternate" type="application/rss+xml" title="Sendoh Akira" href="https://wuyanfeigithub.github.io/Sendoh-Akira/Sendoh-Akira/feed.xml" />
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/echarts.min.js"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/embed.js"></script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/ua-parser.js"></script>
+
+  <script>var duoshuoQuery = {short_name:"wuyanfei"};</script>
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+	<div class="container">
+		<div class="row">
+			<nav class="navbar navbar-default" role="navigation">
+			
+				    <div class="navbar-header col-xs-12 col-sm-12 col-md-3 col-lg-3 center" >
+				   	      <button type="button" class="navbar-toggle" data-toggle="collapse"  data-target="#example-navbar-collapse">
+					         <span class="icon-bar"></span>
+					         <span class="icon-bar"></span>
+					         <span class="icon-bar"></span>
+					      </button>
+					      <div class="sitehome">
+						 	<a href="/Sendoh-Akira/" title="首页"><i class="fa fa-home fa-2x homeicon"></i><a><a class="site-title" href="/Sendoh-Akira/">Sendoh Akira</a>
+						</div>
+				   </div>
+				  
+				  
+				  <div class="col-md-6 col-lg-6 hidden-xs hidden-sm center">				  			
+							<nav class="site-nav">
+								        <ul class="nav nav-pills">
+											<li class="select"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/read.html">读书</a></li>
+											<li class="select"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/class.html">分类</a></li>
+											<li class="select"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/archive.html">归档</a></li>
+											<li class="select"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/about.html">关于</a></li>
+								        </ul>
+							</nav>
+				  </div>
+				  
+				   <div class="col-md-3 col-lg-3 hidden-xs hidden-sm">
+				   		<!--<div class="search">
+						  	<input type="text" class="search-query st-default-search-input" placeholder="Search">
+				   		</div>-->
+				   		<div class="search-tool" style="float: left;height: 45px;line-height: 45px;margin-left: 12px;">
+							    <input type="text" class="form-control search-content" data-provide="search-content" style="display: inline-block !important; 
+							    color: #49525c;
+							    font-size: 14px;
+							    line-height: 13px;
+							    background-color: #e1eaf2;
+							    border: 1px solid #045bb2;
+							    border-radius: 4px;
+							    box-shadow: inset 0 1px 3px rgba(0,0,0,.2),0 1px 0 rgba(255,255,255,.1);
+							    outline: 0;
+							    box-sizing: border-box;
+							    -webkit-transition: all .2s ease-in-out;
+							    transition: all .2s ease-in-out;" placeholder="Search this site" />
+						</div>
+							
+						
+				   </div>
+				   
+				   
+				   <div class="collapse navbar-collapse" id="example-navbar-collapse">
+						<ul class="nav navbar-nav phone-nav center">
+							<li class="phoneselect"><a class="page-link pjaxlink" href="/Sendoh-Akira/"><i class="fa fa-home"></i>&nbsp;首页</a></li>
+							<li class="phoneselect"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/read.html"><i class="fa fa-book"></i>&nbsp;读书</a></li>
+							<li class="phoneselect"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/class.html"><i class="fa fa-tasks"></i>&nbsp;分类</a></li>
+							<li class="phoneselect"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/tags.html"><i class="fa fa-tags"></i>&nbsp;标签</a></li>
+							<li class="phoneselect"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/archive.html"><i class="fa fa-archive"></i>&nbsp;归档</a></li>
+							<li class="phoneselect"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/about.html"><i class="fa fa-user"></i>&nbsp;关于</a></li>
+						</ul>
+				   </div>
+				   
+			</nav>
+		</div>
+	</div>
+</header>
+
+      
+    <div class="content">
+   	<div class="container">	
+   		<div class="row">  		
+   		
+			<div class="col-md-3 col-lg-3 hidden-xs hidden-sm aside1 fadein-left">
+				<div class="profile box-shadow center">
+					<div class="overlay"></div>
+					<div class="center gavatar">
+						<a href="/Sendoh-Akira" class="profile_gavatar"><img class="circle" src="/Sendoh-Akira/assets/img/gavatar_2.png"></a>
+					</div>
+					<div class="address">
+						<h5><span class="fa fa-map-marker"></span> BeiJing, China</h5>
+					</div>
+					<div class="center profile_desc">
+						红衣佳人白衣友<br>朝与同歌暮同酒<br>世人谓我恋长安<br>其实只恋长安某<br><br><br>
+					</div>
+				</div>
+				
+				<div class="tag-cloud-text">
+					<p class="center">音乐</p>
+				</div>
+				<div class="tag-cloud ">	
+					<hr>
+					<div id="player5" class="aplayer"></div>				
+				</div>
+				<div class="clear"></div>
+				
+				<div class="tag-cloud-text">
+					<a href="/Sendoh-Akira/pages/tags.html" title="标签" class="pjaxlink"><p class="center">标签</p></a>
+				</div>
+				<div class="tag-cloud ">	
+					<hr>
+					<div class="page-tag">
+							
+								<a href="/Sendoh-Akira/pages/tags.html#life" name="life" class="pjaxlink"><i class="fa fa-tags"></i>life(3)</a>
+							
+								<a href="/Sendoh-Akira/pages/tags.html#java" name="java" class="pjaxlink"><i class="fa fa-tags"></i>java(2)</a>
+							
+								<a href="/Sendoh-Akira/pages/tags.html#android" name="android" class="pjaxlink"><i class="fa fa-tags"></i>android(15)</a>
+							
+								<a href="/Sendoh-Akira/pages/tags.html#linux" name="linux" class="pjaxlink"><i class="fa fa-tags"></i>linux(2)</a>
+							
+								<a href="/Sendoh-Akira/pages/tags.html#算法" name="算法" class="pjaxlink"><i class="fa fa-tags"></i>算法(2)</a>
+							
+								<a href="/Sendoh-Akira/pages/tags.html#其他" name="其他" class="pjaxlink"><i class="fa fa-tags"></i>其他(2)</a>
+							
+					</div>					
+				</div>
+				<div class="clear"></div>
+				<div class="recentcome box-shadow">
+	 				<p>最近访客 <i class="fa fa-user"></i></p>
+	 				<ul class="ds-recent-visitors" data-num-items="15"></ul>
+	 			</div>
+	 			<div class="comment box-shadow">
+	 				<p>最新评论 <i class="fa fa-comments"></i></p>
+	 				<dl class="ds-recent-comments"  data-num-items="5" data-show-avatars="1" data-show-time="1" data-show-title="1"  data-show-admin="1" data-excerpt-length="50"></dl>
+	 			</div>
+
+	 			
+	 			<div class="recentuse">
+	 					<p>经常出没</p>
+	 					<hr>
+	 					<ul>
+		 					
+	 					</ul>
+	 			</div>
+				
+				<div class="friendlink">
+	 					<p>友情链接</p>
+	 					
+	 			</div>
+				
+			</div>
+			
+			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 box-shadow fadein-right aside2">					 		
+					<div class="page-content" id="pjax"><div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Android的消息机制</h1>
+    <div class="info">
+	    <p class="post-meta"><i class="fa fa-calendar"></i>&nbsp;2015-11-24</p>
+	    
+		<i class="fa fa-tags"></i>
+		<span class="index-post-tag">
+		
+			<a class="pjaxlink" href="/pages/tags.html#android">android</a>
+		
+		</span>
+	    
+    </div>
+  </header>
+
+  <article class="post-content">
+    <blockquote>
+  <p>Android的消息机制是怎样的呢?我们今天一起来看一下</p>
+</blockquote>
+
+<p>参考书籍: <a href="http://bornbeauty.github.io/2015/11/06/book-list-of-2015.html#Android开发艺术探索">Android开发艺术探索</a></p>
+
+<p>今天学了一下android的消息机制,在开头我想先说下Android Studio 2.0!
+今天在被窝里就看到了来自各个媒体有关Android Studio2.0的新闻,我也存在同样的疑问:不是刚刚才升级到1.5么?看到新闻上说速度提高了许多,自己也迫不及待的试了一下,果然快了好多好多!真是爽~这样的速度开发简直就是享受啊~</p>
+
+<p><a href="http://android-developers.blogspot.jp/2015/11/android-studio-20-preview.html">AndroidStudio2.0</a></p>
+
+<h3 id="section">1.消息机制概述</h3>
+
+<p>Android的消息机制主要是指Handler的运行机制.在Handler的背后,还需要Looper和MessageQueen的支持. MessageQueen顾名思义,就是消息队列,它的内部存放是一组消息.它仅仅负责消息的入队出队,并不负责怎么去处理消息.消息怎么去处理还要依靠Looper来完成.Looper会一直监听是否有新的消息,有的话就去处理消息,没有就会一直阻塞.</p>
+
+<p>我以前在开发的时候曾经想这样干:
+在线程的内部创建一个匿名内部类Handler去处理该线程的消息,在里面做一些更新UI的工作.但是却得到这样的错误信息:</p>
+
+<pre><code>java.lang.RuntimeException: Can't create handler inside thread that has not called Looper.prepare()
+at android.os.Handler.&lt;init&gt;(Handler.java:200)
+at android.os.Handler.&lt;init&gt;(Handler.java:128)
+at com.example.jimbo.myapplication.MainActivity$2.run(MainActivity.java:59)
+at java.lang.Thread.run(Thread.java:818)
+</code></pre>
+
+<p>当时很不解,但是我试着上面的说明,先去调用一下<code>Looper.prepare()</code>方法,然后在运行没有错误了,但是界面并没有更新,也就是说线程的消息并没有得到处理,或者是Handler并没有接收到消息.当时为了赶进度也就没深究,今天可以看一看到底哪里出了问题.
+其实, <code>Looper.prepare()</code>只是创建了一Looper,但是并没有开始工作,所以上面的消息并没有发送处理,也就不会有什么错误出现.所以还要适时调用<code>Looper.loop()</code>方法才能真正使得Looper工作起来.
+加上上面代码,再次运行,其实还是会有错误的.原因待会讲:</p>
+
+<pre><code>android.view.ViewRootImpl$CalledFromWrongThreadException: Only the original thread that created a view hierarchy can touch its views.
+                    at android.view.ViewRootImpl.checkThread(ViewRootImpl.java:6357)
+                    at android.view.ViewRootImpl.invalidateChildInParent(ViewRootImpl.java:909)
+                    at android.view.ViewGroup.invalidateChild(ViewGroup.java:4690)
+                    at android.view.View.invalidateInternal(View.java:11801)
+                    at android.view.View.invalidate(View.java:11765)
+                    at android.view.View.invalidate(View.java:11749)
+                    at android.widget.TextView.checkForRelayout(TextView.java:6858)
+                    at android.widget.TextView.setText(TextView.java:4057)
+                    at android.widget.TextView.setText(TextView.java:3915)
+                    at android.widget.TextView.setText(TextView.java:3890)
+                    at com.example.jimbo.myapplication.MainActivity$2$1.handleMessage(MainActivity.java:51)
+                    at android.os.Handler.dispatchMessage(Handler.java:98)
+                    at android.os.Looper.loop(Looper.java:135)
+                    at com.example.jimbo.myapplication.MainActivity$2.run(MainActivity.java:55)
+                    at java.lang.Thread.run(Thread.java:818)
+</code></pre>
+
+<p>原因很明显:没有在主线程中更新UI.
+这些错误还是对Handler消息机制不够清楚导致的,其实我还差一点就可以正确的时候内部类更新UI了,这个我们最后再说.我们还是先看一下消息机制到底是怎么运行的?</p>
+
+<p>Handler创建完成后,这时候就需要Looper和MessageQueen一起协作完成消息处理工作了.首先,Handler通过<code>post()</code>方法将<code>Runnable</code>投递到Looper去处理,或者通过<code>send()</code>方法发送消息去Looper中处理.当然,这里的<code>post()</code>方法也是通过<code>send()</code>方法实现的.当Handler的<code>send()</code>方法被调用的时候,他会调用<code>MessageQueen</code>的<code>enqueueMessage()</code>将消息放入队里中,然后Looper发现新消息来了,就会去处理这个消息.<strong><em>注意,Looper会运行在创建Handler的那个线程中,这样,Handler中的业务就会切换到了创建时候的线程中去了.</em></strong></p>
+
+<p>到这里我们就应该知道上面为什么会出错误了吧.</p>
+
+<h3 id="messagequeen">2.MessageQueen工作原理分析</h3>
+
+<p>MessageQueen比较简单,主要就是包括<code>enqueueMessage()</code>和<code>next()</code>;
+<code>enqueueMessage()</code>:将收到的消息加入到队列中去,对消息对先来先服务处理
+<code>next()</code>:将消息出队,交于Looper处理</p>
+
+<h3 id="looper">3.Looper工作原理</h3>
+
+<p>通过<code>Looper.prepare()</code>可以为当前的线程去创建一个Looper对象,与之对应的是一个<code>Looper.prepareMainLooper()</code>,通过名字也可以知道他是做什么的-专门为ActivityThread(也就是UI线程)去创建Looper.还有一个<code>Looper.getMainLooper()</code>方法获取这个Looper.这些仅仅是创建一个Looper,并没有进入监听MesageQueen状态中去,我们还应该调用<code>Looper.loop()</code>去开启他.
+<code>Looper</code>也是可以退出的,有<code>quit()</code>和<code>quitSafely()</code>,区别就在于<code>quit()</code>会直接退出,而<code>quitSafely()</code>只是设定一个标记,在消息全部处理完毕后就会退出.Looper退出后,Handler的send方法发送消息会得到一个true,表示消息发送失败.
+在子线程中手动创建的Looper,在完成所有的工作后要将其退出,不然子线程会一直处于等待状态.</p>
+
+<h3 id="handler">4.Handler的工作原理</h3>
+
+<p>Handler的工作包括消息的发送和接收过程.发送消息的方法主要有<code>post()</code>和<code>send()</code>这两个系列,他们都包括延时等的一些重载函数可以供我们使用.Handler发送消息仅仅就是向MessageQueen里面插入了一条消息而已.
+MessageQueen发现Message后通过<code>next()</code>方法将消息传递给<code>Looper</code>,Looper最后在调用Handler里的<code>dispatchMessage()</code>方法,这时候Handler就会进入消息处理阶段了,而这时候会切换到创建Handler的线程中去了.
+处理消息就是通过<code>handleMessage()</code>回调方法,处理数据.
+这里我们还要说明一点就是,Handler的构造方法里面有这样的参数<code>Looper</code>,也就是说我们可以在创建Handler的时候指定一个Looper给他,回到我们最初那个问题,可能就会有答案了.</p>
+
+<pre><code>        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                new Handler(Looper. getMainLooper(), new Handler.Callback() {
+                    @Override
+                    public boolean handleMessage(Message msg) {
+                        Toast.makeText(MainActivity.this, "收到消息", Toast.LENGTH_SHORT).show();
+                        test.setText("piu~");
+                        return true;
+                    }
+                }).sendEmptyMessage(0);
+            }
+        }).start();
+</code></pre>
+
+
+  </article>
+</div>
+
+  <div class="prevandnext">
+    	  
+	    <div style="margin:0.5em;">
+	    <span>上一篇 ：</span><a class="pjaxlink" href="https://wuyanfeigithub.github.io/Sendoh-Akira/2015/12/01/android-CropImageView.html"  title="不规则四边形裁剪">不规则四边形裁剪</a>
+	    </div>
+	  
+  	  
+	    <div style="margin:0.5em;">
+	    <span>下一篇 ：</span><a class="pjaxlink" href="https://wuyanfeigithub.github.io/Sendoh-Akira/2015/11/22/linux-sduoshcommandnotfound.html"  title="为什么使用sudo命令执行sh会报command not found错误">为什么使用sudo命令执行sh会报command not found错误</a>
+	    </div>
+	  
+	  	<div style="margin:0.5em;">
+			<span> 版权所有，转载时必须以链接形式注明原始出处</span>
+	    </div>
+	 
+  </div>
+  
+  <!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2015/11/24/android-messagehandler" data-title="Android的消息机制" data-url="/Sendoh-Akira"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wuyanfei"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+</div>				
+			</div>
+			
+
+
+ 		</div>	
+	</div>
+    </div>
+    
+	
+	<div class="profile_social">
+		<a class="rss" href="/Sendoh-Akira/feed.xml" target="_blank"></a>
+		<a class="github" href="https://github.com/wuyanfeigithub"  target="_blank"></a>
+		<a class="weibo" href=""  target="_blank"></a>
+	</div>
+	
+    <div id="backtotop">
+    		<a href="#"><i class="fa fa-arrow-circle-up"></i></a>
+    </div>
+    
+    <div class="pjax_loading"></div>
+    
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Sendoh Akira's blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>Sendoh Akira</li>
+          <li><a href="mailto:wuyanfeijob@163.com">wuyanfeijob@163.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a class="github" href="https://github.com/wuyanfeigithub"  target="_blank"></a>
+          </li>
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        <p class="text">good luck</p>
+      </div>
+    </div>
+    <div class="center sitedesc">
+    	Powered by <a href ="http://jekyllrb.com/">Jekyll</a>  |  © 2016 GY  |  Hosted on <a href="https://github.com/wuyanfeigithub"> Github</a>
+    </div>
+  </div>
+	
+ 
+  <script type="text/javascript">
+	  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+	  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+	  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+	  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+	  
+	  _st('install','8i7AWfTU6yge5uNc4fmc','2.0.0');
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        TeX: {equationNumbers: {
+            autoNumber: ["AMS"], useLabelIds: true}},
+            "HTML-CSS": {linebreaks: {automatic: true}},
+            SVG: {linebreaks: {automatic: true}}
+    });
+   </script>
+  	<!-- 多说公共JS代码 start (一个网页只需插入一次) 
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"wuyanfei"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	多说公共JS代码 end -->
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/jquery.js"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/bootstrap.js"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/jquery.pjax.js"></script> 
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/echarts.min.js"></script> 
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/prettify/prettify.js"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/stickUp.min.js"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/fancybox/jquery.mousewheel-3.0.6.pack.js"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/main.js"></script>
+  <link rel="stylesheet" href="/Sendoh-Akira/assets/css/duoshuo.css"> 
+  <link rel="stylesheet" href="/Sendoh-Akira/search/css/cb-search.css">
+							
+  <script src="/Sendoh-Akira/search/js/bootstrap3-typeahead.min.js"></script>
+  <script src="/Sendoh-Akira/search/js/cb-search.js"></script>
+  
+</footer>
+
+	
+	<script type="text/javascript" src="/Sendoh-Akira/assets/js/mp3/APlayer.min.js"></script>
+  	<script type="text/javascript">
+	  	var ap5 = new APlayer({
+	    element: document.getElementById('player5'),
+	    narrow: false,
+	    autoplay: false,
+	    showlrc: 3,
+	    mutex: true,
+	    theme: '#ad7a86',
+	    mode: 'random',
+	    listmaxheight: '80px',
+	    music: [
+	        {
+	            title: 'あっちゅ～ま青春!',
+	            author: '七森中☆ごらく部',
+	            url: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.mp3',
+	            pic: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.jpg',
+	            lrc: '/Sendoh-Akira/assets/js/mp3/lrc/あっちゅ～ま青春!.lrc'
+	        },
+	        {
+	            title: 'secret base~君がくれたもの~',
+	            author: '茅野愛衣',
+	            url: 'http://devtest.qiniudn.com/secret base~.mp3',
+	            pic: 'http://devtest.qiniudn.com/secret base~.jpg',
+	            lrc: '/Sendoh-Akira/assets/js/mp3/lrc/secret base~君がくれたもの~.lrc'
+	        },
+	        {
+	            title: '回レ！雪月花',
+	            author: '小倉唯',
+	            url: 'http://devtest.qiniudn.com/回レ！雪月花.mp3',
+	            pic: 'http://devtest.qiniudn.com/回レ！雪月花.jpg',
+	            lrc: '/Sendoh-Akira/assets/js/mp3/lrc/回レ！雪月花.lrc'
+	        }
+	    ]
+	});
+	</script>
+  </body>
+
+</html>

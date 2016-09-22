@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <!-- 添加搜索关键字 -->
+  <meta name="keywords" content="武燕飞,https://wuyanfeigithub.github.io/Sendoh-Akira/">
+
+  <title>jni使用详解 | Sendoh Akira</title>
+  <meta name="description" content="  开发中难免要使用jni，现在系统的学习总结一下使用的方法">
+
+  
+  <link rel="stylesheet" href="/Sendoh-Akira/assets/css/bootstrap.css">
+  <link rel="stylesheet" href="/Sendoh-Akira/assets/css/font-awesome.css">
+  <link rel="stylesheet" href="/Sendoh-Akira/assets/js/fancybox/jquery.fancybox.css" media="screen">
+  <link rel="stylesheet" href="/Sendoh-Akira/assets/css/main.css" >
+  <link rel="stylesheet" href="/Sendoh-Akira/assets/js/prettify/prettify.css">
+  <link rel="shortcut icon" href="/Sendoh-Akira/assets/img/favicon_2.png" />
+  <link rel="canonical" href="https://wuyanfeigithub.github.io/Sendoh-Akira/Sendoh-Akira/2016/04/05/jni.html">
+  <link rel="alternate" type="application/rss+xml" title="Sendoh Akira" href="https://wuyanfeigithub.github.io/Sendoh-Akira/Sendoh-Akira/feed.xml" />
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/echarts.min.js"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/embed.js"></script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/ua-parser.js"></script>
+
+  <script>var duoshuoQuery = {short_name:"wuyanfei"};</script>
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+	<div class="container">
+		<div class="row">
+			<nav class="navbar navbar-default" role="navigation">
+			
+				    <div class="navbar-header col-xs-12 col-sm-12 col-md-3 col-lg-3 center" >
+				   	      <button type="button" class="navbar-toggle" data-toggle="collapse"  data-target="#example-navbar-collapse">
+					         <span class="icon-bar"></span>
+					         <span class="icon-bar"></span>
+					         <span class="icon-bar"></span>
+					      </button>
+					      <div class="sitehome">
+						 	<a href="/Sendoh-Akira/" title="首页"><i class="fa fa-home fa-2x homeicon"></i><a><a class="site-title" href="/Sendoh-Akira/">Sendoh Akira</a>
+						</div>
+				   </div>
+				  
+				  
+				  <div class="col-md-6 col-lg-6 hidden-xs hidden-sm center">				  			
+							<nav class="site-nav">
+								        <ul class="nav nav-pills">
+											<li class="select"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/read.html">读书</a></li>
+											<li class="select"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/class.html">分类</a></li>
+											<li class="select"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/archive.html">归档</a></li>
+											<li class="select"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/about.html">关于</a></li>
+								        </ul>
+							</nav>
+				  </div>
+				  
+				   <div class="col-md-3 col-lg-3 hidden-xs hidden-sm">
+				   		<!--<div class="search">
+						  	<input type="text" class="search-query st-default-search-input" placeholder="Search">
+				   		</div>-->
+				   		<div class="search-tool" style="float: left;height: 45px;line-height: 45px;margin-left: 12px;">
+							    <input type="text" class="form-control search-content" data-provide="search-content" style="display: inline-block !important; 
+							    color: #49525c;
+							    font-size: 14px;
+							    line-height: 13px;
+							    background-color: #e1eaf2;
+							    border: 1px solid #045bb2;
+							    border-radius: 4px;
+							    box-shadow: inset 0 1px 3px rgba(0,0,0,.2),0 1px 0 rgba(255,255,255,.1);
+							    outline: 0;
+							    box-sizing: border-box;
+							    -webkit-transition: all .2s ease-in-out;
+							    transition: all .2s ease-in-out;" placeholder="Search this site" />
+						</div>
+							
+						
+				   </div>
+				   
+				   
+				   <div class="collapse navbar-collapse" id="example-navbar-collapse">
+						<ul class="nav navbar-nav phone-nav center">
+							<li class="phoneselect"><a class="page-link pjaxlink" href="/Sendoh-Akira/"><i class="fa fa-home"></i>&nbsp;首页</a></li>
+							<li class="phoneselect"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/read.html"><i class="fa fa-book"></i>&nbsp;读书</a></li>
+							<li class="phoneselect"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/class.html"><i class="fa fa-tasks"></i>&nbsp;分类</a></li>
+							<li class="phoneselect"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/tags.html"><i class="fa fa-tags"></i>&nbsp;标签</a></li>
+							<li class="phoneselect"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/archive.html"><i class="fa fa-archive"></i>&nbsp;归档</a></li>
+							<li class="phoneselect"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/about.html"><i class="fa fa-user"></i>&nbsp;关于</a></li>
+						</ul>
+				   </div>
+				   
+			</nav>
+		</div>
+	</div>
+</header>
+
+      
+    <div class="content">
+   	<div class="container">	
+   		<div class="row">  		
+   		
+			<div class="col-md-3 col-lg-3 hidden-xs hidden-sm aside1 fadein-left">
+				<div class="profile box-shadow center">
+					<div class="overlay"></div>
+					<div class="center gavatar">
+						<a href="/Sendoh-Akira" class="profile_gavatar"><img class="circle" src="/Sendoh-Akira/assets/img/gavatar_2.png"></a>
+					</div>
+					<div class="address">
+						<h5><span class="fa fa-map-marker"></span> BeiJing, China</h5>
+					</div>
+					<div class="center profile_desc">
+						红衣佳人白衣友<br>朝与同歌暮同酒<br>世人谓我恋长安<br>其实只恋长安某<br><br><br>
+					</div>
+				</div>
+				
+				<div class="tag-cloud-text">
+					<p class="center">音乐</p>
+				</div>
+				<div class="tag-cloud ">	
+					<hr>
+					<div id="player5" class="aplayer"></div>				
+				</div>
+				<div class="clear"></div>
+				
+				<div class="tag-cloud-text">
+					<a href="/Sendoh-Akira/pages/tags.html" title="标签" class="pjaxlink"><p class="center">标签</p></a>
+				</div>
+				<div class="tag-cloud ">	
+					<hr>
+					<div class="page-tag">
+							
+								<a href="/Sendoh-Akira/pages/tags.html#life" name="life" class="pjaxlink"><i class="fa fa-tags"></i>life(3)</a>
+							
+								<a href="/Sendoh-Akira/pages/tags.html#java" name="java" class="pjaxlink"><i class="fa fa-tags"></i>java(2)</a>
+							
+								<a href="/Sendoh-Akira/pages/tags.html#android" name="android" class="pjaxlink"><i class="fa fa-tags"></i>android(15)</a>
+							
+								<a href="/Sendoh-Akira/pages/tags.html#linux" name="linux" class="pjaxlink"><i class="fa fa-tags"></i>linux(2)</a>
+							
+								<a href="/Sendoh-Akira/pages/tags.html#算法" name="算法" class="pjaxlink"><i class="fa fa-tags"></i>算法(2)</a>
+							
+								<a href="/Sendoh-Akira/pages/tags.html#其他" name="其他" class="pjaxlink"><i class="fa fa-tags"></i>其他(2)</a>
+							
+					</div>					
+				</div>
+				<div class="clear"></div>
+				<div class="recentcome box-shadow">
+	 				<p>最近访客 <i class="fa fa-user"></i></p>
+	 				<ul class="ds-recent-visitors" data-num-items="15"></ul>
+	 			</div>
+	 			<div class="comment box-shadow">
+	 				<p>最新评论 <i class="fa fa-comments"></i></p>
+	 				<dl class="ds-recent-comments"  data-num-items="5" data-show-avatars="1" data-show-time="1" data-show-title="1"  data-show-admin="1" data-excerpt-length="50"></dl>
+	 			</div>
+
+	 			
+	 			<div class="recentuse">
+	 					<p>经常出没</p>
+	 					<hr>
+	 					<ul>
+		 					
+	 					</ul>
+	 			</div>
+				
+				<div class="friendlink">
+	 					<p>友情链接</p>
+	 					
+	 			</div>
+				
+			</div>
+			
+			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 box-shadow fadein-right aside2">					 		
+					<div class="page-content" id="pjax"><div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">jni使用详解</h1>
+    <div class="info">
+	    <p class="post-meta"><i class="fa fa-calendar"></i>&nbsp;2016-04-05</p>
+	    
+		<i class="fa fa-tags"></i>
+		<span class="index-post-tag">
+		
+			<a class="pjaxlink" href="/pages/tags.html#android">android</a>
+		
+		</span>
+	    
+    </div>
+  </header>
+
+  <article class="post-content">
+    <blockquote>
+  <p>开发中难免要使用jni，现在系统的学习总结一下使用的方法</p>
+</blockquote>
+
+<h5 id="jni">1 jni概述</h5>
+
+<p>jni是Java Native Interface的缩写，中文译为“java本地方法接口”。通俗的说，jni是一种技术，通过jni你可以：</p>
+
+<ul>
+  <li>java程序中的函数可以调用Native语言写的函数，Native一般是指C/C++编写的代码。</li>
+  <li>Native程序中的函数可以调用Java层的函数，也就是说在C/C++程序中可以调用java的函数。</li>
+</ul>
+
+<h5 id="jnijni">2 加载jni库以及注册jni函数</h5>
+
+<p>加载jni库非常简单，只需要在调用Native函数之前使用<code>System.loadLibrary("your_libray_name")</code>即可。我们的通常做法是在class中的静态块中加载，比如：</p>
+
+<pre><code class="language-java">package com.jimbo.jni;
+
+public class JNIInterface {
+
+  static {
+    System.loadLibrary("your_libray_name");
+  }
+
+  //这里可以定义你的Native函数
+  public static native final void native_say_hello();
+
+  int a;
+  int b;
+  public int calc() {
+    return a+b;
+  }
+}
+</code></pre>
+
+<p>知道了<code>java</code>代码编写的方法，那么问题来了，Native代码怎么编写呢？java函数怎么找到对应的Native函数呢？all right,让我们来看一下注册jni的两种方法。</p>
+
+<ul>
+  <li>静态方法</li>
+</ul>
+
+<p>借助java的工具程序<code>javah</code>来实现这一过程。答题流程是这样的：</p>
+
+<ol>
+  <li>编写java代码，然后编译生成<code>.class</code>文件。</li>
+  <li>使用javah，例如<code>javah -o output packname.classname</code>来生成一个叫做<code>output.h</code>的头文件。</li>
+  <li>在jni层实现这些函数。</li>
+</ol>
+
+<p>上面的<code>JNIInterface</code>类经过上述操作后会得到这样的头文件：</p>
+
+<pre><code class="language-c">#include &lt;jni.h&gt;
+//...省略
+//注：如果java的函数中已经有了“_”，则"_"将会被替换成"_l"
+JNIEXPORT void JNICALL Java_com_jimbo_jni_JNIInterface_native_lsay_lhello(JNIEnv *, jclass);
+
+//...省略
+</code></pre>
+
+<p>可以看出，这个Native函数的名字就是包名+函数名，只是因为“.”在c中有特殊的含义，所以被替换成了”_“。这个过程是这样的：</p>
+
+<blockquote>
+  <p>当java层调用native_say_hello()函数时，他会从对应的JNI库中寻找Java_com_jimbo_jni_JNIInterface_native_lsay_lhello()函数，如果没有就会报错。如果找的到，则会为这个native_say_hello()和Java_com_jimbo_jni_JNIInterface_native_lsay_lhello()建立一个关联关系，其实就是保存jni层函数的函数指针。以后再调用native_say_hello()函数时，直接使用这个函数指针就可以了。当然这个过程是虚拟机来完成的，不需要我们操作。</p>
+</blockquote>
+
+<ul>
+  <li>
+    <p>动态注册</p>
+
+    <p>既然java函数和native函数时一一对应的，那么是不是有一种结构来保存这些数据信息呢？答案是肯定的。在jni技术中，用一个<code>JNINativeMethod</code>来保存，结构定义如下：</p>
+  </li>
+</ul>
+
+<pre><code class="language-c">typedef struct {
+  //java函数名 不用携带包名，待会会有其他方式提供包名，
+  //这样查找起来效率就会更高
+  const char *name;
+  //函数签名信息，包括函数的参数以及函数的返回值等信息
+  const char *signature;
+  //函数指针，类型为void*
+  void* fnptr;
+} JNINativeMethod;
+</code></pre>
+
+<p>那么，这些对应数据什么时候会被加载出来了呢？其实在调用<code>System.loadLibrary("your_libray_name");</code>之后，紧接着会查看该库中一个叫做<code>JNI_OnLoad()</code>的函数，如果有就会调用它，动态注册就需要在这里完成。那么究竟如何实现这一个过程呢？需要调用两个函数就可以了：</p>
+
+<pre><code class="language-c">jclass clazz = (*env) -&gt; FindClass(env, className);
+
+(*env) -&gt; RegisterNatives(env, clazz, gMethods, numMethods);
+</code></pre>
+
+<p>具体注册过程可以这样写：</p>
+
+<pre><code class="language-c">#include &lt;jni.h&gt;
+#include &lt;stdlib.h&gt;  
+#include &lt;string.h&gt;  
+#include &lt;stdio.h&gt;  
+#include &lt;assert.h&gt;
+
+//这个函数是对应java函数的
+jstring native_say_hello(JNIEnv *env, jobject thiz) {
+  return (*env) -&gt; NewStringUTF(env, "hello, i am from jni~");
+}
+
+//这个函数提供方法的对应信息，通过创建JNINativeMethod结构体来实现
+//至于那么参数什么意思 待会具体说
+static JNINativeMethod gMethods[] = {
+  {"native_say_hello", "()Ljava/lang/String", (void)*native_say_hello},
+}
+
+//为类的某一个方法注册
+static int registerNativeMethod(JNIEnv *env, const char* className, JNINativeMethod *gMethods, int numbers) {
+  jclass  clazz = (*env) -&gt; FindClass(env, className);
+  if (null == clazz) {
+    return JNI_FALSE;
+  }
+  if ((*env)-&gt;RegisterNatives(env, clazz, gMethods, numMethods) &lt; 0) {  
+        return JNI_FALSE;  
+  }
+  return JNI_TURE;
+}
+
+//为所有类的方法注册
+static int registerNatives(JNIEnv* env) {  
+    const char* kClassName = "com/jimbo/jni/JNIInterface";//指定要注册的类  
+    return registerNativeMethods(env, kClassName, gMethods,  
+            sizeof(gMethods) / sizeof(gMethods[0]));
+}
+
+//如果成功返回JNI版本, 失败返回-1
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved) {  
+    JNIEnv* env = NULL;  
+
+    if ((*vm)-&gt;GetEnv(vm, (void**) &amp;env, JNI_VERSION_1_4) != JNI_OK) {  
+        return -1;  
+    }  
+    assert(env != NULL);  
+
+    if (!registerNatives(env)) {//注册  
+        return -1;  
+    }  
+    //成功  
+    return JNI_VERSION_1_4;  
+}  
+</code></pre>
+
+<p>通过上面的方法我们就可以将jni函数和java的函数注册在一起了。但是上面代码似乎还是有点麻烦的，
+其实jni的AndroidRunTime类提供了一个<code>registerNativeMethods()</code>方法，可以更加简单的实现这
+一过程。</p>
+
+<pre><code class="language-c">#include &lt;jni.h&gt;
+#include &lt;stdlib.h&gt;  
+#include &lt;string.h&gt;  
+#include &lt;stdio.h&gt;  
+#include &lt;assert.h&gt;
+
+jstring native_say_hello(JNIEnv *env, jobject thiz) {
+  return (*env) -&gt; NewStringUTF(env, "hello, i am from jni~");
+}
+
+static JNINativeMethod gMethods[] = {
+  {"native_say_hello", "()Ljava/lang/String;", (void)*native_say_hello},
+}
+//以上代码和前面是一样的
+
+//如果成功返回JNI版本, 失败返回-1
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved) {  
+    JNIEnv* env = NULL;   
+
+    if ((*vm)-&gt;GetEnv(vm, (void**) &amp;env, JNI_VERSION_1_4) != JNI_OK) {  
+        return -1;  
+    }  
+    assert(env != NULL);  
+
+    if (AndroidRunTime::registerNativeMethods(env, "com/jimbo/jni/JNIInterface", gMethods, sizeof(gMethods) / sizeof(gMethods[0])) &lt; 0) {//注册  
+        return -1;  
+    }  
+    //成功  
+    return JNI_VERSION_1_4;  
+}
+</code></pre>
+
+<p>代码比较好理解，但是JNINativeMethod中的signature可能会存在疑问。例如：</p>
+
+<pre><code class="language-c">"()V"
+"()I"
+"(II)Ljava/lang/String"
+</code></pre>
+
+<p>实际上这些是与函数参数以及返回值一一对对应的。<code>()</code>里面表示参数，<code>()</code>外表示的函数的返回值。
+比如<code>(II)Ljava/lang/String</code>就对应这个函数<code>jstring functionName(int ,int)</code>。</p>
+
+<p>具体的对应关系如下:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">字符</th>
+      <th style="text-align: center">java类型</th>
+      <th style="text-align: center">c类型</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">V</td>
+      <td style="text-align: center">void</td>
+      <td style="text-align: center">void</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Z</td>
+      <td style="text-align: center">boolean</td>
+      <td style="text-align: center">jboolean</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">I</td>
+      <td style="text-align: center">int</td>
+      <td style="text-align: center">jint</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">J</td>
+      <td style="text-align: center">long</td>
+      <td style="text-align: center">jlong</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">D</td>
+      <td style="text-align: center">double</td>
+      <td style="text-align: center">jdouble</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">F</td>
+      <td style="text-align: center">float</td>
+      <td style="text-align: center">jfloat</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">B</td>
+      <td style="text-align: center">byte</td>
+      <td style="text-align: center">jbyte</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">C</td>
+      <td style="text-align: center">char</td>
+      <td style="text-align: center">jchar</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">S</td>
+      <td style="text-align: center">short</td>
+      <td style="text-align: center">jshort</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">[I</td>
+      <td style="text-align: center">int[]</td>
+      <td style="text-align: center">jintarray</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">[F</td>
+      <td style="text-align: center">float[]</td>
+      <td style="text-align: center">jshortarray</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">[B</td>
+      <td style="text-align: center">byte[]</td>
+      <td style="text-align: center">jbytearray</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">[C</td>
+      <td style="text-align: center">char[]</td>
+      <td style="text-align: center">jchararray</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">[S</td>
+      <td style="text-align: center">short[]</td>
+      <td style="text-align: center">jshortarray</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">[D</td>
+      <td style="text-align: center">double[]</td>
+      <td style="text-align: center">jdoublearray</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">[j</td>
+      <td style="text-align: center">long[]</td>
+      <td style="text-align: center">jlongarray</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">[z</td>
+      <td style="text-align: center">boolean[]</td>
+      <td style="text-align: center">jbooleanarray</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>以上是关于基本类型和基本类型的数组，那么类是如何表示的呢？</p>
+
+<blockquote>
+  <p>如果Java函数的参数是class，则以”L”开头，以”;”结尾中间是用”/” 隔开的包及类名。而其对应的C函数名的参数则为jobject. 一个例外是String类，其对应的类为jstring
+Ljava/lang/String; String jstring
+Ljava/net/Socket; Socket jobject</p>
+</blockquote>
+
+<h5 id="jnienv">3 JNIEnv介绍</h5>
+
+<p>JNIEnv，即JNIEnvironment，字面意思就是jni环境。其实他就是一个与线程相关的jni环境结构体。
+JNIEnv提供了一些jni系统函数，通过这些函数我们可以做：</p>
+
+<ul>
+  <li>调用java函数</li>
+  <li>操作jobject对象</li>
+</ul>
+
+<h5 id="jnienvjobject">4 通过JNIEnv操作jobject</h5>
+
+<p>我们都知道，类都是由方法和成员变量组成的，在jni的规则中，使用jfirldID和jMethod来表示java的
+成员变量和方法，可通过jni下面的两个函数得到：</p>
+
+<pre><code class="language-c">jfieldId GetFieldID(jclass clazz, const char *name, const char *sig);
+jMethod GetMethodID(jclass clazz, const char *name, const char *sig);
+</code></pre>
+<ul>
+  <li>jclass代表的java中的类，对应<code>java.lang.Class</code>。</li>
+  <li>第二个参数就是类的名称</li>
+  <li>第三个参数是函数签名，和前面介绍的一样</li>
+</ul>
+
+<p>得到jfieldId和jMethod后依然无法调用java函数。那到底该怎么做呢？
+不着急，我们看下面的代码：</p>
+
+<pre><code class="language-c">jint native_calc(JNIEnv *env, jobject thiz) {
+
+  jclass clazz = env -&gt; FindClass("com/jimbo/jni/JNIInterface");
+  jmethodID java_calc_id = env -&gt; GetMethodID(clazz, "native_calc", "()I");
+  jfieldId a_id = env -&gt; GetFieldID(clazz, "a", "I");
+  jfieldId b_id = env -&gt; GetFieldID(clazz, "b", "I");
+  jint a = env -&gt; GetIntField(clazz, thiz, a_id);
+  jint b = env -&gt; GetIntField(clazz, thiz, b_id);
+  return env -&gt; CallIntMethod(env, thiz, java_calc_id, a, b);
+}
+</code></pre>
+
+<p>通过这段代码我们知道jni是通过<code>CallIntMethod()</code>函数来调用了java的函数。</p>
+
+<p>实际上，jni有一系列类似的函数，形式如下：</p>
+
+<pre><code class="language-c">//调用函数
+//最后参数是调用函数的参数
+NativeType Call&lt;Type&gt;Method(JNIEnv *env, jobject thiz, jmethodID methodID, ...);
+
+//获取成员变量的值
+NativeType Get&lt;Type&gt;Field(JNIEnv *env, jobject thiz, jfieldId fieldID);
+//或者是
+void Set&lt;Typr&gt;FieldID(JNIEnv *env, jobject thiz, jfieldId fieldID, NativeType value);
+</code></pre>
+
+<p>常用的还用如下函数:</p>
+
+<p>GetObjectField(),GetIntField(),GetShortField(),GetCharField()等等。</p>
+
+<h5 id="jni-1">5 jni的垃圾回收以及异常处理</h5>
+
+<p>在jni中，有三种类型的引用，包括：</p>
+
+<ul>
+  <li>Local Reference：包括函数调用是传入的参数，在函数内创建的jobject。Local Reference
+最大的特点就是，一旦jni函数结束，就会被回收。</li>
+  <li>Global Reference：全局引用，这种对象不主动释放永远都不会被回收。</li>
+  <li>Weak Reference：弱全局引用，在运行过程中可能被回收。所以在使用前要调用IsSameObject()
+来判断他是否已经被回收了。</li>
+</ul>
+
+<p>我们在使用完变量后也可以通过<code>env -&gt; Delete&lt;ReferenceType&gt;Ref</code>来主动释放内存。例如DeleteLocalRef();</p>
+
+<p>在jni中，提供了三个函数来截获和处理异常：</p>
+
+<ol>
+  <li>ExceptionOccured(),用来判断时候发生了异常。</li>
+  <li>ExceptionClear(),用来清理jni层发生的异常。</li>
+  <li>ThrowNew(),用来向java层抛出异常。</li>
+</ol>
+
+<p>本文参考了<a href="https://book.douban.com/subject/6802440/">邓凡平的深入理解Android 卷1</a>以及<a href="http://blog.csdn.net/chenfeng0104/article/details/7088600">chenfeng0104的专栏-动态注册JNI</a>。</p>
+
+  </article>
+</div>
+
+  <div class="prevandnext">
+    	  
+	    <div style="margin:0.5em;">
+	    <span>上一篇 ：</span><a class="pjaxlink" href="https://wuyanfeigithub.github.io/Sendoh-Akira/2016/04/07/%E5%85%B3%E4%BA%8Edp-px-dip%E5%8D%95%E4%BD%8D%E4%BB%A5%E5%8F%8A%E5%B1%8F%E5%B9%95%E9%80%82%E9%85%8D.html"  title="关于dp px dip单位以及屏幕适配">关于dp px dip单位以及屏幕适配</a>
+	    </div>
+	  
+  	  
+	    <div style="margin:0.5em;">
+	    <span>下一篇 ：</span><a class="pjaxlink" href="https://wuyanfeigithub.github.io/Sendoh-Akira/2016/03/30/gradle(%E4%BA%8C).html"  title="gradle在Android中的使用(二)">gradle在Android中的使用(二)</a>
+	    </div>
+	  
+	  	<div style="margin:0.5em;">
+			<span> 版权所有，转载时必须以链接形式注明原始出处</span>
+	    </div>
+	 
+  </div>
+  
+  <!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2016/04/05/jni" data-title="jni使用详解" data-url="/Sendoh-Akira"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wuyanfei"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+</div>				
+			</div>
+			
+
+
+ 		</div>	
+	</div>
+    </div>
+    
+	
+	<div class="profile_social">
+		<a class="rss" href="/Sendoh-Akira/feed.xml" target="_blank"></a>
+		<a class="github" href="https://github.com/wuyanfeigithub"  target="_blank"></a>
+		<a class="weibo" href=""  target="_blank"></a>
+	</div>
+	
+    <div id="backtotop">
+    		<a href="#"><i class="fa fa-arrow-circle-up"></i></a>
+    </div>
+    
+    <div class="pjax_loading"></div>
+    
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Sendoh Akira's blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>Sendoh Akira</li>
+          <li><a href="mailto:wuyanfeijob@163.com">wuyanfeijob@163.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a class="github" href="https://github.com/wuyanfeigithub"  target="_blank"></a>
+          </li>
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        <p class="text">good luck</p>
+      </div>
+    </div>
+    <div class="center sitedesc">
+    	Powered by <a href ="http://jekyllrb.com/">Jekyll</a>  |  © 2016 GY  |  Hosted on <a href="https://github.com/wuyanfeigithub"> Github</a>
+    </div>
+  </div>
+	
+ 
+  <script type="text/javascript">
+	  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+	  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+	  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+	  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+	  
+	  _st('install','8i7AWfTU6yge5uNc4fmc','2.0.0');
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        TeX: {equationNumbers: {
+            autoNumber: ["AMS"], useLabelIds: true}},
+            "HTML-CSS": {linebreaks: {automatic: true}},
+            SVG: {linebreaks: {automatic: true}}
+    });
+   </script>
+  	<!-- 多说公共JS代码 start (一个网页只需插入一次) 
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"wuyanfei"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	多说公共JS代码 end -->
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/jquery.js"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/bootstrap.js"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/jquery.pjax.js"></script> 
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/echarts.min.js"></script> 
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/prettify/prettify.js"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/stickUp.min.js"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/fancybox/jquery.mousewheel-3.0.6.pack.js"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/main.js"></script>
+  <link rel="stylesheet" href="/Sendoh-Akira/assets/css/duoshuo.css"> 
+  <link rel="stylesheet" href="/Sendoh-Akira/search/css/cb-search.css">
+							
+  <script src="/Sendoh-Akira/search/js/bootstrap3-typeahead.min.js"></script>
+  <script src="/Sendoh-Akira/search/js/cb-search.js"></script>
+  
+</footer>
+
+	
+	<script type="text/javascript" src="/Sendoh-Akira/assets/js/mp3/APlayer.min.js"></script>
+  	<script type="text/javascript">
+	  	var ap5 = new APlayer({
+	    element: document.getElementById('player5'),
+	    narrow: false,
+	    autoplay: false,
+	    showlrc: 3,
+	    mutex: true,
+	    theme: '#ad7a86',
+	    mode: 'random',
+	    listmaxheight: '80px',
+	    music: [
+	        {
+	            title: 'あっちゅ～ま青春!',
+	            author: '七森中☆ごらく部',
+	            url: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.mp3',
+	            pic: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.jpg',
+	            lrc: '/Sendoh-Akira/assets/js/mp3/lrc/あっちゅ～ま青春!.lrc'
+	        },
+	        {
+	            title: 'secret base~君がくれたもの~',
+	            author: '茅野愛衣',
+	            url: 'http://devtest.qiniudn.com/secret base~.mp3',
+	            pic: 'http://devtest.qiniudn.com/secret base~.jpg',
+	            lrc: '/Sendoh-Akira/assets/js/mp3/lrc/secret base~君がくれたもの~.lrc'
+	        },
+	        {
+	            title: '回レ！雪月花',
+	            author: '小倉唯',
+	            url: 'http://devtest.qiniudn.com/回レ！雪月花.mp3',
+	            pic: 'http://devtest.qiniudn.com/回レ！雪月花.jpg',
+	            lrc: '/Sendoh-Akira/assets/js/mp3/lrc/回レ！雪月花.lrc'
+	        }
+	    ]
+	});
+	</script>
+  </body>
+
+</html>

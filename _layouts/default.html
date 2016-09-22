@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+  {% include head.html %}
+
+  <body>
+
+    {% include header.html %}
+      
+    <div class="content">
+   	<div class="container">	
+   		<div class="row">  		
+   		
+			<div class="col-md-3 col-lg-3 hidden-xs hidden-sm aside1 fadein-left">
+				<div class="profile box-shadow center">
+					<div class="overlay"></div>
+					<div class="center gavatar">
+						<a href="{{ site.baseurl }}" class="profile_gavatar"><img class="circle" src="{{ site.gavatar }}"></a>
+					</div>
+					<div class="address">
+						<h5><span class="fa fa-map-marker"></span> BeiJing, China</h5>
+					</div>
+					<div class="center profile_desc">
+						{{ site.profile_desc }}
+					</div>
+				</div>
+				
+				<div class="tag-cloud-text">
+					<p class="center">音乐</p>
+				</div>
+				<div class="tag-cloud ">	
+					<hr>
+					<div id="player5" class="aplayer"></div>				
+				</div>
+				<div class="clear"></div>
+				
+				<div class="tag-cloud-text">
+					<a href="{{site.baseurl}}/pages/tags.html" title="标签" class="pjaxlink"><p class="center">标签</p></a>
+				</div>
+				<div class="tag-cloud ">	
+					<hr>
+					<div class="page-tag">
+							{% for tag in site.tags %}
+								<a href="{{site.baseurl}}/pages/tags.html#{{tag[0]}}" name="{{tag[0]}}" class="pjaxlink"><i class="fa fa-tags"></i>{{ tag[0] }}({{tag[1].size}})</a>
+							{% endfor %}
+					</div>					
+				</div>
+				<div class="clear"></div>
+				<div class="recentcome box-shadow">
+	 				<p>最近访客 <i class="fa fa-user"></i></p>
+	 				<ul class="ds-recent-visitors" data-num-items="15"></ul>
+	 			</div>
+	 			<div class="comment box-shadow">
+	 				<p>最新评论 <i class="fa fa-comments"></i></p>
+	 				<dl class="ds-recent-comments"  data-num-items="5" data-show-avatars="1" data-show-time="1" data-show-title="1"  data-show-admin="1" data-excerpt-length="50"></dl>
+	 			</div>
+
+	 			
+	 			<div class="recentuse">
+	 					<p>经常出没</p>
+	 					<hr>
+	 					<ul>
+		 					
+	 					</ul>
+	 			</div>
+				
+				<div class="friendlink">
+	 					<p>友情链接</p>
+	 					
+	 			</div>
+				
+			</div>
+			
+			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 box-shadow fadein-right aside2">					 		
+					<div class="page-content" id="pjax">{{content}}</div>				
+			</div>
+			
+
+
+ 		</div>	
+	</div>
+    </div>
+    
+	
+	<div class="profile_social">
+		<a class="rss" href="{{ site.rss_url }}" target="_blank"></a>
+		<a class="github" href="{{ site.author.github }}"  target="_blank"></a>
+		<a class="weibo" href="{{ site.author.weibo }}"  target="_blank"></a>
+	</div>
+	
+    <div id="backtotop">
+    		<a href="#"><i class="fa fa-arrow-circle-up"></i></a>
+    </div>
+    
+    <div class="pjax_loading"></div>
+    
+    {% include footer.html %}
+	
+	<script type="text/javascript" src="{{ "/assets/js/mp3/APlayer.min.js" | prepend: site.baseurl }}"></script>
+  	<script type="text/javascript">
+	  	var ap5 = new APlayer({
+	    element: document.getElementById('player5'),
+	    narrow: false,
+	    autoplay: false,
+	    showlrc: 3,
+	    mutex: true,
+	    theme: '#ad7a86',
+	    mode: 'random',
+	    listmaxheight: '80px',
+	    music: [
+	        {
+	            title: 'あっちゅ～ま青春!',
+	            author: '七森中☆ごらく部',
+	            url: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.mp3',
+	            pic: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.jpg',
+	            lrc: '{{site.baseurl}}/assets/js/mp3/lrc/あっちゅ～ま青春!.lrc'
+	        },
+	        {
+	            title: 'secret base~君がくれたもの~',
+	            author: '茅野愛衣',
+	            url: 'http://devtest.qiniudn.com/secret base~.mp3',
+	            pic: 'http://devtest.qiniudn.com/secret base~.jpg',
+	            lrc: '{{site.baseurl}}/assets/js/mp3/lrc/secret base~君がくれたもの~.lrc'
+	        },
+	        {
+	            title: '回レ！雪月花',
+	            author: '小倉唯',
+	            url: 'http://devtest.qiniudn.com/回レ！雪月花.mp3',
+	            pic: 'http://devtest.qiniudn.com/回レ！雪月花.jpg',
+	            lrc: '{{site.baseurl}}/assets/js/mp3/lrc/回レ！雪月花.lrc'
+	        }
+	    ]
+	});
+	</script>
+  </body>
+
+</html>

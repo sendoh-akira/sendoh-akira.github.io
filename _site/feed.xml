@@ -1,0 +1,2156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Sendoh Akira</title>
+    <link>https://wuyanfeigithub.github.io/Sendoh-Akira</link>
+    <description>good luck</description>
+    
+      <item>
+        <title>关于dp px dip单位以及屏幕适配</title>
+        <link>https://wuyanfeigithub.github.io/Sendoh-Akira/2016/04/07/%E5%85%B3%E4%BA%8Edp-px-dip%E5%8D%95%E4%BD%8D%E4%BB%A5%E5%8F%8A%E5%B1%8F%E5%B9%95%E9%80%82%E9%85%8D.html</link>
+        <guid isPermaLink="true">https://wuyanfeigithub.github.io/Sendoh-Akira/2016/04/07/%E5%85%B3%E4%BA%8Edp-px-dip%E5%8D%95%E4%BD%8D%E4%BB%A5%E5%8F%8A%E5%B1%8F%E5%B9%95%E9%80%82%E9%85%8D.html</guid>
+        <pubDate>Thu, 07 Apr 2016 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;关于android中常见的一些单位的说明&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;此文是根据慕课网的android视频自主学习整理的，&lt;a href=&quot;http://www.imooc.com/learn/484&quot;&gt;视频地址&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h4 id=&quot;section&quot;&gt;一.有关屏幕的重要概念&lt;/h4&gt;
+
+&lt;p&gt;#####1.什么是屏幕尺寸、屏幕密度、屏幕像素密度？&lt;/p&gt;
+
+&lt;p&gt;######a.&lt;/p&gt;
+
+&lt;p&gt;屏幕尺寸就是手机屏幕的对角线长度。
+单位是英寸，1英寸 = 2.54厘米&lt;/p&gt;
+
+&lt;p&gt;######b.&lt;/p&gt;
+
+&lt;p&gt;屏幕分辨率就是手机屏幕在横纵方向上的像素点数。
+单位是px，1px = 1个像素点
+一般以纵向像素*横向像素，如1080 * 720&lt;/p&gt;
+
+&lt;p&gt;######c.&lt;/p&gt;
+
+&lt;p&gt;屏幕像素密度就是指每英寸上的像素点数。
+单位是dpi，即“dot per inch”的缩写
+屏幕像素密度是由屏幕的尺寸和屏幕的分辨率来决定的
+计算方法：拿华为荣耀3c来计算， 屏幕尺寸是5英寸，分辨率是1280*720
+它的像素密度 = (1280^2 + 720^2)^(1/2) / 5 = 293.7&lt;/p&gt;
+
+&lt;p&gt;#####2.什么是dp、dip、sp、px？他们之间有什么关系？&lt;/p&gt;
+
+&lt;p&gt;a. dp和dpi是一回事，名字不一样而已，为了和sp统一，现在多用sp。dpi上面已经解释过了，就不用多解释了。
+b. px是构成图像的最小单位
+c. sp是字体大小的单位，与缩放无关的抽象像素。sp和dp很相似，单位一的区别就是，android系统允许用户自定义文字的大小（小，正常，打，超大等等），当文字尺寸是正常的时候，1sp=1dp=0.00626英寸，而当文字尺寸是大或者超大的时候，1sp&amp;gt;1dp=0.00625英寸。&lt;/p&gt;
+
+&lt;p&gt;#####3.什么是mdpi、hdpi、xdpi、xxdpi？如何计算和区分？&lt;/p&gt;
+
+&lt;p&gt;它们都是表示像素密度。
+| 名称 | 像素密度范围 |
+| :————–: | :————————-: |
+| mdpi | 120-160dpi |
+| hdpi | 160-240dpi |
+| xhdpi | 240-320dpi |
+| xxdpi | 320-480dpi |
+| xxxdpi | 480-640dpi |&lt;/p&gt;
+
+&lt;h4 id=&quot;section-1&quot;&gt;二.怎么适配屏幕&lt;/h4&gt;
+
+&lt;p&gt;#####1.支持各种屏幕尺寸的方法&lt;/p&gt;
+
+&lt;p&gt;a.使用wrap_content、match_parent、weight 
+warp_content:就是适配内容的大小
+match_parent:就是充满父控件
+weight:这个属性有点麻烦，比较难理解，我们举个例子看一下。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-xml&quot;&gt;
+&amp;lt;!-- 我简单表示一下 就不写全了 --&amp;gt;
+&amp;lt;Linearlayout&amp;gt;
+
+&amp;lt;Button 
+    android:id=&quot;@+id/button1&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_weight=&quot;1&quot;
+    /&amp;gt;
+    
+&amp;lt;Button 
+    android:id=&quot;@+id/button2&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_weight=&quot;2&quot;
+    /&amp;gt;
+
+&amp;lt;/Linearlayout&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;假如有以上布局，实际长度 = layout设置的长度+剩余的长度*weight权重
+屏幕长度为L，则button1和button2的layout设置值都是L，button1的剩余长度就是总长度L-button1的长度-button2的长度，即为L-2L
+L1 = L + (L - 2L) * 1/3 = 2/3L
+L2 = L + (L - 2L) * 2/3 = 1/3L
+这样算出来发现和我们所设置的权重值是相反的，所以我们一般都是设置为0dp
+这样算的话是这样的
+L1 = L * 1/3 = 1/3L
+L2 = L * 2/3 = 2/3L&lt;/p&gt;
+
+&lt;p&gt;b.使用相符布局，禁用绝对布局&lt;/p&gt;
+
+&lt;p&gt;c.使用限定符-large&lt;/p&gt;
+
+&lt;p&gt;就是同一个布局文件同时适配不同大小的屏幕尺寸。
+主要是来适配平板的。&lt;/p&gt;
+
+&lt;p&gt;d.使用自动拉伸位图&lt;/p&gt;
+
+&lt;p&gt;#####2.支持各种屏幕密度&lt;/p&gt;
+
+&lt;p&gt;#####3.实施自适应用户界面流程&lt;/p&gt;
+
+</description>
+      </item>
+    
+      <item>
+        <title>jni使用详解</title>
+        <link>https://wuyanfeigithub.github.io/Sendoh-Akira/2016/04/05/jni.html</link>
+        <guid isPermaLink="true">https://wuyanfeigithub.github.io/Sendoh-Akira/2016/04/05/jni.html</guid>
+        <pubDate>Tue, 05 Apr 2016 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;开发中难免要使用jni，现在系统的学习总结一下使用的方法&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h5 id=&quot;jni&quot;&gt;1 jni概述&lt;/h5&gt;
+
+&lt;p&gt;jni是Java Native Interface的缩写，中文译为“java本地方法接口”。通俗的说，jni是一种技术，通过jni你可以：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;java程序中的函数可以调用Native语言写的函数，Native一般是指C/C++编写的代码。&lt;/li&gt;
+  &lt;li&gt;Native程序中的函数可以调用Java层的函数，也就是说在C/C++程序中可以调用java的函数。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;jnijni&quot;&gt;2 加载jni库以及注册jni函数&lt;/h5&gt;
+
+&lt;p&gt;加载jni库非常简单，只需要在调用Native函数之前使用&lt;code&gt;System.loadLibrary(&quot;your_libray_name&quot;)&lt;/code&gt;即可。我们的通常做法是在class中的静态块中加载，比如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;package com.jimbo.jni;
+
+public class JNIInterface {
+
+  static {
+    System.loadLibrary(&quot;your_libray_name&quot;);
+  }
+
+  //这里可以定义你的Native函数
+  public static native final void native_say_hello();
+
+  int a;
+  int b;
+  public int calc() {
+    return a+b;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;知道了&lt;code&gt;java&lt;/code&gt;代码编写的方法，那么问题来了，Native代码怎么编写呢？java函数怎么找到对应的Native函数呢？all right,让我们来看一下注册jni的两种方法。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;静态方法&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;借助java的工具程序&lt;code&gt;javah&lt;/code&gt;来实现这一过程。答题流程是这样的：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;编写java代码，然后编译生成&lt;code&gt;.class&lt;/code&gt;文件。&lt;/li&gt;
+  &lt;li&gt;使用javah，例如&lt;code&gt;javah -o output packname.classname&lt;/code&gt;来生成一个叫做&lt;code&gt;output.h&lt;/code&gt;的头文件。&lt;/li&gt;
+  &lt;li&gt;在jni层实现这些函数。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;上面的&lt;code&gt;JNIInterface&lt;/code&gt;类经过上述操作后会得到这样的头文件：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;#include &amp;lt;jni.h&amp;gt;
+//...省略
+//注：如果java的函数中已经有了“_”，则&quot;_&quot;将会被替换成&quot;_l&quot;
+JNIEXPORT void JNICALL Java_com_jimbo_jni_JNIInterface_native_lsay_lhello(JNIEnv *, jclass);
+
+//...省略
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;可以看出，这个Native函数的名字就是包名+函数名，只是因为“.”在c中有特殊的含义，所以被替换成了”_“。这个过程是这样的：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;当java层调用native_say_hello()函数时，他会从对应的JNI库中寻找Java_com_jimbo_jni_JNIInterface_native_lsay_lhello()函数，如果没有就会报错。如果找的到，则会为这个native_say_hello()和Java_com_jimbo_jni_JNIInterface_native_lsay_lhello()建立一个关联关系，其实就是保存jni层函数的函数指针。以后再调用native_say_hello()函数时，直接使用这个函数指针就可以了。当然这个过程是虚拟机来完成的，不需要我们操作。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;动态注册&lt;/p&gt;
+
+    &lt;p&gt;既然java函数和native函数时一一对应的，那么是不是有一种结构来保存这些数据信息呢？答案是肯定的。在jni技术中，用一个&lt;code&gt;JNINativeMethod&lt;/code&gt;来保存，结构定义如下：&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;typedef struct {
+  //java函数名 不用携带包名，待会会有其他方式提供包名，
+  //这样查找起来效率就会更高
+  const char *name;
+  //函数签名信息，包括函数的参数以及函数的返回值等信息
+  const char *signature;
+  //函数指针，类型为void*
+  void* fnptr;
+} JNINativeMethod;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;那么，这些对应数据什么时候会被加载出来了呢？其实在调用&lt;code&gt;System.loadLibrary(&quot;your_libray_name&quot;);&lt;/code&gt;之后，紧接着会查看该库中一个叫做&lt;code&gt;JNI_OnLoad()&lt;/code&gt;的函数，如果有就会调用它，动态注册就需要在这里完成。那么究竟如何实现这一个过程呢？需要调用两个函数就可以了：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;jclass clazz = (*env) -&amp;gt; FindClass(env, className);
+
+(*env) -&amp;gt; RegisterNatives(env, clazz, gMethods, numMethods);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;具体注册过程可以这样写：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;#include &amp;lt;jni.h&amp;gt;
+#include &amp;lt;stdlib.h&amp;gt;  
+#include &amp;lt;string.h&amp;gt;  
+#include &amp;lt;stdio.h&amp;gt;  
+#include &amp;lt;assert.h&amp;gt;
+
+//这个函数是对应java函数的
+jstring native_say_hello(JNIEnv *env, jobject thiz) {
+  return (*env) -&amp;gt; NewStringUTF(env, &quot;hello, i am from jni~&quot;);
+}
+
+//这个函数提供方法的对应信息，通过创建JNINativeMethod结构体来实现
+//至于那么参数什么意思 待会具体说
+static JNINativeMethod gMethods[] = {
+  {&quot;native_say_hello&quot;, &quot;()Ljava/lang/String&quot;, (void)*native_say_hello},
+}
+
+//为类的某一个方法注册
+static int registerNativeMethod(JNIEnv *env, const char* className, JNINativeMethod *gMethods, int numbers) {
+  jclass  clazz = (*env) -&amp;gt; FindClass(env, className);
+  if (null == clazz) {
+    return JNI_FALSE;
+  }
+  if ((*env)-&amp;gt;RegisterNatives(env, clazz, gMethods, numMethods) &amp;lt; 0) {  
+        return JNI_FALSE;  
+  }
+  return JNI_TURE;
+}
+
+//为所有类的方法注册
+static int registerNatives(JNIEnv* env) {  
+    const char* kClassName = &quot;com/jimbo/jni/JNIInterface&quot;;//指定要注册的类  
+    return registerNativeMethods(env, kClassName, gMethods,  
+            sizeof(gMethods) / sizeof(gMethods[0]));
+}
+
+//如果成功返回JNI版本, 失败返回-1
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved) {  
+    JNIEnv* env = NULL;  
+
+    if ((*vm)-&amp;gt;GetEnv(vm, (void**) &amp;amp;env, JNI_VERSION_1_4) != JNI_OK) {  
+        return -1;  
+    }  
+    assert(env != NULL);  
+
+    if (!registerNatives(env)) {//注册  
+        return -1;  
+    }  
+    //成功  
+    return JNI_VERSION_1_4;  
+}  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;通过上面的方法我们就可以将jni函数和java的函数注册在一起了。但是上面代码似乎还是有点麻烦的，
+其实jni的AndroidRunTime类提供了一个&lt;code&gt;registerNativeMethods()&lt;/code&gt;方法，可以更加简单的实现这
+一过程。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;#include &amp;lt;jni.h&amp;gt;
+#include &amp;lt;stdlib.h&amp;gt;  
+#include &amp;lt;string.h&amp;gt;  
+#include &amp;lt;stdio.h&amp;gt;  
+#include &amp;lt;assert.h&amp;gt;
+
+jstring native_say_hello(JNIEnv *env, jobject thiz) {
+  return (*env) -&amp;gt; NewStringUTF(env, &quot;hello, i am from jni~&quot;);
+}
+
+static JNINativeMethod gMethods[] = {
+  {&quot;native_say_hello&quot;, &quot;()Ljava/lang/String;&quot;, (void)*native_say_hello},
+}
+//以上代码和前面是一样的
+
+//如果成功返回JNI版本, 失败返回-1
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved) {  
+    JNIEnv* env = NULL;   
+
+    if ((*vm)-&amp;gt;GetEnv(vm, (void**) &amp;amp;env, JNI_VERSION_1_4) != JNI_OK) {  
+        return -1;  
+    }  
+    assert(env != NULL);  
+
+    if (AndroidRunTime::registerNativeMethods(env, &quot;com/jimbo/jni/JNIInterface&quot;, gMethods, sizeof(gMethods) / sizeof(gMethods[0])) &amp;lt; 0) {//注册  
+        return -1;  
+    }  
+    //成功  
+    return JNI_VERSION_1_4;  
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;代码比较好理解，但是JNINativeMethod中的signature可能会存在疑问。例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;&quot;()V&quot;
+&quot;()I&quot;
+&quot;(II)Ljava/lang/String&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;实际上这些是与函数参数以及返回值一一对对应的。&lt;code&gt;()&lt;/code&gt;里面表示参数，&lt;code&gt;()&lt;/code&gt;外表示的函数的返回值。
+比如&lt;code&gt;(II)Ljava/lang/String&lt;/code&gt;就对应这个函数&lt;code&gt;jstring functionName(int ,int)&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;具体的对应关系如下:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;字符&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;java类型&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;c类型&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;V&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;void&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;void&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Z&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;boolean&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;jboolean&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;I&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;jint&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;J&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;long&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;jlong&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;D&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;double&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;jdouble&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;F&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;float&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;jfloat&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;B&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;byte&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;jbyte&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;C&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;char&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;jchar&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;S&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;short&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;jshort&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;[I&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int[]&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;jintarray&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;[F&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;float[]&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;jshortarray&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;[B&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;byte[]&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;jbytearray&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;[C&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;char[]&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;jchararray&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;[S&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;short[]&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;jshortarray&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;[D&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;double[]&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;jdoublearray&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;[j&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;long[]&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;jlongarray&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;[z&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;boolean[]&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;jbooleanarray&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;以上是关于基本类型和基本类型的数组，那么类是如何表示的呢？&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;如果Java函数的参数是class，则以”L”开头，以”;”结尾中间是用”/” 隔开的包及类名。而其对应的C函数名的参数则为jobject. 一个例外是String类，其对应的类为jstring
+Ljava/lang/String; String jstring
+Ljava/net/Socket; Socket jobject&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h5 id=&quot;jnienv&quot;&gt;3 JNIEnv介绍&lt;/h5&gt;
+
+&lt;p&gt;JNIEnv，即JNIEnvironment，字面意思就是jni环境。其实他就是一个与线程相关的jni环境结构体。
+JNIEnv提供了一些jni系统函数，通过这些函数我们可以做：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;调用java函数&lt;/li&gt;
+  &lt;li&gt;操作jobject对象&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;jnienvjobject&quot;&gt;4 通过JNIEnv操作jobject&lt;/h5&gt;
+
+&lt;p&gt;我们都知道，类都是由方法和成员变量组成的，在jni的规则中，使用jfirldID和jMethod来表示java的
+成员变量和方法，可通过jni下面的两个函数得到：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;jfieldId GetFieldID(jclass clazz, const char *name, const char *sig);
+jMethod GetMethodID(jclass clazz, const char *name, const char *sig);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+  &lt;li&gt;jclass代表的java中的类，对应&lt;code&gt;java.lang.Class&lt;/code&gt;。&lt;/li&gt;
+  &lt;li&gt;第二个参数就是类的名称&lt;/li&gt;
+  &lt;li&gt;第三个参数是函数签名，和前面介绍的一样&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;得到jfieldId和jMethod后依然无法调用java函数。那到底该怎么做呢？
+不着急，我们看下面的代码：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;jint native_calc(JNIEnv *env, jobject thiz) {
+
+  jclass clazz = env -&amp;gt; FindClass(&quot;com/jimbo/jni/JNIInterface&quot;);
+  jmethodID java_calc_id = env -&amp;gt; GetMethodID(clazz, &quot;native_calc&quot;, &quot;()I&quot;);
+  jfieldId a_id = env -&amp;gt; GetFieldID(clazz, &quot;a&quot;, &quot;I&quot;);
+  jfieldId b_id = env -&amp;gt; GetFieldID(clazz, &quot;b&quot;, &quot;I&quot;);
+  jint a = env -&amp;gt; GetIntField(clazz, thiz, a_id);
+  jint b = env -&amp;gt; GetIntField(clazz, thiz, b_id);
+  return env -&amp;gt; CallIntMethod(env, thiz, java_calc_id, a, b);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;通过这段代码我们知道jni是通过&lt;code&gt;CallIntMethod()&lt;/code&gt;函数来调用了java的函数。&lt;/p&gt;
+
+&lt;p&gt;实际上，jni有一系列类似的函数，形式如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;//调用函数
+//最后参数是调用函数的参数
+NativeType Call&amp;lt;Type&amp;gt;Method(JNIEnv *env, jobject thiz, jmethodID methodID, ...);
+
+//获取成员变量的值
+NativeType Get&amp;lt;Type&amp;gt;Field(JNIEnv *env, jobject thiz, jfieldId fieldID);
+//或者是
+void Set&amp;lt;Typr&amp;gt;FieldID(JNIEnv *env, jobject thiz, jfieldId fieldID, NativeType value);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;常用的还用如下函数:&lt;/p&gt;
+
+&lt;p&gt;GetObjectField(),GetIntField(),GetShortField(),GetCharField()等等。&lt;/p&gt;
+
+&lt;h5 id=&quot;jni-1&quot;&gt;5 jni的垃圾回收以及异常处理&lt;/h5&gt;
+
+&lt;p&gt;在jni中，有三种类型的引用，包括：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Local Reference：包括函数调用是传入的参数，在函数内创建的jobject。Local Reference
+最大的特点就是，一旦jni函数结束，就会被回收。&lt;/li&gt;
+  &lt;li&gt;Global Reference：全局引用，这种对象不主动释放永远都不会被回收。&lt;/li&gt;
+  &lt;li&gt;Weak Reference：弱全局引用，在运行过程中可能被回收。所以在使用前要调用IsSameObject()
+来判断他是否已经被回收了。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;我们在使用完变量后也可以通过&lt;code&gt;env -&amp;gt; Delete&amp;lt;ReferenceType&amp;gt;Ref&lt;/code&gt;来主动释放内存。例如DeleteLocalRef();&lt;/p&gt;
+
+&lt;p&gt;在jni中，提供了三个函数来截获和处理异常：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;ExceptionOccured(),用来判断时候发生了异常。&lt;/li&gt;
+  &lt;li&gt;ExceptionClear(),用来清理jni层发生的异常。&lt;/li&gt;
+  &lt;li&gt;ThrowNew(),用来向java层抛出异常。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;本文参考了&lt;a href=&quot;https://book.douban.com/subject/6802440/&quot;&gt;邓凡平的深入理解Android 卷1&lt;/a&gt;以及&lt;a href=&quot;http://blog.csdn.net/chenfeng0104/article/details/7088600&quot;&gt;chenfeng0104的专栏-动态注册JNI&lt;/a&gt;。&lt;/p&gt;
+</description>
+      </item>
+    
+      <item>
+        <title>gradle在Android中的使用(二)</title>
+        <link>https://wuyanfeigithub.github.io/Sendoh-Akira/2016/03/30/gradle(%E4%BA%8C).html</link>
+        <guid isPermaLink="true">https://wuyanfeigithub.github.io/Sendoh-Akira/2016/03/30/gradle(%E4%BA%8C).html</guid>
+        <pubDate>Wed, 30 Mar 2016 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;上一博客学习了gradle的基本内容，这次我们继续学习一下怎么使用gradle进行签名打包和分渠道打包&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h5 id=&quot;section&quot;&gt;1 签名打包&lt;/h5&gt;
+
+&lt;p&gt;关于什么是签名以及怎样生成自己的签名我在以前的博客中介绍过了，不熟悉的话可以参考&lt;a href=&quot;http://bornbeauty.github.io/2016/03/29/keystore.html&quot;&gt;这一篇&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;在android{}添加一下代码片段就可&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-gradle&quot;&gt;signingConfigs {
+
+  mySignConfig {
+    storeFile file(&quot;yourKeyStoreName.keystore&quot;)
+    storePassword &quot;yourKeyStorePassword&quot;
+    keyAlias &quot;yourKeyAlias&quot;
+    keyPassword &quot;yourKeyAliasPassword&quot;
+  }
+
+  buildTypes {
+    release {
+      signingConfig signingConfigs.mySignConfig
+    }
+  }
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后运行 &lt;code&gt;gradle build&lt;/code&gt;命令就会得到[项目名]-release-unaligned和[项目名]-release，他们都是签名的apk文件，区别是前者没有经过ZipAlign优化。当然，我们一般在签名优化apk的时候都需要一个proguard文件，所以上面的完整的写法是：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-gradle&quot;&gt;buildTypes {
+  release {
+    signingConfig signingConfigs.mySignConfig
+    runProguard ture
+    proguardFile 'proguard-android.txt'
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h6 id=&quot;apk&quot;&gt;2 同一设备上安装不同版本的apk&lt;/h6&gt;
+
+&lt;p&gt;在我们开发过程中，一般都会有发布版和一个调试版。常常不得不为了装另一个版而要覆盖安装，那么我们能不能再一个设备上同时安装这两个版本呢？&lt;/p&gt;
+
+&lt;p&gt;答案肯定是可以的。我们知道，android区别程序是通过包名来实现的，所以我们修改一下包名不就行了么。但是这么做又比较麻烦，所以gradle在构建程序的时候给我们提供了一个非常简单的方法。&lt;/p&gt;
+
+&lt;p&gt;在android{}下面的buildTypes{}下面添加debug版本，并且设置一个新的包名(和我们想到的方法一样，但是这样不需要修改包名就可以做到了非常方便)。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-gradle&quot;&gt;  buildTypes {
+    release {
+
+    }
+    debug {
+      //其实也可以在release中做类似的操作
+      applicationIdSuffix '.debug'
+    }
+  }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样生成的debug版本和release版本可以同时安装在一个设备上，这样调试起来就非常方便了。&lt;/p&gt;
+
+&lt;h5 id=&quot;section-1&quot;&gt;3 多渠道打包&lt;/h5&gt;
+
+&lt;p&gt;例如我开发的程序有海外版和国内版两个版本，我们可以在android{}中添加一下代码&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-gradle&quot;&gt;productFlavors {
+  playstore {
+    packageName=&quot;com.yourname.applicationname.playstore&quot;
+  }
+  wandoujia {
+    packageName=&quot;com.yourname.applicationname.wandoujia&quot;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后执行&lt;code&gt;gradle build&lt;/code&gt;就能得到[项目名]-[渠道名]-release.apk文件了。非常方便。&lt;/p&gt;
+
+&lt;p&gt;并且&lt;code&gt;productFlavors&lt;/code&gt;还可以切换不同的源码进行编译，比如我们使用不同的&lt;code&gt;mainfest&lt;/code&gt;文件来打包apk可以这样做，在android{}下的sourceSets{}下面这样写：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-gradle&quot;&gt;sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+        }
+
+       	wandoujia {
+       		manifest.srcFile 'wandoujia/AndroidManifest.xml'
+       	}
+
+       	playstore {
+       		manifest.srcFile 'playstore/AndroidManifest.xml'
+       	}
+
+
+        instrumentTest.setRoot('tests')
+    }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;编写构建代码的时候可以参考这个写法：&lt;a href=&quot;https://gist.github.com/youxiachai/5608223&quot;&gt;gradle&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;end&lt;/p&gt;
+</description>
+      </item>
+    
+      <item>
+        <title>gradle在Android中的使用(一)</title>
+        <link>https://wuyanfeigithub.github.io/Sendoh-Akira/2016/03/29/gradle(%E4%B8%80).html</link>
+        <guid isPermaLink="true">https://wuyanfeigithub.github.io/Sendoh-Akira/2016/03/29/gradle(%E4%B8%80).html</guid>
+        <pubDate>Tue, 29 Mar 2016 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;google发布了Android Studio，并且一同发布了编译的新的方法-gradle，今天看一下这个怎么使用&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;gradle&quot;&gt;1 gradle文件中参数解析&lt;/h1&gt;
+
+&lt;p&gt;我们以project当中的app Moudle中的gradle文件为列&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// 声明是Android程序
+apply plugin: 'com.android.application'
+
+android {
+    // 编译SDK的版本
+    compileSdkVersion 21
+    // build tools的版本
+    buildToolsVersion &quot;21.1.1&quot;
+
+    defaultConfig {
+    	// 应用的包名
+        applicationId &quot;me.storm.ninegag&quot;
+        //最低兼容版本
+        minSdkVersion 14
+        //编译版本
+        targetSdkVersion 21
+        //应用的版本号
+        versionCode 1
+        //版本号
+        versionName &quot;1.0.0&quot;
+    }
+
+    // java版本
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    buildTypes {
+        debug {
+            // debug模式
+            // 这样就可以在手机上安装一个正式版 一个debug版本
+            applicationIdSuffix &quot;.debug&quot;
+        }
+
+        release {
+            // 是否进行混淆
+            minifyEnabled false
+            // 混淆文件的位置
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+
+    // 移除lint检查的error
+    lintOptions {
+      abortOnError false
+    }
+}
+
+dependencies {
+    // 编译libs目录下的所有jar包
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:support-v4:21.0.2'
+    compile 'com.etsy.android.grid:library:1.0.5'
+    compile 'com.alexvasilkov:foldable-layout:1.0.1'
+    // 编译extras目录下的ShimmerAndroid模块
+    compile project(':extras:ShimmerAndroid')
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;以上就是一个gradle文件中大体的参数&lt;/p&gt;
+
+&lt;h1 id=&quot;gradleapk&quot;&gt;2 使用gradle编译apk文件&lt;/h1&gt;
+
+&lt;p&gt;我们一般会去github浏览一些开源的项目。看这些项目一般都是看源码和看运行的demo。有的项目提供了demo的apk我们可以直接下载安装，有的没有提供，就不得不自己编译apk了。当然最简单的方法就是把源代码导入Android Studio中编译，但是AS非常重，速度慢，所以我们可以直接使用gradle编译出apk就好了。&lt;/p&gt;
+
+&lt;p&gt;下载好一个项目&lt;/p&gt;
+
+&lt;p&gt;1进入到根目录，执行下面代码&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gradlew -v
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;第一次他会先下载gradle，不翻墙速度很慢。
+等下载好会出现以下的界面：
+&lt;img src=&quot;http://7xjtan.com1.z0.glb.clouddn.com/2016-04-09_144635.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;2紧接着执行下面的代码&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gradlew clean
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xjtan.com1.z0.glb.clouddn.com/2016-04-09_151920.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;3最后执行下面的代码&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gradle build
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样在app Moudle下的build文件夹中的output文件下面就有了三个apk文件了&lt;/p&gt;
+
+&lt;h1 id=&quot;gradle-1&quot;&gt;3 常用的gradle编译命令详解&lt;/h1&gt;
+
+&lt;p&gt;Android plugin使用相同的约定以兼容其他插件，并且附加了自己的标识性task，包括：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;* assemble：这个task用于组合项目中的所有输出。
+* check：这个task用于执行所有检查。
+* connectedCheck：这个task将会在一个指定的设备或者模拟器上执行检查，它们可以同时在所有连接的设备上执行。
+* deviceCheck：通过APIs连接远程设备来执行检查，这是在CL服务器上使用的。
+* build：这个task执行assemble和check的所有工作。
+* clean：这个task清空项目的所有输出。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这些新的标识性task是必须的，以保证能够在没有设备连接的情况下执行定期检查。
+注意build task不依赖于deviceCheck或者connectedCheck。&lt;/p&gt;
+
+&lt;p&gt;一个Android项目至少拥有两个输出：debug APK（调试版APK)和release APK（发布版APK）。每一个输出都拥有自己的标识性task以便能够单独构建它们。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;* assemble：
+    * assembleDebug
+    * assembleRelease 它们都依赖于其它一些tasks以完成构建一个APK需要多个步骤。其中assemble task依赖于这两个task，所以执行assemble将会同时构建出两个APK。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;小提示：gradle在命令行终端上支持骆驼命名法的task简称，例如，执行gradle aR命令等同于执行gradle assembleRelease。&lt;/p&gt;
+
+&lt;p&gt;check task也拥有自己的依赖：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;* check：
+    * lint
+* connectedCheck：
+    * connectedAndroidTest
+    * connectedUiAutomatorTest(目前还没有应用到）
+* deviceCheck: 这个test依赖于test创建时，其它实现测试扩展点的插件。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;最后，只要task能够被安装（那些要求签名的task），android plugin就会为所有构建类型（debug，release，test）安装或者卸载。&lt;/p&gt;
+
+&lt;h1 id=&quot;gradle-2&quot;&gt;4 使用gradle多渠道打包&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://stormzhang.com/devtools/2015/01/15/android-studio-tutorial6/&quot;&gt;参考&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://blog.isming.me/2014/05/20/android4gradle/&quot;&gt;使用Gradle构建Android项目&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;这里只是简单的了解一下gradle 逛博客的时候看到了邓凡平老师的深入理解Android系列的gradle课程，受益颇多，在学习之后再总结一下写另一篇博客&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+      </item>
+    
+      <item>
+        <title>关于keystore的作用以及生成</title>
+        <link>https://wuyanfeigithub.github.io/Sendoh-Akira/2016/03/25/keystore.html</link>
+        <guid isPermaLink="true">https://wuyanfeigithub.github.io/Sendoh-Akira/2016/03/25/keystore.html</guid>
+        <pubDate>Fri, 25 Mar 2016 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;对于混乱的Android应用市场 使用统一的keystore签名自己的应用，保护自己的产权是十分重要的，所以我们今天就看一下有关keystore的内容&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h5 id=&quot;keystore&quot;&gt;1. keystore的作用&lt;/h5&gt;
+
+&lt;p&gt;为了保证每个应用程序开发商合法ID，防止部分开放商可能通过使用相同的Package Name来混淆替换已经安装的程序，我们需要对我们发布的APK文件进行唯一签名，保证我们每次发布的版本的一致性(如自动更新不会因为版本不一致而无法安装)。&lt;/p&gt;
+
+&lt;h4 id=&quot;apk&quot;&gt;2. 对apk签名&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;生成一个属于你的keystore文件&lt;/li&gt;
+  &lt;li&gt;使用apktool和生成的keystore文件为apk文件签名&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;keystore-1&quot;&gt;3. 生成keystore文件&lt;/h4&gt;
+
+&lt;p&gt;使用jdk安装路径/jre/bin/keytool.exe来生成签名文件
+使用jdk安装路径/bin/jarsinger.exe来签名&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;D:\&amp;gt;keytool -genkey -alias demo.keystore -keyalg RSA -validity 40000 -keystore demo.keystore
+-genkey: 产生密钥
+-alias: 签名文件的文件名
+-keyalg: RSA 使用RSA算法对签名加密
+-validity: 有效期
+
+D:\&amp;gt;jarsigner -verbose -keystore demo.keystore -signedjar demo_signed.apk demo.apk demo.keystore
+-verbose 输出签名的详细信息
+-keystore  demo.keystore 密钥库位置
+-signedjar demor_signed.apk demo.apk demo.keystore 正式签名，三个参数中依次为签名后产生的文件demo_signed，要签名的文件demo.apk和密钥库demo.keystore.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&quot;zipalignapk&quot;&gt;4. 签名之后，用zipalign(压缩对齐)优化你的APK文件。&lt;/h4&gt;
+
+&lt;p&gt;未签名的apk不能使用，也不能优化。签名之后的apk谷歌推荐使用zipalign.exe(位于android-sdk-windows\tools目录下)工具对其优化&lt;/p&gt;
+
+&lt;h4 id=&quot;app&quot;&gt;5. 签名对你的App的影响&lt;/h4&gt;
+
+&lt;p&gt;你不可能只做一个APP，你可能有一个宏伟的战略工程，想要在生活，服务，游戏，系统各个领域都想插足的话，你不可能只做一个APP，谷歌建议你把你所有的APP都使用同一个签名证书。&lt;/p&gt;
+
+&lt;p&gt;使用你自己的同一个签名证书，就没有人能够覆盖你的应用程序，即使包名相同，所以影响有：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;App升级。 使用相同签名的升级软件可以正常覆盖老版本的软件，否则系统比较发现新版本的签名证书和老版本的签名证书不一致，不会允许新版本安装成功的。&lt;/li&gt;
+  &lt;li&gt;App模块化。android系统允许具有相同的App运行在同一个进程中，如果运行在同一个进程中，则他们相当于同一个App，但是你可以单独对他们升级更新，这是一种App级别的模块化思路。&lt;/li&gt;
+  &lt;li&gt;允许代码和数据共享。android中提供了一个基于签名的Permission标签。通过允许的设置，我们可以实现对不同App之间的访问和共享，如下：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;code&gt;AndroidManifest.xml：&amp;lt;permission android:protectionLevel=&quot;normal&quot; /&amp;gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;其中protectionLevel标签有4种值：normal(缺省值),dangerous,signature,signatureOrSystem。简单来说，normal是低风险的，所有的App不能访问和共享此App。dangerous是高风险的，所有的App都能访问和共享此App。signature是指具有相同签名的App可以访问和共享此App。signatureOrSystem是指系统image中App和具有相同签名的App可以访问和共享此App，谷歌建议不要使用这个选项，因为签名就足够了，一般这个许可会被用在在一个image中需要共享一些特定的功能的情况下。&lt;/p&gt;
+
+&lt;p&gt;最后，请一定要记得保管好你的签名证书的两个密码，两个密码都不要告诉任何人，也不要把你的密钥库拷贝给别人，包括我！&lt;/p&gt;
+</description>
+      </item>
+    
+      <item>
+        <title>Gradle</title>
+        <link>https://wuyanfeigithub.github.io/Sendoh-Akira/2016/03/20/gradle.html</link>
+        <guid isPermaLink="true">https://wuyanfeigithub.github.io/Sendoh-Akira/2016/03/20/gradle.html</guid>
+        <pubDate>Sun, 20 Mar 2016 00:00:00 +0800</pubDate>
+        <description>&lt;p&gt;﻿—
+layout: post
+title: gradle在Android中的使用
+category: 技术
+tags: android
+description: gradle的使用
+—&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;google发布了Android Studio，并且一同发布了编译的新的方法-gradle，今天看一下这个怎么使用&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;gradle&quot;&gt;1 gradle文件中参数解析&lt;/h1&gt;
+
+&lt;p&gt;我们以project当中的app Moudle中的gradle文件为列&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// 声明是Android程序
+apply plugin: 'com.android.application'
+
+android {
+    // 编译SDK的版本
+    compileSdkVersion 21
+    // build tools的版本
+    buildToolsVersion &quot;21.1.1&quot;
+
+    defaultConfig {
+    	// 应用的包名
+        applicationId &quot;me.storm.ninegag&quot;
+        //最低兼容版本
+        minSdkVersion 14
+        //编译版本
+        targetSdkVersion 21
+        //应用的版本号
+        versionCode 1
+        //版本号
+        versionName &quot;1.0.0&quot;
+    }
+
+    // java版本
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+    
+    buildTypes {
+        debug {
+            // debug模式
+            // 这样就可以在手机上安装一个正式版 一个debug版本
+            applicationIdSuffix &quot;.debug&quot;
+        }
+        
+        release {
+            // 是否进行混淆
+            minifyEnabled false
+            // 混淆文件的位置
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    
+    // 移除lint检查的error
+    lintOptions {
+      abortOnError false
+    }
+}
+
+dependencies {
+    // 编译libs目录下的所有jar包
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:support-v4:21.0.2'
+    compile 'com.etsy.android.grid:library:1.0.5'
+    compile 'com.alexvasilkov:foldable-layout:1.0.1'
+    // 编译extras目录下的ShimmerAndroid模块
+    compile project(':extras:ShimmerAndroid')
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;以上就是一个gradle文件中大体的参数&lt;/p&gt;
+
+&lt;h1 id=&quot;gradleapk&quot;&gt;2 使用gradle编译apk文件&lt;/h1&gt;
+
+&lt;p&gt;我们一般会去github浏览一些开源的项目。看这些项目一般都是看源码和看运行的demo。有的项目提供了demo的apk我们可以直接下载安装，有的没有提供，就不得不自己编译apk了。当然最简单的方法就是把源代码导入Android Studio中编译，但是AS非常重，速度慢，所以我们可以直接使用gradle编译出apk就好了。&lt;/p&gt;
+
+&lt;p&gt;下载好一个项目&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;进入到根目录，执行下面代码
+    &lt;pre&gt;&lt;code&gt;gradlew -v
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;第一次他会先下载gradle，不翻墙速度很慢。
+等下载好会出现以下的界面：
+&lt;img src=&quot;http://7xjtan.com1.z0.glb.clouddn.com/2016-04-09_144635.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;紧接着执行下面的代码
+    &lt;pre&gt;&lt;code&gt;gradlew clean
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;p&gt;&lt;img src=&quot;http://7xjtan.com1.z0.glb.clouddn.com/2016-04-09_151920.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;最后执行下面的代码
+    &lt;pre&gt;&lt;code&gt;gradle build
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;这样在app Moudle下的build文件夹中的output文件下面就有了三个apk文件了&lt;/p&gt;
+
+&lt;h1 id=&quot;gradle-1&quot;&gt;3 使用gradle多渠道打包&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://stormzhang.com/devtools/2015/01/15/android-studio-tutorial6/&quot;&gt;参考&lt;/a&gt;&lt;/p&gt;
+
+</description>
+      </item>
+    
+      <item>
+        <title>二叉树的分层遍历</title>
+        <link>https://wuyanfeigithub.github.io/Sendoh-Akira/2016/03/14/suanfa-erchashufencengbianli.html</link>
+        <guid isPermaLink="true">https://wuyanfeigithub.github.io/Sendoh-Akira/2016/03/14/suanfa-erchashufencengbianli.html</guid>
+        <pubDate>Mon, 14 Mar 2016 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;二叉树的分层遍历&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;题目要求：给定一个二叉树的root结点，然后按照每层从左到右的顺序将二叉树结点的值储存在一个二维数组中，每一层一个数组，每一个数组的元素是按照从左到右的顺序进行存储的。&lt;/p&gt;
+
+&lt;p&gt;思路：二叉树的分层打印类似于图的广度优先遍历算法，我们可以借助一个队列实现这个过程。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;初始化队列 将root结点加入到队列之中&lt;/li&gt;
+  &lt;li&gt;判断当前队列是否为空
+    &lt;ul&gt;
+      &lt;li&gt;不为空，则出队队列的首元素 并且将不为空的结点入队列&lt;/li&gt;
+      &lt;li&gt;为空则表示遍历完成&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;经过上述操作之后就可以得到二叉树分层遍历的顺序了。但是我们并不能得到每一个层都有什么元素这样的信息，我们还需要在遍历的过程中使用变量记录这一个过程。&lt;/p&gt;
+
+&lt;p&gt;一个&lt;code&gt;last&lt;/code&gt;变量记录当前打印行的最右结点&lt;/p&gt;
+
+&lt;p&gt;一个&lt;code&gt;nLast&lt;/code&gt;变量记录加入队列的最近一个元素&lt;/p&gt;
+
+&lt;p&gt;在元素弹出的时候判断一下是否和&lt;code&gt;last&lt;/code&gt;元素相等，相等则表示要换行了，这时候要更新&lt;code&gt;last&lt;/code&gt;的值，就是将&lt;code&gt;nLast&lt;/code&gt;赋值给&lt;code&gt;last&lt;/code&gt;即可，这样就实现了这个功能。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;
+import java.util.*;
+
+public class Java {
+
+	public static void main(String[] args) {
+		TreeNode one = new TreeNode(1);
+		TreeNode two = new TreeNode(2);
+		TreeNode three =new TreeNode(3);
+		TreeNode four = new TreeNode(4);
+		TreeNode five = new TreeNode(5);
+		TreeNode six = new TreeNode(6);
+		TreeNode seven = new TreeNode(7);
+		TreeNode eight = new TreeNode(8);
+		TreeNode nine = new TreeNode(9);
+		TreeNode ten = new TreeNode(10);
+		TreeNode n11 = new TreeNode(11);
+		TreeNode n12 = new TreeNode(12);
+		TreeNode n13 = new TreeNode(13);
+		TreeNode n14 = new TreeNode(14);
+
+		one.left = two;
+		one.right = three;
+		//two.left = four;
+		two.right = five;
+		three.left = six;
+		three.right = seven;
+		four.left = eight;
+		//four.right = nine;
+		//five.left = ten;
+		five.right = n11;
+		six.left = n12;
+		six.right = n13;
+
+		n13.right = n14;
+
+		TreePrinter p = new TreePrinter();
+		int[][] result = p.printTree(one);
+		for (int i = 0; i &amp;lt; result.length; i++) {
+			for (int j = 0; j &amp;lt; result[i].length; j++) {
+				System.out.print(result[i][j]);
+			}
+			System.out.println(&quot;&quot;);
+		}
+	}
+
+}
+
+class TreePrinter {
+    public int[][] printTree(TreeNode root) {
+        // write code here
+    	if (null == root) {
+    		return null;
+    	}
+
+    	if (null == root.left &amp;amp;&amp;amp; null == root.right) {
+    		int[][] result = ;
+    		return result;
+    	}
+
+    	int[][] result = new int[10][];
+
+    	Queue&amp;lt;TreeNode&amp;gt; queue = new LinkedList&amp;lt;TreeNode&amp;gt;();	
+    	TreeNode last = root;
+    	TreeNode nLast = root.right == null ? root.left : root.right;
+
+    	int i = 0;
+    	int j = 0;
+
+    	int numOfLine[] = new int[10];
+
+    	result[i] = new int[1];
+
+    	queue.add(root);
+
+    	while(!queue.isEmpty()) {
+
+    		TreeNode tree = queue.poll();
+    		result[i][j++] = tree.val;
+    		numOfLine[i]++;
+
+    		if (tree.left != null) {
+    			queue.add(tree.left);
+    			nLast = tree.left;
+    		}
+    		if (tree.right != null) {
+    			queue.add(tree.right);
+    			nLast = tree.right;
+    		}
+
+    		if (last == tree) {
+    			j = 0;
+    			i++;
+    			result[i] = new int[(int)(Math.pow((double)2, (double)i))];
+    			last = nLast;
+    		}
+
+    		
+    	}
+
+    	int[][] r = new int[i][];
+    	//System.out.println(i+&quot;&quot;);
+    	for (int g = 0; g &amp;lt; i; g++) {
+    		r[g] = new int[numOfLine[g]];
+    		for (int h = 0; h &amp;lt; numOfLine[g]; h++) {
+    			r[g][h] = result[g][h];
+    		}
+    	}
+    	result = null;
+    	return r;
+    }
+}
+
+class TreeNode {
+    public int val = 0;
+    public TreeNode left = null;
+    public TreeNode right = null;
+    public TreeNode(int val) {
+        this.val = val;
+    }
+}
+
+
+&lt;/code&gt;&lt;/pre&gt;
+
+</description>
+      </item>
+    
+      <item>
+        <title>android资料整理</title>
+        <link>https://wuyanfeigithub.github.io/Sendoh-Akira/2016/03/04/android-blogs.html</link>
+        <guid isPermaLink="true">https://wuyanfeigithub.github.io/Sendoh-Akira/2016/03/04/android-blogs.html</guid>
+        <pubDate>Fri, 04 Mar 2016 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;一些优秀android博客或者学习资源 有时间会分门别类整理一下 现在先收集一下&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://gityuan.com/&quot;&gt;优秀资源-深入学习android&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.jianshu.com/p/af2de05aadff&quot;&gt;安卓学习资源集合&lt;/a&gt;
+面试必看博客&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/guolin_blog/article/details/9097463&quot;&gt;view事件分发1&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/guolin_blog/article/details/11952435&quot;&gt;service详解&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://www.zhihu.com/question/27163593/answer/42703123?utm_source=weibo&amp;amp;utm_medium=weibo_share&amp;amp;utm_content=share_answer&amp;amp;utm_campaign=share_button&quot;&gt;项目结构&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://www.uml.org.cn/sjms/201211023.asp#1&quot;&gt;设计模式六大原则&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://www.jianshu.com/p/69141aa52f34&quot;&gt;问题集合&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/luoshengyang/article/details/6685853&quot;&gt;activity启动过程&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://www.codeceo.com/article/git-version-control-workflow.html&quot;&gt;git的使用&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://www.codeceo.com/article/i-like-ask-for-programmer.html&quot;&gt;面经&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://www.jianshu.com/p/c8cbeb7ea43a&quot;&gt;android新UI特性&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/zhaokaiqiang1992/article/details/45419023&quot;&gt;屏幕适配&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://blog.sina.com.cn/s/blog_ad991b1601018mjc.html&quot;&gt;面试技巧&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://gank.io/post/560e15be2dca930e00da1083&quot;&gt;RxJava&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://my.oschina.net/beenlee/blog/182866&quot;&gt;android技术体系&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/listening_music/article/details/6927988&quot;&gt;android中Service的使用&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://seniorzhai.github.io/2015/02/05/AndroidStudio%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%B1%87%E6%80%BB/&quot;&gt;android studio快捷键大全&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://www.codeceo.com/article/android-code-style-guide.html&quot;&gt;android编码规范&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://www.nowcoder.com/discuss/3043?type=2&amp;amp;order=0&amp;amp;pos=5&amp;amp;page=2&quot;&gt;牛客面经1&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://www.nowcoder.com/discuss/3066&quot;&gt;牛客面经2&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/xiaanming/article/details/26810303&quot;&gt;ImageLoader使用详解与源码解析&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://a.codekk.com/&quot;&gt;Android开源库源码分析&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/gdutliuyun827/article/details/17264259&quot;&gt;浅谈Http以及HttpGet和HttpPost&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://ncstatic.oss-cn-hangzhou.aliyuncs.com/pdf/%E8%AE%B2%E5%BA%A7ppt.pdf&quot;&gt;牛客左程云-关于面试&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://mp.weixin.qq.com/s?__biz=MjM5MTE1NjQzMQ==&amp;amp;mid=402557402&amp;amp;idx=1&amp;amp;sn=237247226ba99c93e0993a35468bb347&amp;amp;scene=20#wechat_redirect&quot;&gt;Git命令&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://www.codeceo.com/article/android-context.html&quot;&gt;Context详解&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://segmentfault.com/a/1190000002570753&quot;&gt;sublime快捷键&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/zhangerqing/article/details/8193118&quot;&gt;HashMap的实现原理&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/zhaokaiqiang1992/article/details/45419023&quot;&gt;屏幕适配方案&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+</description>
+      </item>
+    
+      <item>
+        <title>定义Activity启动模式的两种方式</title>
+        <link>https://wuyanfeigithub.github.io/Sendoh-Akira/2016/03/01/android-launchermode.html</link>
+        <guid isPermaLink="true">https://wuyanfeigithub.github.io/Sendoh-Akira/2016/03/01/android-launchermode.html</guid>
+        <pubDate>Tue, 01 Mar 2016 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;关于activity启动模式定义的两种方式&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;关于activity的生命周期和启动模式可以查看博客: &lt;a href=&quot;http://bornbeauty.github.io/2015/11/11/androidLifecycleAndlauncherMode.html&quot;&gt;activity生命周期和启动模式深入理解&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;一 定义启动模式的方式&lt;/h2&gt;
+
+&lt;p&gt;有两种方式：&lt;/p&gt;
+
+&lt;p&gt;1、通过manifest文件定义
+2、在Intent中通过设置flag的方式&lt;/p&gt;
+
+&lt;p&gt;如果一个activity启动模式通过这两个方式都有定义，以Intent设置flag的方式为准，也就是说方式2的优先级高于方式1.&lt;/p&gt;
+
+&lt;h2 id=&quot;manifest&quot;&gt;二 使用manifest文件&lt;/h2&gt;
+
+&lt;p&gt;通过设置activity的launchMode来设置启动模式：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;standard-标准启动模式&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;这是默认的启动模式。无论当前任务栈中是否已经存在改activity的实例，都将会重新new一个activity，并将改activity放置到当前任务栈的栈顶。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;singleTop-栈顶复用模式&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;如果任务栈中已经存在改activity的实例，并且该实例位于栈顶，那么该activity将被复用，不会重新启动一个activity，而是调用activity的onNewIntent().&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;singleTask-栈内复用模式&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;一个任务栈中只会存在一个改启动模式的activity。当activity已经存在的时候，会直接复用，调用它的onNewIntent()方法。同时，singleTask具有clearTop的效果，位于它上方的activity都会被出栈。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;singleInstance-单例模式&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;一个栈内只存在一个改启动模式的activity。&lt;/p&gt;
+
+&lt;h2 id=&quot;intentflag&quot;&gt;三 使用Intent的flag&lt;/h2&gt;
+
+&lt;p&gt;FLAG_ACTIVITY_NEW_TASK&lt;/p&gt;
+
+&lt;p&gt;设置了这个flag，新启动Activity就会被放置到一个新的任务当中(与”singleTask”有点类似，但不完全一样)，当然这里讨论的仍然还是启动其它程序中的Activity。这个flag的作用通常是模拟一种Launcher的行为，即列出一推可以启动的东西，但启动的每一个Activity都是在运行在自己独立的任务当中的。&lt;/p&gt;
+
+&lt;p&gt;FLAG_ACTIVITY_SINGLE_TOP&lt;/p&gt;
+
+&lt;p&gt;设置了这个flag，如果要启动的Activity在当前任务中已经存在了，并且还处于栈顶的位置，那么就不会再次创建这个Activity的实例，而是直接调用它的onNewIntent()方法。这种flag和在launchMode中指定”singleTop”模式所实现的效果是一样的。&lt;/p&gt;
+
+&lt;p&gt;FLAG_ACTIVITY_CLEAR_TOP&lt;/p&gt;
+
+&lt;p&gt;设置了这个flag，如果要启动的Activity在当前任务中已经存在了，就不会再次创建这个Activity的实例，而是会把这个Activity之上的所有Activity全部关闭掉。比如说，一个任务当中有A、B、C、D四个Activity，然后D调用了startActivity()方法来启动B，并将flag指定成FLAG_ACTIVITY_CLEAR_TOP，那么此时C和D就会被关闭掉，现在返回栈中就只剩下A和B了。
+那么此时Activity B会接收到这个启动它的Intent，你可以决定是让Activity B调用onNewIntent()方法(不会创建新的实例)，还是将ActivityB销毁掉并重新创建实例。如果ActivityB没有在manifest中指定任何启动模式(也就是”standard”模式)，并且Intent中也没有加入一个FLAG_ACTIVITY_SINGLE_TOP flag，那么此时ActivityB就会销毁掉，然后重新创建实例。而如果Activity B在manifest中指定了任何一种启动模式，或者是在Intent中加入了一个FLAG_ACTIVITY_SINGLE_TOPflag，那么就会调用ActivityB的onNewIntent()方法。
+FLAG_ACTIVITY_CLEAR_TOP和FLAG_ACTIVITY_NEW_TASK结合在一起使用也会有比较好的效果，比如可以将一个后台运行的任务切换到前台，并把目标Activity之上的其它Activity全部关闭掉。这个功能在某些情况下非常有用，比如说从通知栏启动Activity的时候。&lt;/p&gt;
+
+&lt;p&gt;处理affinity&lt;/p&gt;
+
+&lt;p&gt;affinity可以用于指定一个Activity更加愿意依附于哪一个任务，在默认情况下，同一个应用程序中的所有Activity都具有相同的affinity，所以，这些Activity都更加倾向于运行在相同的任务当中。当然了，你也可以去改变每个Activity的affinity值，通过&lt;activity&gt;元素的taskAffinity属性就可以实现了。
+taskAffinity属性接收一个字符串参数，你可以指定成任意的值(经我测试字符串中至少要包含一个.)，但必须不能和应用程序的包名相同，因为系统会使用包名来作为默认的affinity值。&lt;/activity&gt;&lt;/p&gt;
+
+&lt;p&gt;affinity主要有以下两种应用场景：
+当调用startActivity()方法来启动一个Activity时，默认是将它放入到当前的任务当中。但是，如果在Intent中加入了一个FLAG_ACTIVITY_NEW_TASK flag的话(或者该Activity在manifest文件中声明的启动模式是”singleTask”)，系统就会尝试为这个Activity单独创建一个任务。但是规则并不是只有这么简单，系统会去检测要启动的这个Activity的affinity和当前任务的affinity是否相同，如果相同的话就会把它放入到现有任务当中，如果不同则会去创建一个新的任务。而同一个程序中所有Activity的affinity默认都是相同的，这也是前面为什么说，同一个应用程序中即使声明成”singleTask”，也不会为这个Activity再去创建一个新的任务了。
+当把Activity的allowTaskReparenting属性设置成true时，Activity就拥有了一个转移所在任务的能力。具体点来说，就是一个Activity现在是处于某个任务当中的，但是它与另外一个任务具有相同的affinity值，那么当另外这个任务切换到前台的时候，该Activity就可以转移到现在的这个任务当中。
+那还是举一个形象点的例子吧，比如有一个天气预报程序，它有一个Activity是专门用于显示天气信息的，这个Activity和该天气预报程序的所有其它Activity具体相同的affinity值，并且还将allowTaskReparenting属性设置成true了。这个时候，你自己的应用程序通过Intent去启动了这个用于显示天气信息的Activity，那么此时这个Activity应该是和你的应用程序是在同一个任务当中的。但是当把天气预报程序切换到前台的时候，这个Activity又会被转移到天气预报程序的任务当中，并显示出来，因为它们拥有相同的affinity值，并且将allowTaskReparenting属性设置成了true。&lt;/p&gt;
+
+&lt;p&gt;清空返回栈&lt;/p&gt;
+
+&lt;p&gt;如何用户将任务切换到后台之后过了很长一段时间，系统会将这个任务中除了最底层的那个Activity之外的其它所有Activity全部清除掉。当用户重新回到这个任务的时候，最底层的那个Activity将得到恢复。这个是系统默认的行为，因为既然过了这么长的一段时间，用户很有可能早就忘记了当时正在做什么，那么重新回到这个任务的时候，基本上应该是要去做点新的事情了。
+当然，既然说是默认的行为，那就说明我们肯定是有办法来改变的，在&lt;activity&gt;元素中设置以下几种属性就可以改变系统这一默认行为：
+alwaysRetainTaskState
+如果将最底层的那个Activity的这个属性设置为true，那么上面所描述的默认行为就将不会发生，任务中所有的Activity即使过了很长一段时间之后仍然会被继续保留。&lt;/activity&gt;&lt;/p&gt;
+
+&lt;p&gt;clearTaskOnLaunch&lt;/p&gt;
+
+&lt;p&gt;如果将最底层的那个Activity的这个属性设置为true，那么只要用户离开了当前任务，再次返回的时候就会将最底层Activity之上的所有其它Activity全部清除掉。简单来讲，就是一种和alwaysRetainTaskState完全相反的工作模式，它保证每次返回任务的时候都会是一种初始化状态，即使用户仅仅离开了很短的一段时间。&lt;/p&gt;
+
+&lt;p&gt;finishOnTaskLaunch&lt;/p&gt;
+
+&lt;p&gt;这个属性和clearTaskOnLaunch是比较类似的，不过它不是作用于整个任务上的，而是作用于单个Activity上。如果某个Activity将这个属性设置成true，那么用户一旦离开了当前任务，再次返回时这个Activity就会被清除掉。&lt;/p&gt;
+</description>
+      </item>
+    
+      <item>
+        <title>Android跨进程通信机制(二)</title>
+        <link>https://wuyanfeigithub.github.io/Sendoh-Akira/2016/02/28/android-AIDLTwo.html</link>
+        <guid isPermaLink="true">https://wuyanfeigithub.github.io/Sendoh-Akira/2016/02/28/android-AIDLTwo.html</guid>
+        <pubDate>Sun, 28 Feb 2016 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;昨天简单的看了一下AIDL怎么使用 今天我们深入学一下这个过程&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;还记得通过aidl.exe编译.aidl文件生成的java代码吗？让我们来看看里面都有哪些内容吧~&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Interface的实现类-Stub&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;生成的IMyAidlInterface只有一个Stub类，而这个类继承了Binder类并且实现了IMyAidlInterface接口。查看Stub类发现，里面不仅实现了我们自定义的方法，还多了其他方法。&lt;/p&gt;
+
+&lt;p&gt;a. DESCRIPTOR 这是binder的唯一表示&lt;/p&gt;
+
+&lt;p&gt;b. asInterface(android.os.IBinder obj)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;public static com.jimbo.aidl.IMyAidlInterface asInterface(android.os.IBinder obj)
+{
+if ((obj==null)) {
+return null;
+}
+android.os.IInterface iin = obj.queryLocalInterface(DESCRIPTOR);
+if (((iin!=null)&amp;amp;&amp;amp;(iin instanceof com.jimbo.aidl.IMyAidlInterface))) {
+return ((com.jimbo.aidl.IMyAidlInterface)iin);
+}
+return new com.jimbo.aidl.IMyAidlInterface.Stub.Proxy(obj);
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这个方法是将服务端的Binder转换成客户端所需要的AIDL接口，并且是区分线程的。如果客户端和服务端位于同一服务端则返回对象本身，否则返回一个代理-Stub.proxy对象。&lt;/p&gt;
+
+&lt;p&gt;c. asBinder()&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Override
+public android.os.IBinder asBinder()
+{
+return this;
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;返回自己&lt;/p&gt;
+
+&lt;p&gt;d. onTranslate&lt;/p&gt;
+
+&lt;p&gt;运行在服务端中的Binder线程池中，当客户端发起跨进程请求的时候，proxy代理会通过&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;mRemote.transact(Stub.TRANSACTION_add, _data, _reply, 0);        
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;代码将数据交给系统底层，然后通过&lt;code&gt;onTranslate()&lt;/code&gt;方法中接受数据。&lt;/p&gt;
+
+&lt;p&gt;e. proxy代理类&lt;/p&gt;
+
+&lt;p&gt;这个类也继承了IMyAidlInterface接口，跨进程通信的时候这个类会暴漏给客户端，改类实现了IMyAidlInterface接口里我们定义的方法。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;跨进程通信过程分析&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://7xjtan.com1.z0.glb.clouddn.com/1111111111.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+</description>
+      </item>
+    
+      <item>
+        <title>Android进程间通信机制(一)</title>
+        <link>https://wuyanfeigithub.github.io/Sendoh-Akira/2016/02/27/android-AIDLOne.html</link>
+        <guid isPermaLink="true">https://wuyanfeigithub.github.io/Sendoh-Akira/2016/02/27/android-AIDLOne.html</guid>
+        <pubDate>Sat, 27 Feb 2016 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;本片博客让我们一起来学一下android的进程之间的通信机制&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;参考视频：&lt;a href=&quot;http://www.imooc.com/learn/606&quot;&gt;慕课网-AIDL-小白成长记&lt;/a&gt;
+&lt;a href=&quot;http://developer.android.com/guide/components/aidl.html&quot;&gt;android官网文档&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;ipc&quot;&gt;一 什么是IPC？&lt;/h2&gt;
+&lt;p&gt;IPC 即 inter-Process Communication，含义为进程间通信或者硕士跨进程通信。当我们需要在不同的进程之间通信的时候就需要了解Android的IPC。
+Android有很多种方式来实现IPC，包括：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;使用Bundle，在使用intent调用组件的时候传递数据&lt;/li&gt;
+  &lt;li&gt;使用文件共享&lt;/li&gt;
+  &lt;li&gt;使用Messenger&lt;/li&gt;
+  &lt;li&gt;使用AIDL&lt;/li&gt;
+  &lt;li&gt;使用Socket&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;一般来说，我们使用3,4比较多，其他方式都可以使用，也比较简单，但是会有数据同步的问题。&lt;/p&gt;
+
+&lt;h2 id=&quot;aidlabc&quot;&gt;二 使用AIDL计算A+B=C&lt;/h2&gt;
+
+&lt;p&gt;我们先抛开原理底层不看，来看一下AIDL怎么使用，然后我们在深入学习一下。做一个A+B=C的Demo来学习一下。应用场景是这样的，client端要计算A+B的值，所以去server端调用&lt;code&gt;add()&lt;/code&gt;方法来计算，然后server将结果给client，client显示给用户。&lt;/p&gt;
+
+&lt;p&gt;注：AIDL 即 Android Interface Definition Language.AIDL is similar to other IDLs you might have worked with. It allows you to define the programming interface that both the client and service agree upon in order to communicate with each other using interprocess communication (IPC). On Android, one process cannot normally access the memory of another process. So to talk, they need to decompose their objects into primitives that the operating system can understand, and marshall the objects across that boundary for you. The code to do that marshalling is tedious to write, so Android handles it for you with AIDL.&lt;/p&gt;
+
+&lt;p&gt;AIDL类似于其他你曾经用过的IDL语言.它允许您定义的编程接口,客户端和服务达成一致,以便互相交流使用进程间通信(IPC)。在Android上,一个进程无法正常访问另一个进程的内存。所以说,他们需要他们的对象分解为原语操作系统可以理解,和马歇尔的对象边界。编组的代码是乏味的写,所以与AIDL Android为您处理。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;编写server端
+新建工程什么的略过不说，我们直接新建一个&lt;code&gt;module&lt;/code&gt;来模拟server，起名叫AIDLServer&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;a. 在AIDLServer中新建AIDL Folder 然后新建一个包 新建一个AIDL文件&lt;/p&gt;
+
+&lt;p&gt;这个时候得到如图所示的项目结构：
+&lt;img src=&quot;http://7xjtan.com1.z0.glb.clouddn.com/QM%24R%5B%24DX094O2%40OYR4IBUOI.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;b. 在接口中添加一个&lt;code&gt;add()&lt;/code&gt;方法 添加完成后编译一下&lt;code&gt;module&lt;/code&gt; android studio会自动为我们生成相应的java代码(在android SDK的tools里面有一个aidl.exe工具 由他完成这个工作).在Project模式下，可以在AIDLServer-build-generated-source-aidl-debug下面看到相应的java代码&lt;/p&gt;
+
+&lt;p&gt;c. 新建一个Service，然后新建一个IBinder
+&lt;img src=&quot;http://7xjtan.com1.z0.glb.clouddn.com/5J088BAW6F2_INBOKHOSV3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;d. 记得在manifest文件中注册Service，并且声明成&lt;code&gt;android:exported=&quot;true&quot;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;否则会抛出：java.lang.SecurityException: Not allowed to bind to service Intent { cmp=com.jimbo.server/.IMyAidlServer }
+这样server就算编写完毕了&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;编写client端&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;a. 完成计算界面&lt;/p&gt;
+
+&lt;p&gt;b. 在client端也要编写AIDL文件，且与Server端一致，所以拷贝过去 编译一下&lt;/p&gt;
+
+&lt;p&gt;c. 在MainActivity中添加一个启动Service的方法 在安卓5.0后必须通过显示的方式启动Service；conn是一个ServiceConnection对象，其中有两个回调函数&lt;code&gt;onServiceConnected&lt;/code&gt;,&lt;code&gt;onServiceDisconnected&lt;/code&gt;，我们可以在‘onServiceConnected`方法中获取到Server端的Service，然后在条用其中的方法&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;    ServiceConnection conn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.d(&quot;TestAIDL&quot;, &quot;成功连接到server&quot;);
+            // 获取到远端的服务
+            iMyAidlInterface = IMyAidlInterface.Stub.asInterface(service);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Log.d(&quot;TestAIDL&quot;, &quot;断开连接&quot;);
+            iMyAidlInterface = null;
+        }
+    };
+    private void bindService() {
+//        Intent intent = new Intent(MainActivity.this,
+//                com.jimbo.server.IMyAidlServer.class);
+        Intent intent = new Intent();
+        intent.setComponent(new ComponentName(&quot;com.jimbo.server&quot;,
+                &quot;com.jimbo.server.IMyAidlServer&quot;));
+
+        boolean isBind = bindService(intent, conn, Context.BIND_AUTO_CREATE);
+        Log.d(&quot;TestAIDL&quot;, &quot;请求开启远端服务&quot;);
+        if (isBind) {
+            Log.d(&quot;TestAIDL&quot;, &quot;bind成功&quot;);
+        } else {
+            Log.d(&quot;TestAIDL&quot;, &quot;bind失败&quot;);
+        }
+    }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;运行效果图：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://7xjtan.com1.z0.glb.clouddn.com/testAIDLResultImage.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;学习了简单的怎么使用后 下一篇我们继续深入学习一下&lt;/p&gt;
+
+&lt;p&gt;参考代码下载 &lt;a href=&quot;http://pan.baidu.com/s/1eRdrMyI&quot;&gt;点这里&lt;/a&gt;&lt;/p&gt;
+</description>
+      </item>
+    
+      <item>
+        <title>武林外传 百看不厌</title>
+        <link>https://wuyanfeigithub.github.io/Sendoh-Akira/2016/01/02/life-wulinwaizhuan.html</link>
+        <guid isPermaLink="true">https://wuyanfeigithub.github.io/Sendoh-Akira/2016/01/02/life-wulinwaizhuan.html</guid>
+        <pubDate>Sat, 02 Jan 2016 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;武林外传 百看不厌 转眼已是十年&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://img.store.sogou.com/net/a/04/link?appid=100140019&amp;amp;url=http://leisure.365jia.cn/uploads/news/folder_169886/images/f4ca7bb66f4b9222d077a7189f368d02.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;“嘿 兄弟 如果是你请打招呼~ 嘿 朋友…”&lt;/p&gt;
+
+&lt;p&gt;最近武林外传出现在了微博上面的热搜榜上，原来，武林外传播出十年了。十年了，再次看到这部电视剧总是有说不出的情切感，像是分别已久的亲人再次见面了。十年前，在那个互联网并不发达的时候，看电视成了我小时候最喜欢的消遣方式。«武林外史»，«风云争霸»，«天下第一»。。。等等这些陪我走过了那段青葱岁月。&lt;/p&gt;
+
+&lt;p&gt;一天，居然在熊猫上看到了有直播间在播 武林外传，想不到这么久过去了好有人在看。我缓缓的点开直播间，开始细细回味。想不到一发不可收拾，只要开了电脑，我就不自觉的想看，看一下小郭的排山倒海，看一下老白的葵花点穴手，看一下佟湘玉额滴神啊。。。&lt;/p&gt;
+
+&lt;p&gt;这部剧到处都充满了灵动，处处有包袱，让人喜得不得了。我不得不佩服宁财神的才气，经典的台词层出不穷。没没想起这么台词，我都会哑然失笑，不由自主的在嘴里念叨着。我一直不明白，为什么我会这么喜欢这个剧呢？为什么会白看不厌呢？我一直不明白，可是在刚才我觉得我可能一直幻想也有这样的生活罢了。他们每一人都有让我感动或者说触动我的地方。&lt;/p&gt;
+
+&lt;p&gt;佟湘玉，她一直很乐观。老白呢，一直很低调。大嘴呢，当然是蕙兰了，我佩服他的勇气。秀才就是很怕老婆，这个最让人羡慕了。小郭，好爽。&lt;/p&gt;
+
+&lt;p&gt;也许我永远不能把他们身上的这些特质都据为己有，但是我会一直默默的喜欢他们。武林外传，我喜欢。百看不厌。&lt;/p&gt;
+</description>
+      </item>
+    
+      <item>
+        <title>upsdnu使用说明</title>
+        <link>https://wuyanfeigithub.github.io/Sendoh-Akira/2015/12/02/life-upsdnudescription.html</link>
+        <guid isPermaLink="true">https://wuyanfeigithub.github.io/Sendoh-Akira/2015/12/02/life-upsdnudescription.html</guid>
+        <pubDate>Wed, 02 Dec 2015 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;upsdnu使用说明
+任何意见以及建议都可以反馈 在博客下面留言即可&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;BUG集合：
+2016年3月15日20:58:09&lt;/p&gt;
+  &lt;ol&gt;
+    &lt;li&gt;由于采用thread去请求认证 可能会导致内存泄露问题&lt;/li&gt;
+    &lt;li&gt;
+      &lt;h2 id=&quot;section&quot;&gt;计算绩点操作数据的时候可能导致了精度丢失&lt;/h2&gt;
+      &lt;p&gt;1.alpha_2.1 2016年1月6日16:46:29：(尚未处理)
+java.lang.StringIndexOutOfBoundsException: length=0; regionStart=1; regionLength=-2
+at java.lang.String.startEndAndLength(String.java:504)
+at java.lang.String.substring(String.java:1333)
+at com.jimbo.myapplication.MainActivity.getWifiName(MainActivity.java:315)
+可能是WIFI的名字过长溢出了
+2.alpha_2.0 2016年1月6日16:56:12: (已经处理)
+at android.view.ViewRootImpl.setView(ViewRootImpl.java:677)
+at android.view.WindowManagerGlobal.addView(WindowManagerGlobal.java:248)
+at android.view.WindowManagerImpl.addView(WindowManagerImpl.java:69)
+at android.app.Dialog.show(Dialog.java:281)
+at com.gc.materialdesign.widgets.SnackBar.show(SnackBar.java:93)
+可能是因为activity被切换到后台导致的问题&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;section-1&quot;&gt;1. 使用说明&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;SDNU WIFI连接模块
+1.首先在菜单选项里面找到&lt;code&gt;设置sdnu账号&lt;/code&gt;
+2.进入设置账号
+3.在首页即可使用&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;注：软件没有任务后台服务，只会在网络状态改变的时候被激活(重启手机后没有打开过或者被强制关闭过软件不会被激活)，并且连接后完全释放资源。由于sdnu网络环境比较复杂，并不能保证每一次都能自动连接到网络，没有接收到通知的时候可以手动启动软件连接。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;成绩查询模块
+1.在菜单选项里面找到&lt;code&gt;本学期成绩&lt;/code&gt;和&lt;code&gt;计算绩点&lt;/code&gt;
+2.进入输入教务处&lt;code&gt;学号&lt;/code&gt;和&lt;code&gt;密码&lt;/code&gt;即可&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;注：这是我见过最丑的界面= =&lt;/p&gt;
+
+&lt;h1 id=&quot;section-2&quot;&gt;2. 关于&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;1.如果有意见请在下面留言或者发送邮件到 zhongjinbao1994@gmail.com，欢迎大家反馈
+2.代码开源 不会窃取用户信息
+3.唯一指定软件下载地址 &lt;a href=&quot;http://www.pgyer.com/upsdun&quot;&gt;upsdnu-蒲公英&lt;/a&gt;，不要相信其他途径，防止被钓鱼。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;section-3&quot;&gt;3. 软件部分截图&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://7xjtan.com1.z0.glb.clouddn.com/screenshot.jpg&quot; alt=&quot;截图2&quot; /&gt;
+&lt;img src=&quot;http://7xjtan.com1.z0.glb.clouddn.com/screenshot1_meitu_2.jpg&quot; alt=&quot;截图3&quot; /&gt;
+&lt;img src=&quot;http://7xjtan.com1.z0.glb.clouddn.com/screenshot2_meitu_3.jpg&quot; alt=&quot;截图1&quot; /&gt;&lt;/p&gt;
+
+</description>
+      </item>
+    
+      <item>
+        <title>不规则四边形裁剪</title>
+        <link>https://wuyanfeigithub.github.io/Sendoh-Akira/2015/12/01/android-CropImageView.html</link>
+        <guid isPermaLink="true">https://wuyanfeigithub.github.io/Sendoh-Akira/2015/12/01/android-CropImageView.html</guid>
+        <pubDate>Tue, 01 Dec 2015 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;算是自己造的第一个轮子吧 以前总是拿过别人开源的东西来用 即使做出什么东西来也没有什么成就感 能自己造轮子感觉很棒&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;开篇废话:距离自己上一篇的博客已经过了好几天了 一来是因为自己忙了些其他事情 另外 也许是因为过了新鲜感了吧 当刚建博客的时候总是时不时来看看 欣赏以下自己的劳动成果 几天过后 没有了新鲜劲 也就那么回事了 人嘛 总是有惰性的&lt;/p&gt;
+
+&lt;h1 id=&quot;section&quot;&gt;一 概述&lt;/h1&gt;
+
+&lt;p&gt;功能需求：
+类似于全能扫描王的功能：裁剪一个四边形然后利用算法矫正成一个矩形的图片。这个裁剪模块是这样的，外部传入一个Bitmap和四个点(利用算法识别出来的原始点)，显示四个点并且让用户调整到合适的位置，最后获取到用户调整后的四个点。
+这就是基本的需求，比较简单。&lt;/p&gt;
+
+&lt;h1 id=&quot;section-1&quot;&gt;二 思路&lt;/h1&gt;
+
+&lt;p&gt;继承ImageView，并且重写&lt;code&gt;onDraw()&lt;/code&gt;，&lt;code&gt;onLayout()&lt;/code&gt;和&lt;code&gt;onTouchEvent()&lt;/code&gt;。&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;用四个圆圈提供用户的交互接口，&lt;/li&gt;
+  &lt;li&gt;在&lt;code&gt;onLayout()&lt;/code&gt;中获取到view的&lt;code&gt;width&lt;/code&gt;和&lt;code&gt;height&lt;/code&gt;，获取&lt;code&gt;bitmap&lt;/code&gt;的&lt;code&gt;width&lt;/code&gt;和&lt;code&gt;height&lt;/code&gt;，在这里计算出图片在view中的缩放比例。(为了好操作和美观，让图片在view中铺满居中显示)。&lt;/li&gt;
+  &lt;li&gt;在&lt;code&gt;onDraw()&lt;/code&gt;方法中绘制操作符号。&lt;/li&gt;
+  &lt;li&gt;在&lt;code&gt;onTouchEvent()&lt;/code&gt;方法中监听用户的触摸事件。在&lt;code&gt;ACTION_DOWN&lt;/code&gt;事件的时候记录下事件发生的位置，然后在&lt;code&gt;ACTION_MOVE&lt;/code&gt;每次触发的时候记录事件位置，并且和上一个的事件位置比较，得出相应的事件并且做出相应的回应。在&lt;code&gt;ACTION_UP&lt;/code&gt;中结束事件。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;#　三　效果展示&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://7xjtan.com1.z0.glb.clouddn.com/cropImageView_Show.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;section-2&quot;&gt;四 使用方法&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;setImageView() 设置bitmap&lt;/li&gt;
+  &lt;li&gt;setPoints() 给出初始的四个点&lt;/li&gt;
+  &lt;li&gt;getPoints() 获取调整后的四个点&lt;/li&gt;
+  &lt;li&gt;isRightStatus() 判断当前位置是能够构成一个凸四边形&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;section-3&quot;&gt;五 项目地址&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/bornbeauty/CropImageView&quot;&gt;bornbeauty-CropImageView:不规则四边形裁剪&lt;/a&gt;&lt;/p&gt;
+
+</description>
+      </item>
+    
+      <item>
+        <title>Android的消息机制</title>
+        <link>https://wuyanfeigithub.github.io/Sendoh-Akira/2015/11/24/android-messagehandler.html</link>
+        <guid isPermaLink="true">https://wuyanfeigithub.github.io/Sendoh-Akira/2015/11/24/android-messagehandler.html</guid>
+        <pubDate>Tue, 24 Nov 2015 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;Android的消息机制是怎样的呢?我们今天一起来看一下&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;参考书籍: &lt;a href=&quot;http://bornbeauty.github.io/2015/11/06/book-list-of-2015.html#Android开发艺术探索&quot;&gt;Android开发艺术探索&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;今天学了一下android的消息机制,在开头我想先说下Android Studio 2.0!
+今天在被窝里就看到了来自各个媒体有关Android Studio2.0的新闻,我也存在同样的疑问:不是刚刚才升级到1.5么?看到新闻上说速度提高了许多,自己也迫不及待的试了一下,果然快了好多好多!真是爽~这样的速度开发简直就是享受啊~&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://android-developers.blogspot.jp/2015/11/android-studio-20-preview.html&quot;&gt;AndroidStudio2.0&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;section&quot;&gt;1.消息机制概述&lt;/h3&gt;
+
+&lt;p&gt;Android的消息机制主要是指Handler的运行机制.在Handler的背后,还需要Looper和MessageQueen的支持. MessageQueen顾名思义,就是消息队列,它的内部存放是一组消息.它仅仅负责消息的入队出队,并不负责怎么去处理消息.消息怎么去处理还要依靠Looper来完成.Looper会一直监听是否有新的消息,有的话就去处理消息,没有就会一直阻塞.&lt;/p&gt;
+
+&lt;p&gt;我以前在开发的时候曾经想这样干:
+在线程的内部创建一个匿名内部类Handler去处理该线程的消息,在里面做一些更新UI的工作.但是却得到这样的错误信息:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;java.lang.RuntimeException: Can't create handler inside thread that has not called Looper.prepare()
+at android.os.Handler.&amp;lt;init&amp;gt;(Handler.java:200)
+at android.os.Handler.&amp;lt;init&amp;gt;(Handler.java:128)
+at com.example.jimbo.myapplication.MainActivity$2.run(MainActivity.java:59)
+at java.lang.Thread.run(Thread.java:818)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;当时很不解,但是我试着上面的说明,先去调用一下&lt;code&gt;Looper.prepare()&lt;/code&gt;方法,然后在运行没有错误了,但是界面并没有更新,也就是说线程的消息并没有得到处理,或者是Handler并没有接收到消息.当时为了赶进度也就没深究,今天可以看一看到底哪里出了问题.
+其实, &lt;code&gt;Looper.prepare()&lt;/code&gt;只是创建了一Looper,但是并没有开始工作,所以上面的消息并没有发送处理,也就不会有什么错误出现.所以还要适时调用&lt;code&gt;Looper.loop()&lt;/code&gt;方法才能真正使得Looper工作起来.
+加上上面代码,再次运行,其实还是会有错误的.原因待会讲:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;android.view.ViewRootImpl$CalledFromWrongThreadException: Only the original thread that created a view hierarchy can touch its views.
+                    at android.view.ViewRootImpl.checkThread(ViewRootImpl.java:6357)
+                    at android.view.ViewRootImpl.invalidateChildInParent(ViewRootImpl.java:909)
+                    at android.view.ViewGroup.invalidateChild(ViewGroup.java:4690)
+                    at android.view.View.invalidateInternal(View.java:11801)
+                    at android.view.View.invalidate(View.java:11765)
+                    at android.view.View.invalidate(View.java:11749)
+                    at android.widget.TextView.checkForRelayout(TextView.java:6858)
+                    at android.widget.TextView.setText(TextView.java:4057)
+                    at android.widget.TextView.setText(TextView.java:3915)
+                    at android.widget.TextView.setText(TextView.java:3890)
+                    at com.example.jimbo.myapplication.MainActivity$2$1.handleMessage(MainActivity.java:51)
+                    at android.os.Handler.dispatchMessage(Handler.java:98)
+                    at android.os.Looper.loop(Looper.java:135)
+                    at com.example.jimbo.myapplication.MainActivity$2.run(MainActivity.java:55)
+                    at java.lang.Thread.run(Thread.java:818)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;原因很明显:没有在主线程中更新UI.
+这些错误还是对Handler消息机制不够清楚导致的,其实我还差一点就可以正确的时候内部类更新UI了,这个我们最后再说.我们还是先看一下消息机制到底是怎么运行的?&lt;/p&gt;
+
+&lt;p&gt;Handler创建完成后,这时候就需要Looper和MessageQueen一起协作完成消息处理工作了.首先,Handler通过&lt;code&gt;post()&lt;/code&gt;方法将&lt;code&gt;Runnable&lt;/code&gt;投递到Looper去处理,或者通过&lt;code&gt;send()&lt;/code&gt;方法发送消息去Looper中处理.当然,这里的&lt;code&gt;post()&lt;/code&gt;方法也是通过&lt;code&gt;send()&lt;/code&gt;方法实现的.当Handler的&lt;code&gt;send()&lt;/code&gt;方法被调用的时候,他会调用&lt;code&gt;MessageQueen&lt;/code&gt;的&lt;code&gt;enqueueMessage()&lt;/code&gt;将消息放入队里中,然后Looper发现新消息来了,就会去处理这个消息.&lt;strong&gt;&lt;em&gt;注意,Looper会运行在创建Handler的那个线程中,这样,Handler中的业务就会切换到了创建时候的线程中去了.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;到这里我们就应该知道上面为什么会出错误了吧.&lt;/p&gt;
+
+&lt;h3 id=&quot;messagequeen&quot;&gt;2.MessageQueen工作原理分析&lt;/h3&gt;
+
+&lt;p&gt;MessageQueen比较简单,主要就是包括&lt;code&gt;enqueueMessage()&lt;/code&gt;和&lt;code&gt;next()&lt;/code&gt;;
+&lt;code&gt;enqueueMessage()&lt;/code&gt;:将收到的消息加入到队列中去,对消息对先来先服务处理
+&lt;code&gt;next()&lt;/code&gt;:将消息出队,交于Looper处理&lt;/p&gt;
+
+&lt;h3 id=&quot;looper&quot;&gt;3.Looper工作原理&lt;/h3&gt;
+
+&lt;p&gt;通过&lt;code&gt;Looper.prepare()&lt;/code&gt;可以为当前的线程去创建一个Looper对象,与之对应的是一个&lt;code&gt;Looper.prepareMainLooper()&lt;/code&gt;,通过名字也可以知道他是做什么的-专门为ActivityThread(也就是UI线程)去创建Looper.还有一个&lt;code&gt;Looper.getMainLooper()&lt;/code&gt;方法获取这个Looper.这些仅仅是创建一个Looper,并没有进入监听MesageQueen状态中去,我们还应该调用&lt;code&gt;Looper.loop()&lt;/code&gt;去开启他.
+&lt;code&gt;Looper&lt;/code&gt;也是可以退出的,有&lt;code&gt;quit()&lt;/code&gt;和&lt;code&gt;quitSafely()&lt;/code&gt;,区别就在于&lt;code&gt;quit()&lt;/code&gt;会直接退出,而&lt;code&gt;quitSafely()&lt;/code&gt;只是设定一个标记,在消息全部处理完毕后就会退出.Looper退出后,Handler的send方法发送消息会得到一个true,表示消息发送失败.
+在子线程中手动创建的Looper,在完成所有的工作后要将其退出,不然子线程会一直处于等待状态.&lt;/p&gt;
+
+&lt;h3 id=&quot;handler&quot;&gt;4.Handler的工作原理&lt;/h3&gt;
+
+&lt;p&gt;Handler的工作包括消息的发送和接收过程.发送消息的方法主要有&lt;code&gt;post()&lt;/code&gt;和&lt;code&gt;send()&lt;/code&gt;这两个系列,他们都包括延时等的一些重载函数可以供我们使用.Handler发送消息仅仅就是向MessageQueen里面插入了一条消息而已.
+MessageQueen发现Message后通过&lt;code&gt;next()&lt;/code&gt;方法将消息传递给&lt;code&gt;Looper&lt;/code&gt;,Looper最后在调用Handler里的&lt;code&gt;dispatchMessage()&lt;/code&gt;方法,这时候Handler就会进入消息处理阶段了,而这时候会切换到创建Handler的线程中去了.
+处理消息就是通过&lt;code&gt;handleMessage()&lt;/code&gt;回调方法,处理数据.
+这里我们还要说明一点就是,Handler的构造方法里面有这样的参数&lt;code&gt;Looper&lt;/code&gt;,也就是说我们可以在创建Handler的时候指定一个Looper给他,回到我们最初那个问题,可能就会有答案了.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                new Handler(Looper. getMainLooper(), new Handler.Callback() {
+                    @Override
+                    public boolean handleMessage(Message msg) {
+                        Toast.makeText(MainActivity.this, &quot;收到消息&quot;, Toast.LENGTH_SHORT).show();
+                        test.setText(&quot;piu~&quot;);
+                        return true;
+                    }
+                }).sendEmptyMessage(0);
+            }
+        }).start();
+&lt;/code&gt;&lt;/pre&gt;
+
+</description>
+      </item>
+    
+      <item>
+        <title>为什么使用sudo命令执行sh会报command not found错误</title>
+        <link>https://wuyanfeigithub.github.io/Sendoh-Akira/2015/11/22/linux-sduoshcommandnotfound.html</link>
+        <guid isPermaLink="true">https://wuyanfeigithub.github.io/Sendoh-Akira/2015/11/22/linux-sduoshcommandnotfound.html</guid>
+        <pubDate>Sun, 22 Nov 2015 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;明明sh文件存在,为什么还会说命令找不到呢?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/poechant/article/details/7216892&quot;&gt;参考博客-Linux下执行一些命令前加sudo时出现command not found的原因&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;为了科(翻)学(墙)上网,一直在用&lt;a href=&quot;www.laod.cn&quot;&gt;laod&lt;/a&gt;给的hosts,非常感谢!为了能高效的更换hosts,想用sh来完成.由于涉及了系统文件的操作,所以需要使用sudo来用root权限执行.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo changehosts.sh
+sudo:changehosts.sh 找不到命令
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;但是输出PATH看了一下,路径设置是没问题的.只好请教万能的&lt;a href=&quot;www.google.com&quot;&gt;google&lt;/a&gt;,终于找到了答案.&lt;/p&gt;
+
+&lt;p&gt;原来,在Linux下用sudo执行某一命令时,是在原进程(parent process)的基础上fork出来一个子进程(child process),这个子进程是以root权限执行的.然后在子进程中,执行你在sudo后面跟的命令.在子进程中是无法调用涉及到父进程的状态的一些命令的,所以非系统内置命令会被拒绝.这就是为什么会出现command not found的提示.
+原因找到了,但是文中没有给解决办法.
+那我们该怎么办呢?
+我们可以用&lt;code&gt;su - root&lt;/code&gt;开启root账号,然后执行完在退出.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;su - root
+密码:
+root@username:#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;执行完我们发现我们已经取得了root权限,这时候执行准没错了.
+但是令人失望的是还是找不到命令,这又是怎么了?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;echo $PTAH
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;输出发现没有我们设置的shell路径了,恍然大悟,我们已经切换到了root账号下面,设置也已经变了.这样的话我们只要先进入预先的目录然后在执行,ok,成功.&lt;/p&gt;
+</description>
+      </item>
+    
+      <item>
+        <title>计算nextDay的实现</title>
+        <link>https://wuyanfeigithub.github.io/Sendoh-Akira/2015/11/22/java-nextday.html</link>
+        <guid isPermaLink="true">https://wuyanfeigithub.github.io/Sendoh-Akira/2015/11/22/java-nextday.html</guid>
+        <pubDate>Sun, 22 Nov 2015 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;实现nextDay算法&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;1.题目要求&lt;/h2&gt;
+
+&lt;p&gt;用户从键盘输入”2014/11/11”,然后输出该输入的下一天日期是多少.
+要求很简单,看上去也不是很复杂,但是要考虑到闰年,月份进位等等问题.&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;2.思路分析&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;用户输入合法性问题&lt;/li&gt;
+  &lt;li&gt;nextDay的推算算法&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;我们先看第一个问题:
+这个比较简单,我们可以使用正则表达式来匹配用户的输入,当然了,只是正则表达式可能还无法完全约束合法,我们可以继续针对个别的在正确的校验.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;//使用分隔符'/'分割年月日
+//年份可以使用09或者2009这样的形式 月份使用1或者01 日使用01或者1
+//至少有一位 至多有两位
+//则可以得到下面的匹配规则
+String pattern = &quot;^(([0-9][0-9])|([1-2][0,9][0-9][0-9]))\\/(([1-9])|(0[1-9])|(1[0-2]))\\/(([0-9])|([0-2][0-9])|(3[0-1]))$&quot;;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样,就可以得到一个合法的类似于”2013/14/22”这样的字符串,但是我们发现,14月仍然是不合法的,仍需我们再次校验合法性.于是,可以封装三个函数:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public static boolean isLegalYear(int year) {
+	return year &amp;gt;= 1900 &amp;amp;&amp;amp; year &amp;lt; 3000;
+}
+
+public static boolean isLegalMonth(int month) {
+	return month &amp;lt;= 12 &amp;amp;&amp;amp; month &amp;gt; 0;
+}
+
+public static boolean isLegalDay(int month, int day) {
+	return mapDay.get(month).intValue() &amp;gt;= day;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样,我们就可以得到一个正确合法的输入日期,然后就可以依照算法,计算下一天.&lt;/p&gt;
+
+&lt;p&gt;再看第二个问题:
+算法说起来也比较简单,类似于一个加法器,只是各个位置上的进位法则不一样而已.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;将day自加1
+    &lt;ul&gt;
+      &lt;li&gt;若day合法,返回该data&lt;/li&gt;
+      &lt;li&gt;若day不合法,day赋值为1,month自加1
+        &lt;ul&gt;
+          &lt;li&gt;若month合法,返回该data&lt;/li&gt;
+          &lt;li&gt;若month不合法,month赋值为1,year自加,返回data&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;经过上述算法计算,即可得到正确的日期了.&lt;/p&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;3.具体实现&lt;/h2&gt;
+
+&lt;p&gt;首先封装一个data数据类:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class MyData {
+	public MyData(int year, int month, int day) {
+		this.day = day;
+		this.month = month;
+		this.year = year;
+	}
+	public int year;
+	public int month;
+	public int day;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;import java.util.*;
+import java.util.regex.*;
+
+public class NextDay{
+
+	public static Map&amp;lt;Integer, Integer&amp;gt; mapDay = new HashMap&amp;lt;Integer, Integer&amp;gt;(){
+		{
+			put(1, 31); put(2, 28); put(3, 31); put(4, 30);
+			put(5, 31); put(6, 30); put(7, 31); put(8, 31);
+			put(9, 30); put(10, 31); put(11, 30); put(12, 31);
+		}
+	};
+
+	public static void main(String[] args) {
+		MyData d = getNextData(getData());
+		System.out.println(d.year+&quot;-&quot;+d.month+&quot;-&quot;+d.day);
+	}
+
+	public static MyData getNextData(MyData data) {
+		data.day++;
+		if (isLegalDay(data.month, data.day)) {
+			return data;	
+		} else {
+			data.day = 1;
+			data.month++;
+			if (isLegalMonth(data.month)) {
+				return data;
+			} else {
+				data.month = 1;
+				data.year++;
+				return data;
+			}
+		}
+	}
+
+	public static MyData getData() {
+		// get input from keyboard
+		Scanner s = new Scanner(System.in);
+		// month/day/year
+		String input = s.next();
+		// using Regular Expression to verify input
+		String pattern = &quot;^(([0-9][0-9])|([1-2][0,9][0-9][0-9]))\\/(([1-9])|(0[1-9])|(1[0-2]))\\/(([0-9])|([0-2][0-9])|(3[0-1]))$&quot;;
+		Matcher m = Pattern.compile(pattern).matcher(input);
+		if (m.matches()) {
+			String[] data = input.split(&quot;/&quot;);
+			int year = Integer.parseInt(data[0]);
+			int month = Integer.parseInt(data[1]);
+			int day = Integer.parseInt(data[2]);
+			if (isLeapYear(year)) {
+				mapDay.put(2, 29);
+			}
+			if (isLegalYear(year) &amp;amp;&amp;amp; isLegalMonth(month) &amp;amp;&amp;amp; isLegalDay(month, day)) {
+				MyData d = new MyData(year, month, day);
+				return d;
+			} else {
+				System.out.println(&quot;your input is illegal!&quot;);
+				System.exit(-1);
+				return null;
+			}
+		} else {
+			System.out.println(&quot;your input format is worry!&quot;);
+			System.exit(-1);
+			return null;
+		}
+	} 
+
+	public static boolean isLegalYear(int year) {
+		return year &amp;gt;= 1900 &amp;amp;&amp;amp; year &amp;lt; 3000;
+	}
+
+	public static boolean isLegalMonth(int month) {
+		return month &amp;lt;= 12 &amp;amp;&amp;amp; month &amp;gt; 0;
+	}
+
+	public static boolean isLegalDay(int month, int day) {
+		return mapDay.get(month).intValue() &amp;gt;= day;
+	}
+
+	public static boolean isLeapYear(int year) {
+		return (year % 400 == 0) || (year % 4 == 0 &amp;amp;&amp;amp; year % 100 != 0);
+	}
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      </item>
+    
+      <item>
+        <title>否定别人是很愚蠢的</title>
+        <link>https://wuyanfeigithub.github.io/Sendoh-Akira/2015/11/21/life-respectEveryone.html</link>
+        <guid isPermaLink="true">https://wuyanfeigithub.github.io/Sendoh-Akira/2015/11/21/life-respectEveryone.html</guid>
+        <pubDate>Sat, 21 Nov 2015 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;每每听到和自己不一样的声音的时候 我们总是习惯性的否定&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;其实我们很小很小就知道这么一句话:燕雀安知鸿鹄之志哉.&lt;/p&gt;
+
+</description>
+      </item>
+    
+      <item>
+        <title>View滑动冲突的解决方案</title>
+        <link>https://wuyanfeigithub.github.io/Sendoh-Akira/2015/11/20/android-dealslideproblem.html</link>
+        <guid isPermaLink="true">https://wuyanfeigithub.github.io/Sendoh-Akira/2015/11/20/android-dealslideproblem.html</guid>
+        <pubDate>Fri, 20 Nov 2015 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;当View的滑动存在冲突的时候怎么解决?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;section&quot;&gt;1.冲突的常见场景&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;外部滑动与内部滑动方向不一致&lt;/li&gt;
+  &lt;li&gt;外部滑动和内部滑动方向一致&lt;/li&gt;
+  &lt;li&gt;(1)和(2)场景的嵌套出现&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;例如我们在Viewpage里面嵌套使用了ListView,这样Viewpage是可以左右滑动的,但是listview同时还可以上下滑动,这样就会出现第一情况这种的滑动冲突.但是我们可能在使用并没有出现什么问题,这是因为Viewpage在内部已经解决了这个问题,所以我们可以正常的使用.要是我们在开发中也遇到类似问题怎么解决呢?其实解决的这个问题的方法是比较固定的,说难不难,说简单也简单.这就是所谓的会的不难,难的不会吧.&lt;/p&gt;
+
+&lt;h1 id=&quot;section-1&quot;&gt;2.解决冲突的办法&lt;/h1&gt;
+
+&lt;p&gt;解决思路是这样的:在分发事件的过程中根据事件的特征就确定出事件到底应该交给谁来处理,这样就不会有冲突了.根据控制事件的分发的途径,可以有一下两个方法:&lt;/p&gt;
+
+&lt;p&gt;1.外部拦截法&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public boolean onInterceptTouchEvent(MotionEvent e) {
+    boolean intercepted = false;
+    int x = (int) e.getX();
+    int y = (int) e.getY();
+    switch (e.getAction()) {
+    	case MotionEvent.ACTION_DOWN:
+        	intercepted = false;
+        	break;
+        case MotionEvent.ACTION_MOVE: 
+        	if (需要拦截该事件的逻辑) {
+            	intercepter = true;
+            } else {
+            	intercepted = false;
+            }
+        	break;
+        case MotionEvent.ACTION_UP:
+        	intercepted = false;
+        	break;
+        default:
+        	break;
+    }
+    mLastXIntercept = x;
+    mLastYIntercept = y;
+    return intercepted;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这段代码是相对固定的,只需要修改拦截的逻辑就好了.有几点需要说明一下:
+&lt;strong&gt;&lt;em&gt;ACTION_DWON这个事件必须返回false,不然的话事件将无法继续分发给子View处理了;ACTION_UP事件也要返回false,不然子View的onClick事件就无法执行了;但是ACTION_MOVE就可以由我们自由控制决定是否要进行拦截了.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;2.内部拦截的方法
+这种方法是将所有的事件都交给内部View去决定这个事件是自己处理还是交还给外部View处理.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public boolean dispatchTouchEvent(MotionEvent e) {
+	int x = (int) e.getX();
+    int y = (int) e.getY();
+    swtich(e.getAction()) {
+		case MotionEvent.ACTION_DOWN:
+        	parent.requestDisallowInterceptTouchEvent(true);
+        	break;
+        case MotionEvent.ACTION_MOVE:
+        	int detalX = x - mLastX;
+            int deltaY = y - mLastY;
+            if (父容器需要拦截事件) {
+            	parent.requestDisallowInterceptTouchEvent(false);
+            }
+        	break;
+        case MotionEvent.ACTION_UP:
+        	break;
+        default:
+        	break;
+    }
+    mLastX = x;
+    mLastY = y;
+    return super.dispatchTouchEvent(e);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;public void requestDisallowInterceptTouchEvent (boolean disallowIntercept)
+Called when a child does not want this parent and its ancestors to intercept touch events with onInterceptTouchEvent(MotionEvent).
+This parent should pass this call onto its parents. This parent must obey this request for the duration of the touch (that is, only clear the flag after this parent has received an up or a cancel.
+Parameters  –  disallowIntercept	True if the child does not want the parent to intercept touch events.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;还要重写外部View的onInterceptTouchEvent:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public boolean onInterceptTouchEvent(MotionEvent e) {
+	int action = e.getAction();
+    if (MotionEvent.ACTION_DOWN == action) {
+    	return false;
+    } eles {
+    	return true;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这里,我们把所有的事件都去交给内部View去分发处理.&lt;/p&gt;
+
+&lt;p&gt;大体解决办法就这两种,这里(1)(2)(3)解决办法其实根本是一样的,只是(2)(3)仅仅通过手势是无法解决的,必须根据我们自己程序的逻辑来确定这个问题.&lt;/p&gt;
+</description>
+      </item>
+    
+      <item>
+        <title>数组中只出现一次的数字</title>
+        <link>https://wuyanfeigithub.github.io/Sendoh-Akira/2015/11/19/algorithm-hash.html</link>
+        <guid isPermaLink="true">https://wuyanfeigithub.github.io/Sendoh-Akira/2015/11/19/algorithm-hash.html</guid>
+        <pubDate>Thu, 19 Nov 2015 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;在牛客上看到了很多这种题目 今天总结一下吧&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.nowcoder.com/practice/e02fdb54d7524710a7d664d082bb7811?rp=2&amp;amp;ru=/ta/coding-interviews&amp;amp;qru=/ta/coding-interviews/question-ranking&quot;&gt;题目&lt;/a&gt;很简单:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;题目描述
+一个整型数组里除了两个数字之外，其他的数字都出现了两次。请写程序找出这两个只出现一次的数字。&lt;/p&gt;
+
+  &lt;p&gt;时间限制：1秒空间限制：32768K
+通过比例：21.19%
+最佳记录：0 ms|8552K&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;一开始看到这个题目的时候,很简单的想到了在OJ上做过的一道题目-&lt;a href=&quot;http://www.acmicpc.sdnu.edu.cn/problem/show/1106&quot;&gt;1106.字符统计器&lt;/a&gt;.这个题目的思路就是把字符当做一个索引,然后在对应的数组里面进行计数操作.所以这里我也想到了同样的方法,把每一个数字稻作一个Key,把他的个数当做Value来进行操作.代码如下:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;//num1,num2分别为长度为1的数组。传出参数
+//将num1[0],num2[0]设置为返回结果
+import java.util.HashMap;
+import java.util.Map;
+public class Solution {
+	public void FindNumsAppearOnce(int[] array, int num1[], int num2[]) {
+		if (array.length == 0 || array.length == 1) {
+			num2[0] = num1[0] = 0;
+		}
+		HashMap&amp;lt;Integer, Integer&amp;gt; map = new HashMap&amp;lt;&amp;gt;();
+		for (int i = 0; i &amp;lt; array.length; i++) {
+			if (map.containsKey(Integer.valueOf(array[i]))) {
+				map.put(Integer.valueOf(array[i]), new Integer(2));
+			} else {
+				map.put(Integer.valueOf(array[i]), new Integer(1));
+			}
+		}
+		boolean isOne = true;
+		for (Map.Entry&amp;lt;Integer, Integer&amp;gt; m : map.entrySet()) {
+			if (m.getValue().intValue() == 1) {
+				if (isOne) {
+					num1[0] = m.getKey().intValue();
+					isOne = false;
+				} else {
+					num2[0] = m.getKey().intValue();
+				}
+			}
+		}
+	}
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;提交没问题,但是看了一看排行榜,发现C++大神都是0time就通过了= =
+然后看了一下人家的代码,发现他们用的完全和我不是一个思路,用的异或运算!一开始我是觉得好神奇的然后就学习了一下.先总结一下大家的思路都有哪些吧.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;比较简单粗暴的,挨个数据检索,没除了他以外的所有元素比较.这个很容易想到,但是时间复杂度是n^2.&lt;/li&gt;
+  &lt;li&gt;先排序,然后在检索,这个复杂度主要看排序算法,最好也是nlgn,最坏n^2.&lt;/li&gt;
+  &lt;li&gt;和我上面的思路一样,用数做key,然后计数,复杂度为n.&lt;/li&gt;
+  &lt;li&gt;重点说一下异或运算这个方法.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;其实这个思路也很简单:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;首先,有一个理论基础,就是相等的两个数异或运算后得0;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;所以我们对所有的数据都进行异或运算,最后会的到一个不为0的数,这个数是那两个不相同的数(n1,n2)的异或得到的.姑且先把这个数想象成一个二进制的数,他必然有一位是1(假设这个位置是onePosition),这个1的位置处n1,n2必然有一个是1一个是0;当然,这个1的值都是由很多数据参与计算得到的结果,但是影响都是抵消的,所以这里我们再次运用这个结论,我们把onePosition上为1的归为一组,为0的归为一组.这样n1,n2就分别进入了这两个组里,我们再一次进行异或,就可以得到这两个数了.
+代码如下:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;//num1,num2分别为长度为1的数组。传出参数
+//将num1[0],num2[0]设置为返回结果
+import java.util.HashMap;
+import java.util.Map;
+public class Solution {
+	public void FindNumsAppearOnce(int[] array, int num1[], int num2[]) {
+		if (array.length == 0 || array.length == 1) {
+			num2[0] = num1[0] = 0;
+		}
+	
+		int sum = 0;
+		for (int i = 0; i &amp;lt; array.length; i++) {
+			sum ^= array[i];
+		}
+
+		int onePosition = 0;
+		for (int i = 0; i &amp;lt; 32; i++) {
+			if (((sum &amp;gt;&amp;gt; i) &amp;amp; 1) == 1) {
+				onePosition = i;
+				break;
+			}
+		}
+
+		for (int i = 0; i &amp;lt; array.length; i++) {
+			if (((array[i] &amp;gt;&amp;gt; onePosition) &amp;amp; 1) == 1) {
+				num1[0] ^= array[i];
+			} else {
+				num2[0] ^= array[i];
+			}
+		}
+	}
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+</description>
+      </item>
+    
+  </channel>
+</rss>

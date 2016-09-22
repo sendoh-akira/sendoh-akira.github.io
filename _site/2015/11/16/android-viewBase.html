@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <!-- 添加搜索关键字 -->
+  <meta name="keywords" content="武燕飞,https://wuyanfeigithub.github.io/Sendoh-Akira/">
+
+  <title>有关View的基础知识介绍 | Sendoh Akira</title>
+  <meta name="description" content="  今天开始学习一下android有关View的知识">
+
+  
+  <link rel="stylesheet" href="/Sendoh-Akira/assets/css/bootstrap.css">
+  <link rel="stylesheet" href="/Sendoh-Akira/assets/css/font-awesome.css">
+  <link rel="stylesheet" href="/Sendoh-Akira/assets/js/fancybox/jquery.fancybox.css" media="screen">
+  <link rel="stylesheet" href="/Sendoh-Akira/assets/css/main.css" >
+  <link rel="stylesheet" href="/Sendoh-Akira/assets/js/prettify/prettify.css">
+  <link rel="shortcut icon" href="/Sendoh-Akira/assets/img/favicon_2.png" />
+  <link rel="canonical" href="https://wuyanfeigithub.github.io/Sendoh-Akira/Sendoh-Akira/2015/11/16/android-viewBase.html">
+  <link rel="alternate" type="application/rss+xml" title="Sendoh Akira" href="https://wuyanfeigithub.github.io/Sendoh-Akira/Sendoh-Akira/feed.xml" />
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/echarts.min.js"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/embed.js"></script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/ua-parser.js"></script>
+
+  <script>var duoshuoQuery = {short_name:"wuyanfei"};</script>
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+	<div class="container">
+		<div class="row">
+			<nav class="navbar navbar-default" role="navigation">
+			
+				    <div class="navbar-header col-xs-12 col-sm-12 col-md-3 col-lg-3 center" >
+				   	      <button type="button" class="navbar-toggle" data-toggle="collapse"  data-target="#example-navbar-collapse">
+					         <span class="icon-bar"></span>
+					         <span class="icon-bar"></span>
+					         <span class="icon-bar"></span>
+					      </button>
+					      <div class="sitehome">
+						 	<a href="/Sendoh-Akira/" title="首页"><i class="fa fa-home fa-2x homeicon"></i><a><a class="site-title" href="/Sendoh-Akira/">Sendoh Akira</a>
+						</div>
+				   </div>
+				  
+				  
+				  <div class="col-md-6 col-lg-6 hidden-xs hidden-sm center">				  			
+							<nav class="site-nav">
+								        <ul class="nav nav-pills">
+											<li class="select"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/read.html">读书</a></li>
+											<li class="select"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/class.html">分类</a></li>
+											<li class="select"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/archive.html">归档</a></li>
+											<li class="select"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/about.html">关于</a></li>
+								        </ul>
+							</nav>
+				  </div>
+				  
+				   <div class="col-md-3 col-lg-3 hidden-xs hidden-sm">
+				   		<!--<div class="search">
+						  	<input type="text" class="search-query st-default-search-input" placeholder="Search">
+				   		</div>-->
+				   		<div class="search-tool" style="float: left;height: 45px;line-height: 45px;margin-left: 12px;">
+							    <input type="text" class="form-control search-content" data-provide="search-content" style="display: inline-block !important; 
+							    color: #49525c;
+							    font-size: 14px;
+							    line-height: 13px;
+							    background-color: #e1eaf2;
+							    border: 1px solid #045bb2;
+							    border-radius: 4px;
+							    box-shadow: inset 0 1px 3px rgba(0,0,0,.2),0 1px 0 rgba(255,255,255,.1);
+							    outline: 0;
+							    box-sizing: border-box;
+							    -webkit-transition: all .2s ease-in-out;
+							    transition: all .2s ease-in-out;" placeholder="Search this site" />
+						</div>
+							
+						
+				   </div>
+				   
+				   
+				   <div class="collapse navbar-collapse" id="example-navbar-collapse">
+						<ul class="nav navbar-nav phone-nav center">
+							<li class="phoneselect"><a class="page-link pjaxlink" href="/Sendoh-Akira/"><i class="fa fa-home"></i>&nbsp;首页</a></li>
+							<li class="phoneselect"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/read.html"><i class="fa fa-book"></i>&nbsp;读书</a></li>
+							<li class="phoneselect"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/class.html"><i class="fa fa-tasks"></i>&nbsp;分类</a></li>
+							<li class="phoneselect"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/tags.html"><i class="fa fa-tags"></i>&nbsp;标签</a></li>
+							<li class="phoneselect"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/archive.html"><i class="fa fa-archive"></i>&nbsp;归档</a></li>
+							<li class="phoneselect"><a class="page-link pjaxlink" href="/Sendoh-Akira/pages/about.html"><i class="fa fa-user"></i>&nbsp;关于</a></li>
+						</ul>
+				   </div>
+				   
+			</nav>
+		</div>
+	</div>
+</header>
+
+      
+    <div class="content">
+   	<div class="container">	
+   		<div class="row">  		
+   		
+			<div class="col-md-3 col-lg-3 hidden-xs hidden-sm aside1 fadein-left">
+				<div class="profile box-shadow center">
+					<div class="overlay"></div>
+					<div class="center gavatar">
+						<a href="/Sendoh-Akira" class="profile_gavatar"><img class="circle" src="/Sendoh-Akira/assets/img/gavatar_2.png"></a>
+					</div>
+					<div class="address">
+						<h5><span class="fa fa-map-marker"></span> BeiJing, China</h5>
+					</div>
+					<div class="center profile_desc">
+						红衣佳人白衣友<br>朝与同歌暮同酒<br>世人谓我恋长安<br>其实只恋长安某<br><br><br>
+					</div>
+				</div>
+				
+				<div class="tag-cloud-text">
+					<p class="center">音乐</p>
+				</div>
+				<div class="tag-cloud ">	
+					<hr>
+					<div id="player5" class="aplayer"></div>				
+				</div>
+				<div class="clear"></div>
+				
+				<div class="tag-cloud-text">
+					<a href="/Sendoh-Akira/pages/tags.html" title="标签" class="pjaxlink"><p class="center">标签</p></a>
+				</div>
+				<div class="tag-cloud ">	
+					<hr>
+					<div class="page-tag">
+							
+								<a href="/Sendoh-Akira/pages/tags.html#life" name="life" class="pjaxlink"><i class="fa fa-tags"></i>life(3)</a>
+							
+								<a href="/Sendoh-Akira/pages/tags.html#java" name="java" class="pjaxlink"><i class="fa fa-tags"></i>java(2)</a>
+							
+								<a href="/Sendoh-Akira/pages/tags.html#android" name="android" class="pjaxlink"><i class="fa fa-tags"></i>android(15)</a>
+							
+								<a href="/Sendoh-Akira/pages/tags.html#linux" name="linux" class="pjaxlink"><i class="fa fa-tags"></i>linux(2)</a>
+							
+								<a href="/Sendoh-Akira/pages/tags.html#算法" name="算法" class="pjaxlink"><i class="fa fa-tags"></i>算法(2)</a>
+							
+								<a href="/Sendoh-Akira/pages/tags.html#其他" name="其他" class="pjaxlink"><i class="fa fa-tags"></i>其他(2)</a>
+							
+					</div>					
+				</div>
+				<div class="clear"></div>
+				<div class="recentcome box-shadow">
+	 				<p>最近访客 <i class="fa fa-user"></i></p>
+	 				<ul class="ds-recent-visitors" data-num-items="15"></ul>
+	 			</div>
+	 			<div class="comment box-shadow">
+	 				<p>最新评论 <i class="fa fa-comments"></i></p>
+	 				<dl class="ds-recent-comments"  data-num-items="5" data-show-avatars="1" data-show-time="1" data-show-title="1"  data-show-admin="1" data-excerpt-length="50"></dl>
+	 			</div>
+
+	 			
+	 			<div class="recentuse">
+	 					<p>经常出没</p>
+	 					<hr>
+	 					<ul>
+		 					
+	 					</ul>
+	 			</div>
+				
+				<div class="friendlink">
+	 					<p>友情链接</p>
+	 					
+	 			</div>
+				
+			</div>
+			
+			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 box-shadow fadein-right aside2">					 		
+					<div class="page-content" id="pjax"><div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">有关View的基础知识介绍</h1>
+    <div class="info">
+	    <p class="post-meta"><i class="fa fa-calendar"></i>&nbsp;2015-11-16</p>
+	    
+		<i class="fa fa-tags"></i>
+		<span class="index-post-tag">
+		
+			<a class="pjaxlink" href="/pages/tags.html#android">android</a>
+		
+		</span>
+	    
+    </div>
+  </header>
+
+  <article class="post-content">
+    <blockquote>
+  <p>今天开始学习一下android有关View的知识</p>
+</blockquote>
+
+<h1 id="view">1.什么是View</h1>
+
+<p>在开发过程中,view的使用频率是非常之高的.那么View到底是什么呢.<strong><em>View其实是android中所有控件的基类.</em></strong>无论是简单的button,复杂的listview,还是布局容器linearlayout等等;所以,这个View就是界面层控件的一层抽象.除了View,还有一个ViewGroup类,他也是继承自View,但是从名字上就可以看出,它是一个View组,可以包含多个View.如此设计,便可以得到一个树形结构.
+<img src="http://my.csdn.net/uploads/201208/01/1343827041_4739.png" alt="view结构" /></p>
+
+<h1 id="view-1">2.View的位置参数</h1>
+
+<p>View的位置是由四个顶点决定的,分别对应top,left,right和bottom.需要注意的是这些数值都是相对于<em>** 父控件 **</em>来说的.</p>
+
+<pre><code>//一般要获取View的大小可以这样
+viewWidth = view.getRight() - view.getLeft();
+viewHeight = view.getBottom - view.getTop();
+</code></pre>
+
+<p>到了android3.0的时候,google又增加了额外的几个参数:x,y,translationX和translationY.
+x,y表示的是左上角点的坐标.translationX和translationY的默认值都是0.</p>
+
+<pre><code>x = left + translationX;
+y = right + translationY;
+</code></pre>
+
+<p><strong><em>需要强调的是:在View平移的过程中,top和left表示的是原始的左上角的位置信息,是不会发生改变的.发生改变的是x,y,translationX和translationY.</em></strong></p>
+
+<h1 id="motioneventtouchslop">3.MotionEvent和TouchSlop</h1>
+
+<p>1.MotionEvent-手势事件
+主要包括一下几个类型:
+ACTION_DOWN:手指刚刚接触屏幕
+ACTION_UP:手指松开的一瞬间
+ACTION_MOVE:手指在屏幕上移动
+对于这些事件发生的位置可以提供以下几个方法获取位置:</p>
+
+<pre><code>//相对于所在view的x,y坐标
+x = motionEvent.getX();
+y = motionEvent.getY();
+//相对于屏幕所在位置
+rawX = motionEvent.getRawX();
+rawY = motionEvent.getRawY();
+</code></pre>
+
+<p>2.TouchSlop
+它是一个常量,是系统所能识别的滑动的最小距离.换句话说,如果你移动的距离小雨这个常量,系统就不会认为你这是一次滑动事件.</p>
+
+<pre><code>//可以通过一下方法获取这个常量 系统版本不一样 数值不一样的
+ViewConfiguration.get(getContext()).getScaledTouchSlop();
+</code></pre>
+
+<h1 id="velocitytrackergesturedetectorscroller">3.VelocityTracker,GestureDetector和Scroller</h1>
+
+<p>1.VelocityTracker
+主要是用来追踪手指的移动速度,包括水平速度和垂直速度.
+使用方法:在View的onTouchEvent()中追踪速度</p>
+
+<pre><code>VelocityTracker tracker = VelocityTracker.obtain();
+tracker.addMovement(tracker);
+</code></pre>
+
+<p>获取速度的时候这样做:</p>
+
+<pre><code>//设置计算速度的时段的大小 单位是ms
+//这一步必须在下面方法的前面 不然报错哟
+tracker.computerCurrentVelocity(1000);
+//速度单位是 px/ms
+//速度值可能是负的
+int velocityX = (int) tracker.getXVelocity();
+int velocityY = (int) tracker.getYVelocity();
+</code></pre>
+
+<p>实际上速度是这样计算的</p>
+
+<pre><code>速度 = (结束位置 - 开始位置) / 时间;
+</code></pre>
+
+<p>在不需要的时要clear掉VelocityTracker</p>
+
+<pre><code>tracker.clear();
+tracker.recycle();
+</code></pre>
+
+<p>2.GestureDetector-手势检测
+用于辅助检测用户的单击,滑动,长按,双击等等行为.
+首先,创建一个GestureDetector对象并实现onGestureListener()接口,根据需要还可以onDoubleTapListener()实现双击事件.</p>
+
+<pre><code>GestureDetector detector = new GestureDetector(this, new GestureDetector.OnGestureListener() {
+        @Override
+        public boolean onDown(MotionEvent e) {
+            //手指触摸屏幕的瞬间 一个ACTION_DOWN发生
+            return false;
+        }
+
+        @Override
+        public void onShowPress(MotionEvent e) {
+			//手指触摸屏幕 尚未松开 强调的是没有松开或者拖动的事件
+            //有一个ACTION_DOWN触发
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            //手指触摸后松开 有一个ACTION_UP发生
+            //是单击行为
+            return false;
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            //手指按下屏幕并且拖动
+            //由一个ACTION_DOWN和多个ACTION_UP触发 是拖动行为
+            return false;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+			//用户长时间按住屏幕不放 这是长按事件
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        //按下屏幕 快速滑动 然后又松开
+        //由一个ACTION_DOWN,多个ACTION_MOVE和一个ACTION_UP触发
+        //这是快速滑动行为
+            return false;
+        }
+    });
+          detector.setOnDoubleTapListener(new GestureDetector.OnDoubleTapListener() {
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+        //这是严格的单击行为
+        //若是触发了onSingleTapConfirmed(),则不可能后面还发生单击,这也就是保证了这就单击 不可能是双击中的一次单击
+            return false;
+        }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+        //双击 由两次单击事件发生
+            return false;
+        }
+
+        @Override
+        public boolean onDoubleTapEvent(MotionEvent e) {
+        //双击事件发生期间会随着ACTION_DOWN,ACTION_UP,ACTON_MOVE多次调用
+            return false;
+        }
+    });
+</code></pre>
+
+<p>接着,接管目标View的onTouchEvent方法,在待监听View的onTouchEvent()方法中添加如下实现:</p>
+
+<pre><code>return decevtor.onTouchEvent(event);
+</code></pre>
+
+<h1 id="scroll">3.Scroll</h1>
+<p>弹性滑动对象,用于实现控件的弹性滑动.当使用View的scrollTo/scrollBy方法来进行滑动.<code>scrollTo</code>是绝对滑动,<code>scrollBy</code>是相对当前位置的滑动.</p>
+
+
+  </article>
+</div>
+
+  <div class="prevandnext">
+    	  
+	    <div style="margin:0.5em;">
+	    <span>上一篇 ：</span><a class="pjaxlink" href="https://wuyanfeigithub.github.io/Sendoh-Akira/2015/11/18/android-viewEventDeal.html"  title="View的事件分发机制">View的事件分发机制</a>
+	    </div>
+	  
+  	  
+	    <div style="margin:0.5em;">
+	    <span>下一篇 ：</span><a class="pjaxlink" href="https://wuyanfeigithub.github.io/Sendoh-Akira/2015/11/15/linux-command.html"  title="linux命令操作随记-不定时更新">linux命令操作随记-不定时更新</a>
+	    </div>
+	  
+	  	<div style="margin:0.5em;">
+			<span> 版权所有，转载时必须以链接形式注明原始出处</span>
+	    </div>
+	 
+  </div>
+  
+  <!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2015/11/16/android-viewBase" data-title="有关View的基础知识介绍" data-url="/Sendoh-Akira"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wuyanfei"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+</div>				
+			</div>
+			
+
+
+ 		</div>	
+	</div>
+    </div>
+    
+	
+	<div class="profile_social">
+		<a class="rss" href="/Sendoh-Akira/feed.xml" target="_blank"></a>
+		<a class="github" href="https://github.com/wuyanfeigithub"  target="_blank"></a>
+		<a class="weibo" href=""  target="_blank"></a>
+	</div>
+	
+    <div id="backtotop">
+    		<a href="#"><i class="fa fa-arrow-circle-up"></i></a>
+    </div>
+    
+    <div class="pjax_loading"></div>
+    
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Sendoh Akira's blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>Sendoh Akira</li>
+          <li><a href="mailto:wuyanfeijob@163.com">wuyanfeijob@163.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a class="github" href="https://github.com/wuyanfeigithub"  target="_blank"></a>
+          </li>
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        <p class="text">good luck</p>
+      </div>
+    </div>
+    <div class="center sitedesc">
+    	Powered by <a href ="http://jekyllrb.com/">Jekyll</a>  |  © 2016 GY  |  Hosted on <a href="https://github.com/wuyanfeigithub"> Github</a>
+    </div>
+  </div>
+	
+ 
+  <script type="text/javascript">
+	  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+	  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+	  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+	  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+	  
+	  _st('install','8i7AWfTU6yge5uNc4fmc','2.0.0');
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        TeX: {equationNumbers: {
+            autoNumber: ["AMS"], useLabelIds: true}},
+            "HTML-CSS": {linebreaks: {automatic: true}},
+            SVG: {linebreaks: {automatic: true}}
+    });
+   </script>
+  	<!-- 多说公共JS代码 start (一个网页只需插入一次) 
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"wuyanfei"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	多说公共JS代码 end -->
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/jquery.js"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/bootstrap.js"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/jquery.pjax.js"></script> 
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/echarts.min.js"></script> 
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/prettify/prettify.js"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/stickUp.min.js"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/fancybox/jquery.mousewheel-3.0.6.pack.js"></script>
+  <script type="text/javascript" src="/Sendoh-Akira/assets/js/main.js"></script>
+  <link rel="stylesheet" href="/Sendoh-Akira/assets/css/duoshuo.css"> 
+  <link rel="stylesheet" href="/Sendoh-Akira/search/css/cb-search.css">
+							
+  <script src="/Sendoh-Akira/search/js/bootstrap3-typeahead.min.js"></script>
+  <script src="/Sendoh-Akira/search/js/cb-search.js"></script>
+  
+</footer>
+
+	
+	<script type="text/javascript" src="/Sendoh-Akira/assets/js/mp3/APlayer.min.js"></script>
+  	<script type="text/javascript">
+	  	var ap5 = new APlayer({
+	    element: document.getElementById('player5'),
+	    narrow: false,
+	    autoplay: false,
+	    showlrc: 3,
+	    mutex: true,
+	    theme: '#ad7a86',
+	    mode: 'random',
+	    listmaxheight: '80px',
+	    music: [
+	        {
+	            title: 'あっちゅ～ま青春!',
+	            author: '七森中☆ごらく部',
+	            url: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.mp3',
+	            pic: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.jpg',
+	            lrc: '/Sendoh-Akira/assets/js/mp3/lrc/あっちゅ～ま青春!.lrc'
+	        },
+	        {
+	            title: 'secret base~君がくれたもの~',
+	            author: '茅野愛衣',
+	            url: 'http://devtest.qiniudn.com/secret base~.mp3',
+	            pic: 'http://devtest.qiniudn.com/secret base~.jpg',
+	            lrc: '/Sendoh-Akira/assets/js/mp3/lrc/secret base~君がくれたもの~.lrc'
+	        },
+	        {
+	            title: '回レ！雪月花',
+	            author: '小倉唯',
+	            url: 'http://devtest.qiniudn.com/回レ！雪月花.mp3',
+	            pic: 'http://devtest.qiniudn.com/回レ！雪月花.jpg',
+	            lrc: '/Sendoh-Akira/assets/js/mp3/lrc/回レ！雪月花.lrc'
+	        }
+	    ]
+	});
+	</script>
+  </body>
+
+</html>
