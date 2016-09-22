@@ -6,7 +6,7 @@ permalink: /pages/about.html
 
 
 <div class="home">
-	
+
 	<br>
 	<h3><i class="fa fa-user"></i>&nbsp;基本信息</h3>
 	<hr>
@@ -29,7 +29,7 @@ permalink: /pages/about.html
 		</tr>
 		<tr>
 			<td>时  间：</td>    
-			<td>2012年~2014年</td>
+			<td>2008年~2012年</td>
 		</tr>
 	</table>
 
@@ -60,11 +60,11 @@ permalink: /pages/about.html
 				QQ：
 			</td>  
 			<td>
-				102088639	
+				102088639
 			</td>
 		</tr>
 
-	
+
 	</table>
 
 
@@ -84,7 +84,7 @@ permalink: /pages/about.html
 		去标签化		
 	</p>
 	<br>
-	<br> 
+	<br>
 	<br>
 
 </div>
@@ -93,4 +93,3 @@ permalink: /pages/about.html
 <div>
 {% include duoshuo.html %}
 </div>
-
