@@ -5,7 +5,7 @@ keep_files:
   - ".git"
   - ".gitignore"
 
-url: "https://wuyanfeigithub.github.io" # the base hostname & protocol for your site
+url: "https://sendoh-akira.github.io" # the base hostname & protocol for your site
 baseurl: ""
 # gavatar头像及Favicon
 gavatar : /assets/img/gavatar_2.png
@@ -22,20 +22,20 @@ highlighter: pygments
 gems: [jekyll-paginate]
 
 # 作者信息
-author: 
+author:
   name: 武燕飞
   email: wuyanfeijob@163.com
   link: http://wuyanfeigithub.io/
-  weibo: 
+  weibo:
   github: https://github.com/wuyanfeigithub
   github_username:  wuyanfeigithub
-  zhihu: 
-  weibo_username:  
+  zhihu:
+  weibo_username:
 
 # 站点信息
 title: Sendoh Akira
-description: 
- good luck 
+description:
+ good luck
 rss_url: /feed.xml
 
 
@@ -48,11 +48,11 @@ rss_url: /feed.xml
 profile_desc : 红衣佳人白衣友<br>朝与同歌暮同酒<br>世人谓我恋长安<br>其实只恋长安某<br><br><br>
 
 # 首页除了最新文章外显示分类
-cates: 
+cates:
 - Essay
 # - Python
 # - OpenStack
 
 # 中文本地化
-locals: 
+locals:
    newest : 最新文章

@@ -2,13 +2,13 @@
 <rss version="2.0">
   <channel>
     <title>Sendoh Akira</title>
-    <link>https://wuyanfeigithub.github.io</link>
+    <link>https://sendoh-akira.github.io</link>
     <description>good luck</description>
     
       <item>
         <title>关于dp px dip单位以及屏幕适配</title>
-        <link>https://wuyanfeigithub.github.io/2016/04/07/%E5%85%B3%E4%BA%8Edp-px-dip%E5%8D%95%E4%BD%8D%E4%BB%A5%E5%8F%8A%E5%B1%8F%E5%B9%95%E9%80%82%E9%85%8D.html</link>
-        <guid isPermaLink="true">https://wuyanfeigithub.github.io/2016/04/07/%E5%85%B3%E4%BA%8Edp-px-dip%E5%8D%95%E4%BD%8D%E4%BB%A5%E5%8F%8A%E5%B1%8F%E5%B9%95%E9%80%82%E9%85%8D.html</guid>
+        <link>https://sendoh-akira.github.io/2016/04/07/%E5%85%B3%E4%BA%8Edp-px-dip%E5%8D%95%E4%BD%8D%E4%BB%A5%E5%8F%8A%E5%B1%8F%E5%B9%95%E9%80%82%E9%85%8D.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2016/04/07/%E5%85%B3%E4%BA%8Edp-px-dip%E5%8D%95%E4%BD%8D%E4%BB%A5%E5%8F%8A%E5%B1%8F%E5%B9%95%E9%80%82%E9%85%8D.html</guid>
         <pubDate>Thu, 07 Apr 2016 00:00:00 +0800</pubDate>
         <description>&lt;blockquote&gt;
   &lt;p&gt;关于android中常见的一些单位的说明&lt;/p&gt;
@@ -114,8 +114,8 @@ L2 = L * 2/3 = 2/3L&lt;/p&gt;
     
       <item>
         <title>jni使用详解</title>
-        <link>https://wuyanfeigithub.github.io/2016/04/05/jni.html</link>
-        <guid isPermaLink="true">https://wuyanfeigithub.github.io/2016/04/05/jni.html</guid>
+        <link>https://sendoh-akira.github.io/2016/04/05/jni.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2016/04/05/jni.html</guid>
         <pubDate>Tue, 05 Apr 2016 00:00:00 +0800</pubDate>
         <description>&lt;blockquote&gt;
   &lt;p&gt;开发中难免要使用jni，现在系统的学习总结一下使用的方法&lt;/p&gt;
@@ -502,8 +502,8 @@ void Set&amp;lt;Typr&amp;gt;FieldID(JNIEnv *env, jobject thiz, jfieldId fieldID,
     
       <item>
         <title>gradle在Android中的使用(二)</title>
-        <link>https://wuyanfeigithub.github.io/2016/03/30/gradle(%E4%BA%8C).html</link>
-        <guid isPermaLink="true">https://wuyanfeigithub.github.io/2016/03/30/gradle(%E4%BA%8C).html</guid>
+        <link>https://sendoh-akira.github.io/2016/03/30/gradle(%E4%BA%8C).html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2016/03/30/gradle(%E4%BA%8C).html</guid>
         <pubDate>Wed, 30 Mar 2016 00:00:00 +0800</pubDate>
         <description>&lt;blockquote&gt;
   &lt;p&gt;上一博客学习了gradle的基本内容，这次我们继续学习一下怎么使用gradle进行签名打包和分渠道打包&lt;/p&gt;
@@ -615,8 +615,8 @@ void Set&amp;lt;Typr&amp;gt;FieldID(JNIEnv *env, jobject thiz, jfieldId fieldID,
     
       <item>
         <title>gradle在Android中的使用(一)</title>
-        <link>https://wuyanfeigithub.github.io/2016/03/29/gradle(%E4%B8%80).html</link>
-        <guid isPermaLink="true">https://wuyanfeigithub.github.io/2016/03/29/gradle(%E4%B8%80).html</guid>
+        <link>https://sendoh-akira.github.io/2016/03/29/gradle(%E4%B8%80).html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2016/03/29/gradle(%E4%B8%80).html</guid>
         <pubDate>Tue, 29 Mar 2016 00:00:00 +0800</pubDate>
         <description>&lt;blockquote&gt;
   &lt;p&gt;google发布了Android Studio，并且一同发布了编译的新的方法-gradle，今天看一下这个怎么使用&lt;/p&gt;
@@ -767,8 +767,8 @@ dependencies {
     
       <item>
         <title>关于keystore的作用以及生成</title>
-        <link>https://wuyanfeigithub.github.io/2016/03/25/keystore.html</link>
-        <guid isPermaLink="true">https://wuyanfeigithub.github.io/2016/03/25/keystore.html</guid>
+        <link>https://sendoh-akira.github.io/2016/03/25/keystore.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2016/03/25/keystore.html</guid>
         <pubDate>Fri, 25 Mar 2016 00:00:00 +0800</pubDate>
         <description>&lt;blockquote&gt;
   &lt;p&gt;对于混乱的Android应用市场 使用统一的keystore签名自己的应用，保护自己的产权是十分重要的，所以我们今天就看一下有关keystore的内容&lt;/p&gt;
@@ -828,8 +828,8 @@ D:\&amp;gt;jarsigner -verbose -keystore demo.keystore -signedjar demo_signed.apk
     
       <item>
         <title>Gradle</title>
-        <link>https://wuyanfeigithub.github.io/2016/03/20/gradle.html</link>
-        <guid isPermaLink="true">https://wuyanfeigithub.github.io/2016/03/20/gradle.html</guid>
+        <link>https://sendoh-akira.github.io/2016/03/20/gradle.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2016/03/20/gradle.html</guid>
         <pubDate>Sun, 20 Mar 2016 00:00:00 +0800</pubDate>
         <description>&lt;p&gt;﻿—
 layout: post
@@ -949,8 +949,8 @@ dependencies {
     
       <item>
         <title>二叉树的分层遍历</title>
-        <link>https://wuyanfeigithub.github.io/2016/03/14/suanfa-erchashufencengbianli.html</link>
-        <guid isPermaLink="true">https://wuyanfeigithub.github.io/2016/03/14/suanfa-erchashufencengbianli.html</guid>
+        <link>https://sendoh-akira.github.io/2016/03/14/suanfa-erchashufencengbianli.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2016/03/14/suanfa-erchashufencengbianli.html</guid>
         <pubDate>Mon, 14 Mar 2016 00:00:00 +0800</pubDate>
         <description>&lt;blockquote&gt;
   &lt;p&gt;二叉树的分层遍历&lt;/p&gt;
@@ -1108,8 +1108,8 @@ class TreeNode {
     
       <item>
         <title>android资料整理</title>
-        <link>https://wuyanfeigithub.github.io/2016/03/04/android-blogs.html</link>
-        <guid isPermaLink="true">https://wuyanfeigithub.github.io/2016/03/04/android-blogs.html</guid>
+        <link>https://sendoh-akira.github.io/2016/03/04/android-blogs.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2016/03/04/android-blogs.html</guid>
         <pubDate>Fri, 04 Mar 2016 00:00:00 +0800</pubDate>
         <description>&lt;blockquote&gt;
   &lt;p&gt;一些优秀android博客或者学习资源 有时间会分门别类整理一下 现在先收集一下&lt;/p&gt;
@@ -1209,8 +1209,8 @@ class TreeNode {
     
       <item>
         <title>定义Activity启动模式的两种方式</title>
-        <link>https://wuyanfeigithub.github.io/2016/03/01/android-launchermode.html</link>
-        <guid isPermaLink="true">https://wuyanfeigithub.github.io/2016/03/01/android-launchermode.html</guid>
+        <link>https://sendoh-akira.github.io/2016/03/01/android-launchermode.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2016/03/01/android-launchermode.html</guid>
         <pubDate>Tue, 01 Mar 2016 00:00:00 +0800</pubDate>
         <description>&lt;blockquote&gt;
   &lt;p&gt;关于activity启动模式定义的两种方式&lt;/p&gt;
@@ -1300,8 +1300,8 @@ alwaysRetainTaskState
     
       <item>
         <title>Android跨进程通信机制(二)</title>
-        <link>https://wuyanfeigithub.github.io/2016/02/28/android-AIDLTwo.html</link>
-        <guid isPermaLink="true">https://wuyanfeigithub.github.io/2016/02/28/android-AIDLTwo.html</guid>
+        <link>https://sendoh-akira.github.io/2016/02/28/android-AIDLTwo.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2016/02/28/android-AIDLTwo.html</guid>
         <pubDate>Sun, 28 Feb 2016 00:00:00 +0800</pubDate>
         <description>&lt;blockquote&gt;
   &lt;p&gt;昨天简单的看了一下AIDL怎么使用 今天我们深入学一下这个过程&lt;/p&gt;
@@ -1372,8 +1372,8 @@ return this;
     
       <item>
         <title>Android进程间通信机制(一)</title>
-        <link>https://wuyanfeigithub.github.io/2016/02/27/android-AIDLOne.html</link>
-        <guid isPermaLink="true">https://wuyanfeigithub.github.io/2016/02/27/android-AIDLOne.html</guid>
+        <link>https://sendoh-akira.github.io/2016/02/27/android-AIDLOne.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2016/02/27/android-AIDLOne.html</guid>
         <pubDate>Sat, 27 Feb 2016 00:00:00 +0800</pubDate>
         <description>&lt;blockquote&gt;
   &lt;p&gt;本片博客让我们一起来学一下android的进程之间的通信机制&lt;/p&gt;
@@ -1477,8 +1477,8 @@ Android有很多种方式来实现IPC，包括：&lt;/p&gt;
     
       <item>
         <title>武林外传 百看不厌</title>
-        <link>https://wuyanfeigithub.github.io/2016/01/02/life-wulinwaizhuan.html</link>
-        <guid isPermaLink="true">https://wuyanfeigithub.github.io/2016/01/02/life-wulinwaizhuan.html</guid>
+        <link>https://sendoh-akira.github.io/2016/01/02/life-wulinwaizhuan.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2016/01/02/life-wulinwaizhuan.html</guid>
         <pubDate>Sat, 02 Jan 2016 00:00:00 +0800</pubDate>
         <description>&lt;blockquote&gt;
   &lt;p&gt;武林外传 百看不厌 转眼已是十年&lt;/p&gt;
@@ -1502,8 +1502,8 @@ Android有很多种方式来实现IPC，包括：&lt;/p&gt;
     
       <item>
         <title>upsdnu使用说明</title>
-        <link>https://wuyanfeigithub.github.io/2015/12/02/life-upsdnudescription.html</link>
-        <guid isPermaLink="true">https://wuyanfeigithub.github.io/2015/12/02/life-upsdnudescription.html</guid>
+        <link>https://sendoh-akira.github.io/2015/12/02/life-upsdnudescription.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2015/12/02/life-upsdnudescription.html</guid>
         <pubDate>Wed, 02 Dec 2015 00:00:00 +0800</pubDate>
         <description>&lt;blockquote&gt;
   &lt;p&gt;upsdnu使用说明
@@ -1572,8 +1572,8 @@ at com.gc.materialdesign.widgets.SnackBar.show(SnackBar.java:93)
     
       <item>
         <title>不规则四边形裁剪</title>
-        <link>https://wuyanfeigithub.github.io/2015/12/01/android-CropImageView.html</link>
-        <guid isPermaLink="true">https://wuyanfeigithub.github.io/2015/12/01/android-CropImageView.html</guid>
+        <link>https://sendoh-akira.github.io/2015/12/01/android-CropImageView.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2015/12/01/android-CropImageView.html</guid>
         <pubDate>Tue, 01 Dec 2015 00:00:00 +0800</pubDate>
         <description>&lt;blockquote&gt;
   &lt;p&gt;算是自己造的第一个轮子吧 以前总是拿过别人开源的东西来用 即使做出什么东西来也没有什么成就感 能自己造轮子感觉很棒&lt;/p&gt;
@@ -1619,8 +1619,8 @@ at com.gc.materialdesign.widgets.SnackBar.show(SnackBar.java:93)
     
       <item>
         <title>Android的消息机制</title>
-        <link>https://wuyanfeigithub.github.io/2015/11/24/android-messagehandler.html</link>
-        <guid isPermaLink="true">https://wuyanfeigithub.github.io/2015/11/24/android-messagehandler.html</guid>
+        <link>https://sendoh-akira.github.io/2015/11/24/android-messagehandler.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2015/11/24/android-messagehandler.html</guid>
         <pubDate>Tue, 24 Nov 2015 00:00:00 +0800</pubDate>
         <description>&lt;blockquote&gt;
   &lt;p&gt;Android的消息机制是怎样的呢?我们今天一起来看一下&lt;/p&gt;
@@ -1716,8 +1716,8 @@ MessageQueen发现Message后通过&lt;code&gt;next()&lt;/code&gt;方法将消息
     
       <item>
         <title>为什么使用sudo命令执行sh会报command not found错误</title>
-        <link>https://wuyanfeigithub.github.io/2015/11/22/linux-sduoshcommandnotfound.html</link>
-        <guid isPermaLink="true">https://wuyanfeigithub.github.io/2015/11/22/linux-sduoshcommandnotfound.html</guid>
+        <link>https://sendoh-akira.github.io/2015/11/22/linux-sduoshcommandnotfound.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2015/11/22/linux-sduoshcommandnotfound.html</guid>
         <pubDate>Sun, 22 Nov 2015 00:00:00 +0800</pubDate>
         <description>&lt;blockquote&gt;
   &lt;p&gt;明明sh文件存在,为什么还会说命令找不到呢?&lt;/p&gt;
@@ -1753,8 +1753,8 @@ root@username:#
     
       <item>
         <title>计算nextDay的实现</title>
-        <link>https://wuyanfeigithub.github.io/2015/11/22/java-nextday.html</link>
-        <guid isPermaLink="true">https://wuyanfeigithub.github.io/2015/11/22/java-nextday.html</guid>
+        <link>https://sendoh-akira.github.io/2015/11/22/java-nextday.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2015/11/22/java-nextday.html</guid>
         <pubDate>Sun, 22 Nov 2015 00:00:00 +0800</pubDate>
         <description>&lt;blockquote&gt;
   &lt;p&gt;实现nextDay算法&lt;/p&gt;
@@ -1922,8 +1922,8 @@ public class NextDay{
     
       <item>
         <title>否定别人是很愚蠢的</title>
-        <link>https://wuyanfeigithub.github.io/2015/11/21/life-respectEveryone.html</link>
-        <guid isPermaLink="true">https://wuyanfeigithub.github.io/2015/11/21/life-respectEveryone.html</guid>
+        <link>https://sendoh-akira.github.io/2015/11/21/life-respectEveryone.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2015/11/21/life-respectEveryone.html</guid>
         <pubDate>Sat, 21 Nov 2015 00:00:00 +0800</pubDate>
         <description>&lt;blockquote&gt;
   &lt;p&gt;每每听到和自己不一样的声音的时候 我们总是习惯性的否定&lt;/p&gt;
@@ -1936,8 +1936,8 @@ public class NextDay{
     
       <item>
         <title>View滑动冲突的解决方案</title>
-        <link>https://wuyanfeigithub.github.io/2015/11/20/android-dealslideproblem.html</link>
-        <guid isPermaLink="true">https://wuyanfeigithub.github.io/2015/11/20/android-dealslideproblem.html</guid>
+        <link>https://sendoh-akira.github.io/2015/11/20/android-dealslideproblem.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2015/11/20/android-dealslideproblem.html</guid>
         <pubDate>Fri, 20 Nov 2015 00:00:00 +0800</pubDate>
         <description>&lt;blockquote&gt;
   &lt;p&gt;当View的滑动存在冲突的时候怎么解决?&lt;/p&gt;
@@ -2044,8 +2044,8 @@ Parameters  –  disallowIntercept	True if the child does not want the parent to
     
       <item>
         <title>数组中只出现一次的数字</title>
-        <link>https://wuyanfeigithub.github.io/2015/11/19/algorithm-hash.html</link>
-        <guid isPermaLink="true">https://wuyanfeigithub.github.io/2015/11/19/algorithm-hash.html</guid>
+        <link>https://sendoh-akira.github.io/2015/11/19/algorithm-hash.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2015/11/19/algorithm-hash.html</guid>
         <pubDate>Thu, 19 Nov 2015 00:00:00 +0800</pubDate>
         <description>&lt;blockquote&gt;
   &lt;p&gt;在牛客上看到了很多这种题目 今天总结一下吧&lt;/p&gt;
