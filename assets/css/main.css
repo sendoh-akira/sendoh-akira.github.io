@@ -672,7 +672,7 @@ blockquote {
  	right : 0.5em;
  }
 .navbar-default{
-	  background-image: url(/assets/img/bg-2.jpg);
+	  background-image: url(/assets/img/black.png);
 	  border-width : 0;
 }
 
@@ -806,7 +806,7 @@ blockquote {
 	-moz-border-radius: 7px 7px 0 0;
 	-webkit-border-radius: 7px 7px 0 0;
 	height: 5.5em;
-	background-image: url(/assets/img/bg-2.jpg);
+	background-image: url(/assets/img/black.png);
 	opacity: 0.7;
 	margin: -2em -2em -4em -2em;
 }
