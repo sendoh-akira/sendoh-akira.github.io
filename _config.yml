@@ -4,7 +4,7 @@ keep_files:
   - "CNAME"
   - ".git"
   - ".gitignore"
-
+year: 2016
 url: "https://sendoh-akira.github.io" # the base hostname & protocol for your site
 baseurl: ""
 # gavatar头像及Favicon
@@ -35,7 +35,7 @@ author:
 # 站点信息
 title: Sendoh Akira
 description:
- good luck
+
 rss_url: /feed.xml
 
 
@@ -52,6 +52,13 @@ cates:
 - Essay
 # - Python
 # - OpenStack
+
+# 不蒜子网站计数设置
+# http://ibruce.info/2015/04/04/busuanzi/
+visit_counter:
+  switch: 1
+  site_visit: 小伙伴到访数
+  page_visit: 本页阅读量
 
 # 中文本地化
 locals:

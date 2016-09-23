@@ -21,11 +21,12 @@
   <link rel="shortcut icon" href="/assets/img/favicon_2.png" />
   <link rel="canonical" href="https://sendoh-akira.github.io/2016/09/22/spring_interview_questions_and_answers.html">
   <link rel="alternate" type="application/rss+xml" title="Sendoh Akira" href="https://sendoh-akira.github.io/feed.xml" />
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <script type="text/javascript" src="/assets/js/echarts.min.js"></script>
   <script type="text/javascript" src="/assets/js/embed.js"></script>
   <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   <script type="text/javascript" src="/assets/js/ua-parser.js"></script>
-
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
   <script>var duoshuoQuery = {short_name:"wuyanfei"};</script>
 </head>
 
@@ -801,7 +802,7 @@ var duoshuoQuery = {short_name:"wuyanfei"};
     
     <div class="pjax_loading"></div>
     
-    <footer class="site-footer">
+    <footer class="site-footer" >
 
   <div class="wrapper">
 
@@ -828,21 +829,67 @@ var duoshuoQuery = {short_name:"wuyanfei"};
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">good luck</p>
+        <p class="text"></p>
       </div>
+
+
     </div>
     <div class="center sitedesc">
-    	Powered by <a href ="http://jekyllrb.com/">Jekyll</a>  |  © 2016 GY  |  Hosted on <a href="https://github.com/wuyanfeigithub"> Github</a>
+    	Powered by <a href ="http://jekyllrb.com/">Jekyll</a>  |   &copy; 2016 Sendoh Akira |  Hosted on <a href="https://github.com/wuyanfeigithub"> Github</a>
+
+      
+          <div class="visit">
+              <span id="span_dt_dt" onload="show_date_time();"></span>
+              &nbsp;&nbsp;|&nbsp;&nbsp;
+              
+                  <span id="busuanzi_container_site_pv" style='display:none'>
+                      <span id="site-visit" >小伙伴到访数 :
+                          <span id="busuanzi_value_site_uv"></span>
+                      </span>
+                  </span>
+              
+              
+                  <span>, </span>
+              
+              
+                  <span id="busuanzi_container_page_pv" style='display:none'>
+                      <span id="page-visit">本页阅读量 :
+                          <span id="busuanzi_value_page_pv"></span>
+                      </span>
+                  </span>
+              
+          </div>
+      
+
+      <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260447200'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260447200%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
     </div>
   </div>
-	
- 
+
+  <script language="javascript">
+  function show_date_time(){
+  window.setTimeout("show_date_time()", 1000);
+  BirthDay=new Date("8/15/2016 11:30:00");//这个日期是可以修改的
+  today=new Date();
+  timeold=(today.getTime()-BirthDay.getTime());
+  sectimeold=timeold/1000
+  secondsold=Math.floor(sectimeold);
+  msPerDay=24*60*60*1000
+  e_daysold=timeold/msPerDay
+  daysold=Math.floor(e_daysold);
+  e_hrsold=(e_daysold-daysold)*24;
+  hrsold=Math.floor(e_hrsold);
+  e_minsold=(e_hrsold-hrsold)*60;
+  minsold=Math.floor((e_hrsold-hrsold)*60);
+  seconds=Math.floor((e_minsold-minsold)*60);
+  span_dt_dt.innerHTML="本站已萌萌哒运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+  }show_date_time();</script>
+
   <script type="text/javascript">
 	  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
 	  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
 	  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
 	  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-	  
+
 	  _st('install','8i7AWfTU6yge5uNc4fmc','2.0.0');
   </script>
   <script type="text/x-mathjax-config">
@@ -853,7 +900,7 @@ var duoshuoQuery = {short_name:"wuyanfei"};
             SVG: {linebreaks: {automatic: true}}
     });
    </script>
-  	<!-- 多说公共JS代码 start (一个网页只需插入一次) 
+  	<!-- 多说公共JS代码 start (一个网页只需插入一次)
 	<script type="text/javascript">
 	var duoshuoQuery = {short_name:"wuyanfei"};
 	(function() {
@@ -861,26 +908,26 @@ var duoshuoQuery = {short_name:"wuyanfei"};
 		ds.type = 'text/javascript';ds.async = true;
 		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
 		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
+		(document.getElementsByTagName('head')[0]
 		 || document.getElementsByTagName('body')[0]).appendChild(ds);
 	})();
 	</script>
 	多说公共JS代码 end -->
   <script type="text/javascript" src="/assets/js/jquery.js"></script>
   <script type="text/javascript" src="/assets/js/bootstrap.js"></script>
-  <script type="text/javascript" src="/assets/js/jquery.pjax.js"></script> 
-  <script type="text/javascript" src="/assets/js/echarts.min.js"></script> 
+  <script type="text/javascript" src="/assets/js/jquery.pjax.js"></script>
+  <script type="text/javascript" src="/assets/js/echarts.min.js"></script>
   <script type="text/javascript" src="/assets/js/prettify/prettify.js"></script>
   <script type="text/javascript" src="/assets/js/stickUp.min.js"></script>
   <script type="text/javascript" src="/assets/js/fancybox/jquery.fancybox.pack.js"></script>
   <script type="text/javascript" src="/assets/js/fancybox/jquery.mousewheel-3.0.6.pack.js"></script>
   <script type="text/javascript" src="/assets/js/main.js"></script>
-  <link rel="stylesheet" href="/assets/css/duoshuo.css"> 
+  <link rel="stylesheet" href="/assets/css/duoshuo.css">
   <link rel="stylesheet" href="/search/css/cb-search.css">
-							
+
   <script src="/search/js/bootstrap3-typeahead.min.js"></script>
   <script src="/search/js/cb-search.js"></script>
-  
+
 </footer>
 
 	

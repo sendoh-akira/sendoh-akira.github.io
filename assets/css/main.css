@@ -15,7 +15,7 @@ dl, dd, ol, ul, figure {
 	width: 100%; height: 100%;
 }
 
-.row{ 
+.row{
 	height : 100%;
 }
 
@@ -147,7 +147,7 @@ ul, ol, dl, figure,
 }
 
 .index-post-tag a:hover, .index-post-tag a:focus{
-	  text-decoration: none; 
+	  text-decoration: none;
 	  color: #fff;
 }
 
@@ -179,10 +179,10 @@ ul, ol, dl, figure,
 /**
  * 读书页
  */
-.bookpiclist{ 
+.bookpiclist{
 	width : 100%;
 }
-.bookpiclist .bookpic{ 
+.bookpiclist .bookpic{
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -o-box-sizing: border-box;
@@ -263,13 +263,13 @@ div.page-tag {
 	opacity : 0.7;
 }
 .page-tag a:visited{
-	  text-decoration: none; 
+	  text-decoration: none;
 	  color : black;
 	  opacity : 0.7;
 }
 .page-tag a:hover,
 .page-tag a:focus {
-	  text-decoration: none; 
+	  text-decoration: none;
 	  color : black;
 	  opacity : 1;
 	  border-color: #3B95B8;
@@ -281,7 +281,7 @@ div.page-tag {
 	border-left: 2px solid #3B95B8;
 }
 .target-fix{
-     padding-top:4em;    
+     padding-top:4em;
      margin-top : -4em;
      margin-bottom : 4em;
 }
@@ -307,7 +307,7 @@ li.article a {
   	padding-left: 4em;
 	display: block;
       color: #666;
-}	
+}
 li.article a:hover,li.article a:focus{
 	color: #428bca;
       box-shadow: 3px 0 #3B95B8 inset;
@@ -338,7 +338,7 @@ li.article a:hover,li.article a:focus{
  	text-decoration: none;
 	font-size: 1em;
 	line-height: 1.5em;
-	margin-bottom: 0.5em;   
+	margin-bottom: 0.5em;
 }
 
 @media  (max-width: 992px) {
@@ -348,7 +348,7 @@ li.article a:hover,li.article a:focus{
 }
 
 /**
- * 
+ *
  */
 .home{
 	margin: 0 0 2em 0;
@@ -372,14 +372,14 @@ li.article a:hover,li.article a:focus{
 	padding: 1em 2em;
 	margin-top: 1em;
  }
- 
+
 .comment{
 	margin-top: 1em;
 	background: white;
 	padding: 1em 2em;
 }
 .ds-recent-visitors, .ds-recent-comments{
-	margin-left : 0 ; 
+	margin-left : 0 ;
 	padding-left : 0;
 }
 .recentuse{
@@ -529,10 +529,10 @@ blockquote {
     color: #fff; }
    .site-title:hover{
     text-decoration: none; }
- 
-    
+
+
 .site-nav {
-  font-size: 1.2em ; 
+  font-size: 1.2em ;
   padding-bottom : 0;
   line-height: 2.9em;
   letter-spacing: 1px;
@@ -583,9 +583,9 @@ blockquote {
 .pjax_loading{
 	margin: auto;
 	position: fixed;
-	top: 0; 
-	left: 0; 
-	bottom: 0; 
+	top: 0;
+	left: 0;
+	bottom: 0;
 	right: 0;
 	display : none;
 	z-index: 999999;
@@ -639,9 +639,9 @@ blockquote {
 /**
  * 手机屏幕上的导航
  */
- 
+
 .phone-nav {
-  font-size: 1.2em ; 
+  font-size: 1.2em ;
   color : #fff;
   letter-spacing: 1px;
   text-align:center;
@@ -658,15 +658,15 @@ blockquote {
 	    .phone-nav  li  a:hover{
 	    background-color:#428bca !important;
 	    color:#fff;}
- 
+
 @media (min-width: 768px){
 	.navbar-nav {
 		width : 100%;
 	}
 }
 
- 
- 
+
+
  .navbar-toggle{
  	position : fixed ;
  	right : 0.5em;
@@ -698,27 +698,27 @@ blockquote {
 	right: -60px;
 	z-index: 9999;
 	font-size: 3.5em;
-	
+
 	-moz-transition: all 1s ease;
 	-webkit-transition: all 1s ease;
 	-o-transition: all 1s ease;
 	transition: all 1s ease;
-	
+
 }
 #backtotop a{
 	color: black;
 	opacity: 0.7;
-} 
+}
 
 #backtotop a:visited{
 	color: black;
 	opacity: 0.7;
-} 
+}
 
 #backtotop a:hover{
 	color: black;
 	opacity: 1;
-} 
+}
 
 #backtotop.showme{
 	right: 12px;
@@ -726,7 +726,7 @@ blockquote {
 	-webkit-transform: scale(1) rotate(-360deg) translate(0px);
 	-o-transform: scale(1) rotate(-360deg) translate(0px);
 	transform: scale(1) rotate(-360deg) translate(0px);
-	
+
 }
 
 #backtotop .bttbg{
@@ -740,7 +740,7 @@ blockquote {
 	background-position : left bottom;
 }
 	*/
-	
+
 /**
  * Search
  */
@@ -775,23 +775,23 @@ blockquote {
 }
 
 .search-query:focus{
-	width: 220px;	
+	width: 220px;
 	-moz-transition: all 0.5s ease;
 	-webkit-transition: all 0.5s ease;
 	-o-transition: all 0.5s ease;
 	transition: all 0.5s ease;
-	
+
 }
 
 /**
  * Profile elements style
  */
 .aside1{
-	padding-left: 4em; 
-	padding-right: 1em; 
+	padding-left: 4em;
+	padding-right: 1em;
 	margin-bottom : 1em;
 }
- 
+
 .aside1 .profile{
 	position: relative;
 	background : #fff;
@@ -799,12 +799,12 @@ blockquote {
 	padding: 2em 2em 0 2em;
 	opacity: 1;
 	/*border: 1px solid black;*/
-	min-height: 27em; 
+	min-height: 27em;
 	height : 100%;
 }
 .profile .overlay{
-	-moz-border-radius: 7px 7px 0 0; 
-	-webkit-border-radius: 7px 7px 0 0;  
+	-moz-border-radius: 7px 7px 0 0;
+	-webkit-border-radius: 7px 7px 0 0;
 	height: 5.5em;
 	background-image: url(/assets/img/bg-2.jpg);
 	opacity: 0.7;
@@ -841,13 +841,13 @@ div.gavatar a:hover{
 	-o-transform: scale(1) rotate(-360deg) translate(0px);
 	transform: scale(1) rotate(-360deg) translate(0px);
 }
-	
+
 .profile .address{
 	margin-top: 1em;
 	border-bottom : 1px solid;
 	padding-bottom : 0.5em;
 	font-family: cursive;
-}	
+}
 .profile_desc{
 	margin-top: 2em;
 	letter-spacing: 1px;
@@ -860,7 +860,7 @@ div.gavatar a:hover{
 		font-size: 0.9em;
 	}
 	.profile .overlay{
-		margin: -2em -2em -3em -2em;	
+		margin: -2em -2em -3em -2em;
 	}
 	a.profile_gavatar{
 		width: 6em;
@@ -873,9 +873,9 @@ div.gavatar a:hover{
  * 左侧标签云
  */
 .tag-cloud-text{
-	margin-top: 1em; 
+	margin-top: 1em;
 	letter-spacing: 5px;
-} 
+}
 .tag-cloud-text p{
 	margin:0 auto;
 	font-size:1.5em;
@@ -900,7 +900,7 @@ div.gavatar a:hover{
 .isStuck p{
 	border:2px solid;
 }
- 
+
 .tag-cloud{
 	background : #fff;
 	-moz-border-radius:7px 7px 0 0;
@@ -940,8 +940,8 @@ div.gavatar a:hover{
  */
 .site-footer {
   border-top: 2px solid #e8e8e8;
-  background-image: url(/assets/img/bg-2.jpg);
-  padding: 20px 0; 
+  background-image: url(/assets/img/black.png);
+  padding: 20px 0;
   position : absolute;
   width : 100%;
   z-index : 6000;
@@ -989,7 +989,7 @@ div.gavatar a:hover{
 	background: url(/assets/img/social/rss.png) center no-repeat #ef7522;
 	border: 1px solid #ef7522;
 }
-  
+
 .footer-col-wrapper {
   font-size: 15px;
   color: #828282;
@@ -1026,21 +1026,21 @@ div.gavatar a:hover{
     float: none;
     width: -webkit-calc(100% - (30px / 2));
     width: calc(100% - (30px / 2)); } }
-    
+
 .social-media-list a:visited{
 	color : black;
-}    
+}
 
 .social-media-list a:hover{
 	color : black;
-}  
- 
-     
+}
+
+
 .content{
 	margin:0 auto;
-	padding-top : 6.5em ; 
+	padding-top : 6.5em ;
 	min-height : 600px;
-} 
+}
 
 
 /**
@@ -1101,14 +1101,14 @@ div.gavatar a:hover{
 ::-webkit-scrollbar-button:end:active {
   background: url("/assets/img/scrollbar_arrow.png") no-repeat -30px -18px;
 }
- 
- 
- 
- 
+
+
+
+
 /**
  * Page content
  */
- 
+
 .aside2{
 	padding-right : 3em;
 	padding-left : 1em;
@@ -1120,7 +1120,7 @@ div.gavatar a:hover{
 		padding-left : 0;
 	}
 }
- 
+
 .page-content {
   padding-bottom : 1em;
   min-height : 50em;
@@ -1138,13 +1138,13 @@ div.gavatar a:hover{
 
 .post{
   background : #fff;
-  padding: 1em 3em; 
+  padding: 1em 3em;
   border-radius: 4px;
 }
 
 @media (max-width: 992px) {
 	.post {
-		padding: 1em 1.5em; 
+		padding: 1em 1.5em;
 	}
 }
 
@@ -1171,9 +1171,9 @@ div.gavatar a:hover{
 /**
  * post box style
  */
- 
- 
- 
+
+
+
 .postbox{
 	width: 100%;
 	-moz-border-radius:0 0 4px 4px;
@@ -1315,7 +1315,7 @@ div.gavatar a:hover{
 /**
  * Posts
  */
- 
+
 .post-content{
  	line-height : 1.8em;
  	letter-spacing : 1px;
@@ -1324,33 +1324,33 @@ div.gavatar a:hover{
 div.contentAbstract img{
 	width : 60%;
 }
- 
+
 .post-header {
   margin-top: 1em;
   margin-bottom: 1em;
   border-left: 6px solid;
   margin-left: -3em;
   padding-left: 3em;}
- 
+
 @media (max-width: 992px) {
 	.post-header  {
 		margin-left: -1.5em;
 		padding-left: 1.5em;
 	}
-} 
-  
+}
+
 
 .post-title {
   font-size: 2em;
   padding-top: 10px;
   letter-spacing: -1px;
   line-height: 1; }
-  
+
   @media (max-width: 992px) {
 		.post-title  {
 			font-size: 1.4em;
 		}
-	} 
+	}
 
 .post-content h1,.post-content h2,.post-content h3,.post-content h4,.post-content h5,.post-content h6{
 	/* border-radius: 5px; */
@@ -1453,14 +1453,14 @@ div.contentAbstract img{
 
 
 
-/*上一篇和下一篇*/ 
+/*上一篇和下一篇*/
 .prevandnext{
 	margin-bottom: 2em;
 	margin-top: 2em;
 	border-radius: 7px;
 	padding: 1em 3em;
 	background: white;
-}	
+}
 
 /*百度分享*/
 .bdshare{

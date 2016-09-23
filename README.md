@@ -1,6 +1,6 @@
 ### 我的博客
 
-地址：[http://bornbeauty.github.io/](http://bornbeauty.github.io/)
+地址：[https://sendoh-akira.github.io/](https://sendoh-akira.github.io/)
 
 ### 安装说明
 
@@ -13,7 +13,7 @@
 
 # License
 
-> Copyright 2013, Edmodo, Inc.
+> Copyright 2016, Inc.
 
 >Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with the License. You may obtain a copy of the License in the LICENSE file, or at:
 
