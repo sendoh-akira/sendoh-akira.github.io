@@ -17,6 +17,9 @@ Pre-Installation
 First we install httpd-devel, pcre, pcre-devel, zlib, zlib-devel, perl, geoip and geoip-devel packages like this:
 yum install -y httpd-devel pcre perl pcre-devel zlib zlib-devel GeoIP GeoIP-devel  gcc gcc-c++
 
+create group and user 
+#/usr/sbin/groupadd -f nginx
+#/usr/sbin/useradd -g nginx nginx
 
  
 Download required packages
@@ -98,9 +101,11 @@ nginx http fastcgi temporary files: "fastcgi_temp"
  
 Start Nginx Server
 
-/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
-
+/usr/local/develop/nginx/bin/nginx -c /usr/local/develop/nginx/etc/nginx.conf 
  
 Testing
 
-/usr/local/nginx/sbin/nginx -V
+/usr/local/develop/nginx/bin/nginx -V
+
+brower
+http://192.168.1.42/
