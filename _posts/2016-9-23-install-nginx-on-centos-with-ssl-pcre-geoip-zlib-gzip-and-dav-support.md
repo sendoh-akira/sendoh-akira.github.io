@@ -54,7 +54,7 @@ Create group and user for nginx
 
 ### Download Nginx source package
 
-You need to download Nginx source package from [nginx.org](http://nginx.org/),nginx wiki from [nginx wiki] (https://www.nginx.com/resources/wiki/)
+You need to download Nginx source package from [nginx.org](http://nginx.org/),nginx wiki from [nginx wiki](https://www.nginx.com/resources/wiki)
 
 ```
 # cd /usr/local/src/
@@ -103,6 +103,7 @@ You can find out more options by using the following command:
 	```
 	# ./configure --help
 	```
+
 Now run:
 
 	```
