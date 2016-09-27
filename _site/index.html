@@ -143,6 +143,8 @@
 							
 								<a href="/pages/tags.html#其他" name="其他" class="pjaxlink"><i class="fa fa-tags"></i>其他(1)</a>
 							
+								<a href="/pages/tags.html#nginx" name="nginx" class="pjaxlink"><i class="fa fa-tags"></i>nginx(1)</a>
+							
 					</div>					
 				</div>
 				<div class="clear"></div>
@@ -173,6 +175,179 @@
 			
 			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 box-shadow fadein-right aside2">					 		
 					<div class="page-content" id="pjax"><div>
+
+   
+
+		<div class="postbox">
+			<!-- <div class="post-format-icon">
+                <a class="item-date pjaxlink" href="/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html"><span>技术</span></a>
+      </div> -->
+			<div class="allpost">
+				<div class="title"><a class="pjaxlink" href="/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html">Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support</a></div>
+				<hr>
+				<div class="info">
+					<i class="fa fa-calendar"></i>&nbsp;2016-09-23
+          &nbsp;&nbsp;
+          
+				  <i class="fa fa-tasks"></i>
+					<span class="index-post-tag">
+						
+							<a class="pjaxlink" href="/pages/class.html#技术">技术</a>
+						
+					</span>
+					
+
+          
+				      <i class="fa fa-tags"></i>
+					<span class="index-post-tag">
+						
+							<a class="pjaxlink" href="/pages/tags.html#nginx">nginx</a>
+						
+					</span>
+					
+
+
+
+				</div>
+				<div class="contentAbstract"><blockquote>
+  <p>Nginx (pronounced “engine x”) is a free, open-source, high-performance HTTP server. Nginx is known for its stability, rich feature set, simple configuration, and low resource consumption. This tutorial shows how you can compile and install Nginx on CentOS server with SSL, PCRE, GeoIP, Zlib, Gzip and DAV supp</p>
+</blockquote>
+
+<h3 id="add-a-repo-for-some-packages-that-we-need">Add a repo for some packages that we need:</h3>
+
+<p><a href="https://support.rackspace.com/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat">Install EPEL, IUS, and Remi repositories on CentOS and Red Hat</a></p>
+
+<p>EPEL(Extra Packages for Enterprise Linux) Repo是Linux发行版中最大的软件仓库之一，免费，丰富的软件包更新。</p>
+
+<pre><code># rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-rpm-macros-6-11.noarch.rpm   
+</code></pre>
+
+<h3 id="pre-installation">Pre-Installation</h3>
+
+<p>First we install httpd-devel, pcre, pcre-devel, zlib, zlib-devel, perl, geoip and geoip-devel  gcc gcc-c++ packages like this:</p>
+
+<pre><code># yum install -y httpd-devel pcre perl pcre-devel zlib zlib-devel GeoIP GeoIP-devel  gcc gcc-c++
+</code></pre>
+
+<p>Create group and user for nginx</p>
+
+<pre><code># /usr/sbin/groupadd -f nginx
+# /usr/sbin/useradd -g nginx nginx
+</code></pre>
+
+<h3 id="download-required-packages">Download required packages</h3>
+
+<pre><code># cd /usr/local/src/
+# wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
+# wget http://zlib.net/zlib-1.2.8.tar.gz
+# wget https://www.openssl.org/source/openssl-1.0.1u.tar.gz
+</code></pre>
+
+<h3 id="now-you-have-to-untar-these-files">Now you have to untar these files.</h3>
+
+<pre><code># tar -xvf pcre-8.38
+# tar -xvf zlib-1.2.8.tar.gz
+# tar -xvf openssl-1.0.1u.tar.gz
+</code></pre>
+
+<h3 id="download-nginx-source-package">Download Nginx source package</h3>
+
+<p>You need to download Nginx source package from <a href="http://nginx.org/">nginx.org</a>,nginx wiki from <a href="https://www.nginx.com/resources/wiki">nginx wiki</a></p>
+
+<pre><code># cd /usr/local/src/
+# wget  http://nginx.org/download/nginx-1.11.4.tar.gz
+# tar -xvf nginx-1.11.4.tar.gz
+# cd nginx-1.11.4
+</code></pre>
+
+<h3 id="compile-and-install-nginx">Compile and Install Nginx</h3>
+
+<p>Now you can compile and install Nginx with the following commands:</p>
+
+<pre><code># ./configure \
+    --user=nginx  \
+    --group=nginx  \
+    --prefix=/usr/local/develop/nginx  \
+    --sbin-path=/usr/local/develop/nginx/bin/nginx  \
+    --conf-path=/usr/local/develop/nginx/etc/nginx.conf  \
+    --error-log-path=/usr/local/develop/nginx/log/error.log  \
+    --http-log-path=/usr/local/develop/nginx/log/access.log  \
+    --http-client-body-temp-path=/var/lib/nginx/tmp/client_body  \
+    --http-proxy-temp-path=/var/lib/nginx/tmp/proxy  \
+    --http-fastcgi-temp-path=/var/lib/nginx/tmp/fastcgi  \
+    --pid-path=/usr/local/develop/nginx/pid/nginx.pid  \
+    --lock-path=/var/lock/subsys/nginx  \
+    --with-http_ssl_module  \
+    --with-http_realip_module  \
+    --with-http_addition_module  \
+    --with-http_sub_module  \
+    --with-http_dav_module \
+    --with-http_flv_module \
+    --with-http_gzip_static_module \
+    --with-http_stub_status_module \
+    --with-mail \
+    --with-mail_ssl_module \
+    --with-openssl=../openssl-1.0.1u \
+    --with-pcre \
+    --with-pcre=../pcre-8.38 \
+    --with-zlib=../zlib-1.2.8 \
+    --with-http_geoip_module \
+</code></pre>
+
+<p>You can find out more options by using the following command:</p>
+
+<pre><code>```
+# ./configure --help
+```
+</code></pre>
+
+<p>Now run:</p>
+
+<pre><code>```
+# make
+# make install
+```
+</code></pre>
+
+<p>Configuration Summary</p>
+
+<pre><code>nginx path prefix: "/usr/local/nginx"
+nginx binary file: "/usr/local/nginx/sbin/nginx"
+nginx configuration prefix: "/usr/local/nginx/conf"
+nginx configuration file: "/usr/local/nginx/conf/nginx.conf"
+nginx pid file: "/usr/local/nginx/logs/nginx.pid"
+nginx error log file: "/usr/local/nginx/logs/error.log"
+nginx http access log file: "/usr/local/nginx/logs/access.log"
+nginx http client request body temporary files: "client_body_temp"
+nginx http proxy temporary files: "proxy_temp"
+nginx http fastcgi temporary files: "fastcgi_temp"
+</code></pre>
+
+<h3 id="start-nginx-server">Start Nginx Server</h3>
+
+<pre><code># /usr/local/develop/nginx/bin/nginx -c /usr/local/develop/nginx/etc/nginx.conf
+</code></pre>
+
+<h3 id="stop-nginx-server">Stop Nginx Server</h3>
+
+<pre><code># /usr/local/develop/nginx/bin/nginx -s stop
+</code></pre>
+
+<h3 id="testing">Testing</h3>
+
+<pre><code># /usr/local/develop/nginx/bin/nginx -V
+</code></pre>
+
+<h3 id="brower">brower</h3>
+
+<pre><code>http://ip/
+</code></pre>
+
+<p><a href="https://www.howtoforge.com/install-nginx-on-centos-5.5-with-ssl-pcre-geoip-zlib-gzip-and-dav-support">reference by the blog</a></p>
+</div>
+			</div>
+			<a href="/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html"  class="readmore pjaxlink">Read More <i class="glyphicon glyphicon-chevron-right"></i></a>
+		</div>
 
    
 
@@ -345,48 +520,6 @@
 
    
 
-		<div class="postbox">
-			<!-- <div class="post-format-icon">
-                <a class="item-date pjaxlink" href="/2015/11/22/linux-sduoshcommandnotfound.html"><span>技术</span></a>
-      </div> -->
-			<div class="allpost">
-				<div class="title"><a class="pjaxlink" href="/2015/11/22/linux-sduoshcommandnotfound.html">为什么使用sudo命令执行sh会报command not found错误</a></div>
-				<hr>
-				<div class="info">
-					<i class="fa fa-calendar"></i>&nbsp;2015-11-22
-          &nbsp;&nbsp;
-          
-				  <i class="fa fa-tasks"></i>
-					<span class="index-post-tag">
-						
-							<a class="pjaxlink" href="/pages/class.html#技术">技术</a>
-						
-					</span>
-					
-
-          
-				      <i class="fa fa-tags"></i>
-					<span class="index-post-tag">
-						
-							<a class="pjaxlink" href="/pages/tags.html#linux">linux</a>
-						
-					</span>
-					
-
-
-
-				</div>
-				<div class="contentAbstract"><blockquote>
-  <p>明明sh文件存在,为什么还会说命令找不到呢?</p>
-</blockquote>
-
-</div>
-			</div>
-			<a href="/2015/11/22/linux-sduoshcommandnotfound.html"  class="readmore pjaxlink">Read More <i class="glyphicon glyphicon-chevron-right"></i></a>
-		</div>
-
-   
-
 	
 		<div class="pagination center">
 
@@ -409,12 +542,16 @@
 				      <a class="pjaxlink" href="/page2"><span class="x1">2</span></a>
 				    
 			  
+				    
+				      <a class="pjaxlink" href="/page3"><span class="x1">3</span></a>
+				    
+			  
 
 			  
 			   	 <a class="pjaxlink" href="/page2"><span class="x1" style="margin-left:5px;"><i class="glyphicon glyphicon-chevron-right"></i></span></a>
 			  
-			  <a class="pjaxlink" href="/page2/"><span class="x1" style="margin-left:5px;">末页</span></a>
-			  <span  style="margin-left:5px;">第1页 / 共2页</span>
+			  <a class="pjaxlink" href="/page3/"><span class="x1" style="margin-left:5px;">末页</span></a>
+			  <span  style="margin-left:5px;">第1页 / 共3页</span>
 		</div>
 	
 
@@ -431,6 +568,14 @@
 
 
   <ul class="post-list">
+    
+      <li>
+        <span class="post-meta">Sep 23, 2016</span>
+
+        <h2>
+          <a class="post-link" href="/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html">Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support</a>
+        </h2>
+      </li>
     
       <li>
         <span class="post-meta">Sep 22, 2016</span>
