@@ -12,7 +12,7 @@
   <title>jni使用详解 | Sendoh Akira</title>
   <meta name="description" content="  开发中难免要使用jni，现在系统的学习总结一下使用的方法">
 
-
+  <!-- <script src="https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/ecom/esl/2-1-4/esl.js"></script> -->
   <link rel="stylesheet" href="/assets/css/bootstrap.css">
   <link rel="stylesheet" href="/assets/css/font-awesome.css">
   <link rel="stylesheet" href="/assets/js/fancybox/jquery.fancybox.css" media="screen">
@@ -25,7 +25,6 @@
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <script type="text/javascript" src="/assets/js/echarts.min.js"></script>
   <script type="text/javascript" src="/assets/js/embed.js"></script>
-  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   <script type="text/javascript" src="/assets/js/ua-parser.js"></script>
   <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
   <script>
@@ -36,8 +35,8 @@
 
   <body>
 
-    <header class="site-header">
-	<div class="container">
+    <header class="site-header " >
+	<div class="container" >
 		<div class="row">
 			<nav class="navbar navbar-default" role="navigation">
 
@@ -578,25 +577,7 @@ void Set&lt;Typr&gt;FieldID(JNIEnv *env, jobject thiz, jfieldId fieldID, NativeT
 
   </article>
 
-  <!-- jiathis分享 BEGIN -->
-<!-- JiaThis Button BEGIN -->
-<div class="jiathis_style">
-	<a class="jiathis_button_qzone"></a>
-	<a class="jiathis_button_tsina"></a>
-	<a class="jiathis_button_tqq"></a>
-	<a class="jiathis_button_weixin"></a>
-	<a class="jiathis_button_renren"></a>
-	<a href="//www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-	<a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" src="//v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
-<!-- JiaThis Button END -->
-
-
-
-
-
-<!-- <div class="bdshare">
+  <!-- <div class="bdshare">
     <span class="fenx">分享文章到：</span>
     <div class="bdsharebuttonbox fl bdshare-button-style0-32">
         <a href="#" class="bds_more" data-cmd="more"></a>
@@ -633,21 +614,19 @@ void Set&lt;Typr&gt;FieldID(JNIEnv *env, jobject thiz, jfieldId fieldID, NativeT
 </script> -->
 <!-- 百度分享 END -->
 <!--多说分享 Begin -->
-<!--<div class="ds-share flat" data-thread-key="/2016/04/05/jni" data-title="jni使用详解" data-images="" data-content="jni使用详解" data-url="https://sendoh-akira.github.io/2016/04/05/jni.html">
-  <div id="ds-reset" class="ds-share-inline">
-    <ul  class="ds-share-icons-16">
-
-      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
-      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
-      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
-      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
-      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-
-    </ul>
-    <div class="ds-share-icons-more">
-    </div>
-  </div>
-</div>-->
+<div class="ds-share flat" data-thread-key="/2016/04/05/jni" data-title="jni使用详解" data-images="" data-content="jni使用详解" data-url="https://sendoh-akira.github.io/2016/04/05/jni.html">
+  <div class="ds-share-inline">
+       <ul  class="ds-share-icons-32">
+           <li> <a class="ds-weibo" href="javascript:void(0);" data-service="weibo"></a> </li>
+           <li> <a class="ds-wechat" href="javascript:void(0);" data-service="wechat"></a> </li>
+           <li> <a class="ds-qq" href="javascript:void(0);" data-service="qq"></a> </li>
+           <li> <a class="ds-douban" href="javascript:void(0);" data-service="douban"></a> </li>
+           <li> <a class="ds-twitter" href="javascript:void(0);" data-service="twitter"></a> </li>
+           <li> <a class="ds-facebook" href="javascript:void(0);" data-service="facebook"></a> </li>
+           <li> <a class="ds-linkedin" href="javascript:void(0);" data-service="linkedin"></a> </li>
+       </ul>
+   </div>
+</div>
 <!--多说分享 End -->
 
 </div>
@@ -790,22 +769,44 @@ void Set&lt;Typr&gt;FieldID(JNIEnv *env, jobject thiz, jfieldId fieldID, NativeT
   span_dt_dt.innerHTML="本站已萌萌哒运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
   }show_date_time();</script>
 
-  <script type="text/javascript">
+  <!-- <script type="text/javascript">
 	  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
 	  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
 	  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
 	  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
 	  _st('install','8i7AWfTU6yge5uNc4fmc','2.0.0');
-  </script>
+  </script> -->
+
   <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+  </script>
+
+  <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+
+  <!-- <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
         TeX: {equationNumbers: {
             autoNumber: ["AMS"], useLabelIds: true}},
             "HTML-CSS": {linebreaks: {automatic: true}},
             SVG: {linebreaks: {automatic: true}}
     });
-   </script>
+   </script> -->
+   
   	<!-- 多说公共JS代码 start (一个网页只需插入一次)
 	<script type="text/javascript">
 	var duoshuoQuery = {short_name:"wuyanfei"};
@@ -819,20 +820,24 @@ void Set&lt;Typr&gt;FieldID(JNIEnv *env, jobject thiz, jfieldId fieldID, NativeT
 	})();
 	</script>
 	多说公共JS代码 end -->
+
+
   <script type="text/javascript" src="/assets/js/jquery.js"></script>
+
   <script type="text/javascript" src="/assets/js/bootstrap.js"></script>
   <script type="text/javascript" src="/assets/js/jquery.pjax.js"></script>
-  <script type="text/javascript" src="/assets/js/echarts.min.js"></script>
+  <!-- <script type="text/javascript" src="/assets/js/echarts.min.js"></script> -->
   <script type="text/javascript" src="/assets/js/prettify/prettify.js"></script>
   <script type="text/javascript" src="/assets/js/stickUp.min.js"></script>
   <script type="text/javascript" src="/assets/js/fancybox/jquery.fancybox.pack.js"></script>
   <script type="text/javascript" src="/assets/js/fancybox/jquery.mousewheel-3.0.6.pack.js"></script>
   <script type="text/javascript" src="/assets/js/main.js"></script>
-
+  <script src="/search/js/bootstrap3-typeahead.min.js"></script>
   <link rel="stylesheet" href="/search/css/cb-search.css">
 
-  <script src="/search/js/bootstrap3-typeahead.min.js"></script>
+
   <script src="/search/js/cb-search.js"></script>
+
 
 </footer>
 
