@@ -12,7 +12,7 @@ description: install nginx on centos
 
 ### Add a repo for some packages that we need:
 
-[Install EPEL, IUS, and Remi repositories on CentOS and Red Hat] (https://support.rackspace.com/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat/)
+[Install EPEL, IUS, and Remi repositories on CentOS and Red Hat](https://support.rackspace.com/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat/)
 
 EPEL(Extra Packages for Enterprise Linux) Repo是Linux发行版中最大的软件仓库之一，免费，丰富的软件包更新。
 
