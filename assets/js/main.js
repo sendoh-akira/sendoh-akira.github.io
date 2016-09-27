@@ -108,13 +108,6 @@ function pajx_loadDuoshuo(){
     }
 
 		var dushare=$('.ds-share');
-    if($(dushare).length==1){
-        var el = document.createElement('div');
-        el.setAttribute('data-thread-key',$(dus).attr("data-thread-key"));//必选参数
-        el.setAttribute('data-url',$(dus).attr("data-url"));
-        DUOSHUO.EmbedThread(el);
-        $(dushare).html(el);
-    }
-
+		window.location.reload() ;
 
 }
