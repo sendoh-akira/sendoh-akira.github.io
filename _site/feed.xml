@@ -11,21 +11,21 @@
         <guid isPermaLink="true">https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html</guid>
         <pubDate>Fri, 23 Sep 2016 00:00:00 +0800</pubDate>
         <description>&lt;blockquote&gt;
-  &lt;p&gt;Nginx (pronounced “engine x”) is a free, open-source, high-performance HTTP server. Nginx is known for its stability, rich feature set, simple configuration, and low resource consumption. This tutorial shows how you can compile and install Nginx on CentOS server with SSL, PCRE, GeoIP, Zlib, Gzip and DAV supp&lt;/p&gt;
+  &lt;p&gt;Nginx(pronounced “engine x”) is a free, open-source, high-performance HTTP server. Nginx is known for its stability, rich feature set, simple configuration, and low resource consumption. This tutorial shows how you can compile and install Nginx on CentOS server with SSL, PCRE, GeoIP, Zlib, Gzip and DAV supp&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&quot;add-a-repo-for-some-packages-that-we-need&quot;&gt;Add a repo for some packages that we need:&lt;/h3&gt;
+&lt;h1 id=&quot;add-a-repo-for-some-packages-that-we-need&quot;&gt;Add a repo for some packages that we need:&lt;/h1&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://support.rackspace.com/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat&quot;&gt;Install EPEL, IUS, and Remi repositories on CentOS and Red Hat&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;EPEL(Extra Packages for Enterprise Linux) Repo是Linux发行版中最大的软件仓库之一，免费，丰富的软件包更新。&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;# rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-rpm-macros-6-11.noarch.rpm   
+&lt;pre&gt;&lt;code&gt;# rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-rpm-macros-6-11.noarch.rpm
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&quot;pre-installation&quot;&gt;Pre-Installation&lt;/h3&gt;
+&lt;h1 id=&quot;pre-installation&quot;&gt;Pre-Installation&lt;/h1&gt;
 
-&lt;p&gt;First we install httpd-devel, pcre, pcre-devel, zlib, zlib-devel, perl, geoip and geoip-devel  gcc gcc-c++ packages like this:&lt;/p&gt;
+&lt;p&gt;First we install httpd-devel, pcre, pcre-devel, zlib, zlib-devel, perl, geoip and geoip-devel gcc gcc-c++ packages like this:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;# yum install -y httpd-devel pcre perl pcre-devel zlib zlib-devel GeoIP GeoIP-devel  gcc gcc-c++
 &lt;/code&gt;&lt;/pre&gt;
@@ -36,7 +36,7 @@
 # /usr/sbin/useradd -g nginx nginx
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&quot;download-required-packages&quot;&gt;Download required packages&lt;/h3&gt;
+&lt;h1 id=&quot;download-required-packages&quot;&gt;Download required packages&lt;/h1&gt;
 
 &lt;pre&gt;&lt;code&gt;# cd /usr/local/src/
 # wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
@@ -44,14 +44,14 @@
 # wget https://www.openssl.org/source/openssl-1.0.1u.tar.gz
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&quot;now-you-have-to-untar-these-files&quot;&gt;Now you have to untar these files.&lt;/h3&gt;
+&lt;h1 id=&quot;now-you-have-to-untar-these-files&quot;&gt;Now you have to untar these files.&lt;/h1&gt;
 
 &lt;pre&gt;&lt;code&gt;# tar -xvf pcre-8.38
 # tar -xvf zlib-1.2.8.tar.gz
 # tar -xvf openssl-1.0.1u.tar.gz
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&quot;download-nginx-source-package&quot;&gt;Download Nginx source package&lt;/h3&gt;
+&lt;h1 id=&quot;download-nginx-source-package&quot;&gt;Download Nginx source package&lt;/h1&gt;
 
 &lt;p&gt;You need to download Nginx source package from &lt;a href=&quot;http://nginx.org/&quot;&gt;nginx.org&lt;/a&gt;,nginx wiki from &lt;a href=&quot;https://www.nginx.com/resources/wiki&quot;&gt;nginx wiki&lt;/a&gt;&lt;/p&gt;
 
@@ -61,7 +61,7 @@
 # cd nginx-1.11.4
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&quot;compile-and-install-nginx&quot;&gt;Compile and Install Nginx&lt;/h3&gt;
+&lt;h1 id=&quot;compile-and-install-nginx&quot;&gt;Compile and Install Nginx&lt;/h1&gt;
 
 &lt;p&gt;Now you can compile and install Nginx with the following commands:&lt;/p&gt;
 
@@ -124,22 +124,22 @@ nginx http proxy temporary files: &quot;proxy_temp&quot;
 nginx http fastcgi temporary files: &quot;fastcgi_temp&quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&quot;start-nginx-server&quot;&gt;Start Nginx Server&lt;/h3&gt;
+&lt;h1 id=&quot;start-nginx-server&quot;&gt;Start Nginx Server&lt;/h1&gt;
 
 &lt;pre&gt;&lt;code&gt;# /usr/local/develop/nginx/bin/nginx -c /usr/local/develop/nginx/etc/nginx.conf
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&quot;stop-nginx-server&quot;&gt;Stop Nginx Server&lt;/h3&gt;
+&lt;h1 id=&quot;stop-nginx-server&quot;&gt;Stop Nginx Server&lt;/h1&gt;
 
 &lt;pre&gt;&lt;code&gt;# /usr/local/develop/nginx/bin/nginx -s stop
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&quot;testing&quot;&gt;Testing&lt;/h3&gt;
+&lt;h1 id=&quot;testing&quot;&gt;Testing&lt;/h1&gt;
 
 &lt;pre&gt;&lt;code&gt;# /usr/local/develop/nginx/bin/nginx -V
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&quot;brower&quot;&gt;brower&lt;/h3&gt;
+&lt;h1 id=&quot;brower&quot;&gt;brower&lt;/h1&gt;
 
 &lt;pre&gt;&lt;code&gt;http://ip/
 &lt;/code&gt;&lt;/pre&gt;

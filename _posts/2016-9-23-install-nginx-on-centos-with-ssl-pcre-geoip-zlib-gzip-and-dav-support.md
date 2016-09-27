@@ -6,23 +6,21 @@ tags: nginx
 description: install nginx on centos
 ---
 
-> Nginx (pronounced "engine x") is a free, open-source, high-performance HTTP server. Nginx is known for its stability, rich feature set, simple configuration, and low resource consumption. This tutorial shows how you can compile and install Nginx on CentOS server with SSL, PCRE, GeoIP, Zlib, Gzip and DAV supp
+> Nginx(pronounced "engine x") is a free, open-source, high-performance HTTP server. Nginx is known for its stability, rich feature set, simple configuration, and low resource consumption. This tutorial shows how you can compile and install Nginx on CentOS server with SSL, PCRE, GeoIP, Zlib, Gzip and DAV supp
 
-
-
-### Add a repo for some packages that we need:
+# Add a repo for some packages that we need:
 
 [Install EPEL, IUS, and Remi repositories on CentOS and Red Hat](https://support.rackspace.com/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat)
 
 EPEL(Extra Packages for Enterprise Linux) Repo是Linux发行版中最大的软件仓库之一，免费，丰富的软件包更新。
 
 ```
-# rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-rpm-macros-6-11.noarch.rpm   
+# rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-rpm-macros-6-11.noarch.rpm
 ```
 
-### Pre-Installation
+# Pre-Installation
 
-First we install httpd-devel, pcre, pcre-devel, zlib, zlib-devel, perl, geoip and geoip-devel  gcc gcc-c++ packages like this:
+First we install httpd-devel, pcre, pcre-devel, zlib, zlib-devel, perl, geoip and geoip-devel gcc gcc-c++ packages like this:
 
 ```
 # yum install -y httpd-devel pcre perl pcre-devel zlib zlib-devel GeoIP GeoIP-devel  gcc gcc-c++
@@ -35,7 +33,7 @@ Create group and user for nginx
 # /usr/sbin/useradd -g nginx nginx
 ```
 
-### Download required packages
+# Download required packages
 
 ```
 # cd /usr/local/src/
@@ -44,7 +42,7 @@ Create group and user for nginx
 # wget https://www.openssl.org/source/openssl-1.0.1u.tar.gz
 ```
 
-### Now you have to untar these files.
+# Now you have to untar these files.
 
 ```
 # tar -xvf pcre-8.38
@@ -52,7 +50,7 @@ Create group and user for nginx
 # tar -xvf openssl-1.0.1u.tar.gz
 ```
 
-### Download Nginx source package
+# Download Nginx source package
 
 You need to download Nginx source package from [nginx.org](http://nginx.org/),nginx wiki from [nginx wiki](https://www.nginx.com/resources/wiki)
 
@@ -63,7 +61,7 @@ You need to download Nginx source package from [nginx.org](http://nginx.org/),ng
 # cd nginx-1.11.4
 ```
 
-### Compile and Install Nginx
+# Compile and Install Nginx
 
 Now you can compile and install Nginx with the following commands:
 
@@ -100,16 +98,20 @@ Now you can compile and install Nginx with the following commands:
 
 You can find out more options by using the following command:
 
-	```
-	# ./configure --help
-	```
+````
+```
+# ./configure --help
+```
+````
 
 Now run:
 
-	```
-	# make
-	# make install
-	```
+````
+```
+# make
+# make install
+```
+````
 
 Configuration Summary
 
@@ -126,25 +128,25 @@ nginx http proxy temporary files: "proxy_temp"
 nginx http fastcgi temporary files: "fastcgi_temp"
 ```
 
-### Start Nginx Server
+# Start Nginx Server
 
 ```
 # /usr/local/develop/nginx/bin/nginx -c /usr/local/develop/nginx/etc/nginx.conf
 ```
 
-### Stop Nginx Server
+# Stop Nginx Server
 
 ```
 # /usr/local/develop/nginx/bin/nginx -s stop
 ```
 
-### Testing
+# Testing
 
 ```
 # /usr/local/develop/nginx/bin/nginx -V
 ```
 
-### brower
+# brower
 
 ```
 http://ip/

@@ -10,7 +10,7 @@
   <meta name="keywords" content="武燕飞,https://sendoh-akira.github.io/">
 
   <title>Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support | Sendoh Akira</title>
-  <meta name="description" content="  Nginx (pronounced “engine x”) is a free, open-source, high-performance HTTP server. Nginx is known for its stability, rich feature set, simple configuratio...">
+  <meta name="description" content="  Nginx(pronounced “engine x”) is a free, open-source, high-performance HTTP server. Nginx is known for its stability, rich feature set, simple configuration...">
 
 
   <link rel="stylesheet" href="/assets/css/bootstrap.css">
@@ -193,21 +193,21 @@
 
   <article class="post-content">
     <blockquote>
-  <p>Nginx (pronounced “engine x”) is a free, open-source, high-performance HTTP server. Nginx is known for its stability, rich feature set, simple configuration, and low resource consumption. This tutorial shows how you can compile and install Nginx on CentOS server with SSL, PCRE, GeoIP, Zlib, Gzip and DAV supp</p>
+  <p>Nginx(pronounced “engine x”) is a free, open-source, high-performance HTTP server. Nginx is known for its stability, rich feature set, simple configuration, and low resource consumption. This tutorial shows how you can compile and install Nginx on CentOS server with SSL, PCRE, GeoIP, Zlib, Gzip and DAV supp</p>
 </blockquote>
 
-<h3 id="add-a-repo-for-some-packages-that-we-need">Add a repo for some packages that we need:</h3>
+<h1 id="add-a-repo-for-some-packages-that-we-need">Add a repo for some packages that we need:</h1>
 
 <p><a href="https://support.rackspace.com/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat">Install EPEL, IUS, and Remi repositories on CentOS and Red Hat</a></p>
 
 <p>EPEL(Extra Packages for Enterprise Linux) Repo是Linux发行版中最大的软件仓库之一，免费，丰富的软件包更新。</p>
 
-<pre><code># rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-rpm-macros-6-11.noarch.rpm   
+<pre><code># rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-rpm-macros-6-11.noarch.rpm
 </code></pre>
 
-<h3 id="pre-installation">Pre-Installation</h3>
+<h1 id="pre-installation">Pre-Installation</h1>
 
-<p>First we install httpd-devel, pcre, pcre-devel, zlib, zlib-devel, perl, geoip and geoip-devel  gcc gcc-c++ packages like this:</p>
+<p>First we install httpd-devel, pcre, pcre-devel, zlib, zlib-devel, perl, geoip and geoip-devel gcc gcc-c++ packages like this:</p>
 
 <pre><code># yum install -y httpd-devel pcre perl pcre-devel zlib zlib-devel GeoIP GeoIP-devel  gcc gcc-c++
 </code></pre>
@@ -218,7 +218,7 @@
 # /usr/sbin/useradd -g nginx nginx
 </code></pre>
 
-<h3 id="download-required-packages">Download required packages</h3>
+<h1 id="download-required-packages">Download required packages</h1>
 
 <pre><code># cd /usr/local/src/
 # wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
@@ -226,14 +226,14 @@
 # wget https://www.openssl.org/source/openssl-1.0.1u.tar.gz
 </code></pre>
 
-<h3 id="now-you-have-to-untar-these-files">Now you have to untar these files.</h3>
+<h1 id="now-you-have-to-untar-these-files">Now you have to untar these files.</h1>
 
 <pre><code># tar -xvf pcre-8.38
 # tar -xvf zlib-1.2.8.tar.gz
 # tar -xvf openssl-1.0.1u.tar.gz
 </code></pre>
 
-<h3 id="download-nginx-source-package">Download Nginx source package</h3>
+<h1 id="download-nginx-source-package">Download Nginx source package</h1>
 
 <p>You need to download Nginx source package from <a href="http://nginx.org/">nginx.org</a>,nginx wiki from <a href="https://www.nginx.com/resources/wiki">nginx wiki</a></p>
 
@@ -243,7 +243,7 @@
 # cd nginx-1.11.4
 </code></pre>
 
-<h3 id="compile-and-install-nginx">Compile and Install Nginx</h3>
+<h1 id="compile-and-install-nginx">Compile and Install Nginx</h1>
 
 <p>Now you can compile and install Nginx with the following commands:</p>
 
@@ -306,22 +306,22 @@ nginx http proxy temporary files: "proxy_temp"
 nginx http fastcgi temporary files: "fastcgi_temp"
 </code></pre>
 
-<h3 id="start-nginx-server">Start Nginx Server</h3>
+<h1 id="start-nginx-server">Start Nginx Server</h1>
 
 <pre><code># /usr/local/develop/nginx/bin/nginx -c /usr/local/develop/nginx/etc/nginx.conf
 </code></pre>
 
-<h3 id="stop-nginx-server">Stop Nginx Server</h3>
+<h1 id="stop-nginx-server">Stop Nginx Server</h1>
 
 <pre><code># /usr/local/develop/nginx/bin/nginx -s stop
 </code></pre>
 
-<h3 id="testing">Testing</h3>
+<h1 id="testing">Testing</h1>
 
 <pre><code># /usr/local/develop/nginx/bin/nginx -V
 </code></pre>
 
-<h3 id="brower">brower</h3>
+<h1 id="brower">brower</h1>
 
 <pre><code>http://ip/
 </code></pre>
