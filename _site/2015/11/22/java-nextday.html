@@ -28,7 +28,15 @@
   <script type="text/javascript" src="/assets/js/ua-parser.js"></script>
   <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
   <script>
-    var duoshuoQuery = {short_name:"wuyanfei"};
+  var duoshuoQuery = {short_name:"wuyanfei"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.unstable.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+       || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
   </script>
 </head>
 
@@ -396,8 +404,8 @@ public class NextDay{
 <!-- 百度分享 END -->
 <!--多说分享 Begin -->
 <div class="ds-share flat" data-thread-key="/2015/11/22/java-nextday" data-title="计算nextDay的实现" data-images="" data-content="计算nextDay的实现" data-url="https://sendoh-akira.github.io/2015/11/22/java-nextday.html">
-  <div class="ds-share-inline">
-       <ul  class="ds-share-icons-32">
+  <div id="ds-reset" class="ds-share-inline">
+       <ul  class="ds-share-icons-32" services="weibo,wechat,qq,douban,twitter,facebook,linkedin">
            <li> <a class="ds-weibo" href="javascript:void(0);" data-service="weibo"></a> </li>
            <li> <a class="ds-wechat" href="javascript:void(0);" data-service="wechat"></a> </li>
            <li> <a class="ds-qq" href="javascript:void(0);" data-service="qq"></a> </li>
@@ -408,6 +416,7 @@ public class NextDay{
        </ul>
    </div>
 </div>
+
 <!--多说分享 End -->
 
 </div>
@@ -430,21 +439,8 @@ public class NextDay{
   </div>
 
   <!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="/2015/11/22/java-nextday" data-title="计算nextDay的实现" data-url=""></div>
-	<!-- 多说评论框 end -->
-	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"wuyanfei"};
-		(function() {
-			var ds = document.createElement('script');
-			ds.type = 'text/javascript';ds.async = true;
-			ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.unstable.js';
-			ds.charset = 'UTF-8';
-			(document.getElementsByTagName('head')[0]
-			 || document.getElementsByTagName('body')[0]).appendChild(ds);
-		})();
-		</script>
-	<!-- 多说公共JS代码 end -->
+<div class="ds-thread" data-thread-key="/2015/11/22/java-nextday" data-title="计算nextDay的实现" data-url=""></div>
+<!-- 多说评论框 end -->
 
 </div>				
 			</div>

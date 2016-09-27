@@ -98,6 +98,8 @@ $(document).ready(function() {
 });
 
 function pajx_loadDuoshuo(){
+
+
     var dus=$('.ds-thread');
     if($(dus).length==1){
         var el = document.createElement('div');
@@ -106,8 +108,5 @@ function pajx_loadDuoshuo(){
         DUOSHUO.EmbedThread(el);
         $(dus).html(el);
     }
-
-		var dushare=$('.ds-share');
-		window.location.reload() ;
-
+		window.location.reload();
 }
