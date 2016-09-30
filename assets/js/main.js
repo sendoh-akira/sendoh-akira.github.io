@@ -101,16 +101,15 @@ function pajx_loadDuoshuo(){
 
 
     var dus=$('.ds-thread');
-		var dushare = $('.ds-share')
+	
     if($(dus).length==1){
-			//duoshuo JS 不生效处理
-			window.location.reload();
-			// var el = document.createElement('div');
-			// el.setAttribute('data-thread-key',$(dus).attr("data-thread-key"));//必选参数
-			// el.setAttribute('data-url',$(dus).attr("data-url"));
-			// DUOSHUO.EmbedThread(el);
-			// $(dus).html(el);
-			//
+
+			var el = document.createElement('div');
+			el.setAttribute('data-thread-key',$(dus).attr("data-thread-key"));//必选参数
+			el.setAttribute('data-url',$(dus).attr("data-url"));
+			DUOSHUO.EmbedThread(el);
+			$(dus).html(el);
+
     }
 
 }
