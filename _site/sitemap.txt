@@ -44,3 +44,5 @@
   /2015/11/09/java-comeputerTestHomework.html
 
   /2015/11/06/book-list-of-2015.html
+
+  /2014/10/03/other.html
