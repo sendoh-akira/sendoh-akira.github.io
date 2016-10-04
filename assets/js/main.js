@@ -101,7 +101,7 @@ function pajx_loadDuoshuo(){
 
 
     var dus=$('.ds-thread');
-	
+
     if($(dus).length==1){
 
 			var el = document.createElement('div');
