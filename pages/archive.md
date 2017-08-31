@@ -3,21 +3,35 @@ layout: default
 title: 归档
 permalink: /pages/archive.html
 ---
+<table  class="table table-condensed" >
+	<tr>
+		<td align="right">
+			<select onchange="read(this);">
+				<option value="class">按类型</option>
+				<option value="tags">按标签</option>
+				<option value="date" selected="selected">按时间</option>
+			</select>
+		</td>
+	</tr>
+</table>
+
 <div class="home">
+
+
 	{% for post in site.posts  %}
 	    {% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
 	    {% capture this_month %}{{ post.date | date: "%m" }}{% endcapture %}
 	    {% capture next_year %}{{ post.previous.date | date: "%Y" }}{% endcapture %}
 	    {% capture next_month %}{{ post.previous.date | date: "%m" }}{% endcapture %}
-	  
+
 	    {% if forloop.first %}
 	      <legend id="{{this_year}}-{{this_month}}">{{this_year}}年-{{this_month}}月</legend>
 	      <ul>
 	    {% endif %}
-	    <li class="archive_span"><span>{{ post.date | date: "%Y年-%m月-%d日" }}</span> &raquo; 
+	    <li class="archive_span"><span>{{ post.date | date: "%Y年-%m月-%d日" }}</span> &raquo;
 	      <a class="pjaxlink"  href="{{site.baseurl }}{{ post.url }}">{{ post.title }}</a>
 	    </li>
-	  
+
 	    {% if forloop.last %}
 	      </ul>
 	    {% else %}
