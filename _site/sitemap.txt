@@ -23,6 +23,10 @@
 
 
 
+  /2017/08/31/linux%E5%AE%89%E8%A3%85mysql.html
+
+  /2017/08/31/linux%E5%AE%89%E8%A3%85jdk7.html
+
   /2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html
 
   /2016/09/22/spring_interview_questions_and_answers.html

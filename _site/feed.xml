@@ -6,6 +6,718 @@
     <description></description>
     
       <item>
+        <title>在linux下安装mysql</title>
+        <link>https://sendoh-akira.github.io/2017/08/31/linux%E5%AE%89%E8%A3%85mysql.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2017/08/31/linux%E5%AE%89%E8%A3%85mysql.html</guid>
+        <pubDate>Thu, 31 Aug 2017 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;在linux下进行安装mysql server&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;section&quot;&gt;安装前准备&lt;/h1&gt;
+
+&lt;p&gt;MySQL 依赖 libaio,所以先要安装 libaio
+yum-based systems:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# search for info
+yum search libaio
+# install library
+yum install libaio
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;APT-based systems:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# search for info 
+apt-cache search libaio 
+# install library
+apt-get install libaio
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;yum&quot;&gt;使用yum库在线安装&lt;/h1&gt;
+
+&lt;p&gt;MySQL 提供了一个Yum格式的软件库可以在Linux平台发现:&lt;/p&gt;
+
+&lt;p&gt;EL5, EL6, and EL7-based platforms (for example, the corresponding versions of Red Hat Enterprise Linux, Oracle Linux, and CentOS) Fedora 23 and 24&lt;/p&gt;
+
+&lt;h2 id=&quot;mysql-yum-&quot;&gt;添加 MySQL Yum 库&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;MySQL Server Yum 库主页 (http://dev.mysql.com/downloads/repo/yum/) in the MySQL Developer Zone.&lt;/li&gt;
+  &lt;li&gt;选择并下载对应系统库到本地&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;通过命令安装&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; sudo yum localinstall platform-and-version-specific-package-name.rpm
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;EL6-based system:&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; sudo yum localinstall mysql57-community-release-el6-{version-number}.noarch.rpm
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;EL7-based system:&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; sudo yum localinstall mysql57-community-release-el7-{version-number}.noarch.rpm
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;EL5-based system:&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; sudo rpm -Uvh mysql57-community-release-el5-{version-number}.noarch.rpm
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;检查是否安装成功
+    &lt;pre&gt;&lt;code&gt;yum repolist enabled | grep &quot;mysql.*-community.*&quot;
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;选择发布版本的库&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;查看可用版本&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; yum repolist all | grep mysql
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;支持yum-config-manager&lt;/p&gt;
+
+    &lt;p&gt;选择要启用/停用的mysql服务&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; sudo yum-config-manager --disable mysql57-community
+ sudo yum-config-manager --enable mysql56-community
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;或者修改配置文件&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; vi /etc/yum.repos.d/mysql-community.repo
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;停用：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; enabled=0 disable 
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;启用：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; enabled=1 enable 
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;安装mysql5.7yum库&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; [mysql57-community]
+
+ name=MySQL 5.7 Community Server baseurl=http://repo.mysql.com/yum/mysql-5.7-community/el/6/$basearch/ 
+ enabled=1
+
+ gpgcheck=1
+
+ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;安装mysql5.6 yum库&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; #Enable to use MySQL 5.6 
+ [mysql56-community]
+
+ name=MySQL 5.6 Community Server
+ baseurl=http://repo.mysql.com/yum/mysql-5.6-community/el/6/$basearch/ 
+ enabled=1
+
+ gpgcheck=1 
+ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;检查生效的库&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; yum repolist enabled | grep mysql
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;安装MySQL&lt;/p&gt;
+
+    &lt;p&gt;安装MySQL&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; sudo yum install mysql-community-server
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;启动MySQL Server&lt;/p&gt;
+
+    &lt;p&gt;启动MySQL Server&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; sudo service mysqld start
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;启动成功输出结果：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; Starting mysqld:[ OK ]
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;检查MySQL server 状态&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; sudo service mysqld status
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;检查MySQL server 状态输出结果&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; mysqld (pid 3066) is running.
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;其他&lt;/h2&gt;
+
+&lt;p&gt;安全策略
+	&lt;code&gt;
+	mysql_secure_installation
+	&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;忘记密码处理&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;进入mysql安装目录&lt;/p&gt;
+
+    &lt;p&gt;5.7以后使用authentication_string
+ Update mysql.user set authentication_string=password(‘root’) where user=’root’ ;
+ FLUSH PRIVILEGES;&lt;/p&gt;
+
+    &lt;p&gt;抛出警告信息
+ Your password does not satisfy the current policy requirements&lt;/p&gt;
+
+    &lt;p&gt;关闭安全策略&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; vi /etc/my.cnf  
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;末尾追加&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; validate_password = OFF
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;安全模式下修改密码&lt;/p&gt;
+
+    &lt;p&gt;安全模式下启动服务&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; ./bin/mysqld_safe   --user=root --skip-grant-tables &amp;amp; 
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;进入mysql,修改密码
+     mysql -u root
+     mysql -u root&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; UPDATE mysql.user SET Password = PASSWORD('new_password')  WHERE User = 'root';
+
+ FLUSH PRIVILEGES;
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;使用mysqladmin&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; shell&amp;gt; mysqladmin -u root password &quot;new_password&quot;
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;初始化数据库&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;找到mysql安装目录，这里引用使用MYSQL_HOME&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; cd $MYSQL_HOME	
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;改变文件夹权限修改文件&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; chown -R mysql .
+ chgrp -R mysql .
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;初始化数据库&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; scripts/mysql_install_db --user=mysql
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;可指定安装选项&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; scripts/mysql_install_db --user=mysql \ --basedir=/usr/local/apps/mysql \ --datadir=/usr/local/apps/mysql/data
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;mysqlinstalldb 选项&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Format&lt;/td&gt;
+          &lt;td&gt;Description&lt;/td&gt;
+          &lt;td&gt;Introduced&lt;/td&gt;
+          &lt;td&gt;Deprecated&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–basedir&lt;/td&gt;
+          &lt;td&gt;Path to base directory&lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–builddir&lt;/td&gt;
+          &lt;td&gt;Path to build directory (for out-of-source builds)&lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–cross-bootstrap&lt;/td&gt;
+          &lt;td&gt;For internal use&lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–datadir&lt;/td&gt;
+          &lt;td&gt;Path to data directory&lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–defaults-extra-file&lt;/td&gt;
+          &lt;td&gt;Read named option file in addition to usual option files&lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–defaults-file&lt;/td&gt;
+          &lt;td&gt;Read only named option file&lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–force&lt;/td&gt;
+          &lt;td&gt;Run even if DNS does not work&lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–help&lt;/td&gt;
+          &lt;td&gt;Display help message and exit&lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–keep-my-cnf&lt;/td&gt;
+          &lt;td&gt;Keep existing my.cnf file, do not create new one&lt;/td&gt;
+          &lt;td&gt;5.6.20&lt;/td&gt;
+          &lt;td&gt;5.6.20&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–ldata&lt;/td&gt;
+          &lt;td&gt;Synonym for –datadir&lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–no-defaults&lt;/td&gt;
+          &lt;td&gt;Read no option files&lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–random-passwords&lt;/td&gt;
+          &lt;td&gt;Generate administrative account random password&lt;/td&gt;
+          &lt;td&gt;5.6.8&lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–rpm&lt;/td&gt;
+          &lt;td&gt;For internal use&lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–skip-name-resolve&lt;/td&gt;
+          &lt;td&gt;Use IP addresses rather than host names in grant tables&lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–srcdir&lt;/td&gt;
+          &lt;td&gt;For internal use&lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–user&lt;/td&gt;
+          &lt;td&gt;System login user under which to execute mysqld&lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–verbose&lt;/td&gt;
+          &lt;td&gt;Verbose mode&lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–windows&lt;/td&gt;
+          &lt;td&gt;For internal use&lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+          &lt;td&gt; &lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;设置最终文件权限&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; chown -R root .
+ chown -R mysql data
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;启动配置&lt;/p&gt;
+
+    &lt;p&gt;/etc/my.cnf or /etc/mysql/my.cnf file&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; vi	/etc/mysql/my.cnf
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;mysql&quot;&gt;Mysql服务&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;开机启动Mysql服务设置，进入mysql目录执行下面命令：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; cp mysql.server /etc/init.d/mysql 
+ chmod +x /etc/init.d/mysql
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;添加mysql用户
+ chkconfig –add mysql&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;mysql.server 选项设置，在 /etc/my.cnf file&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; [mysqld]
+
+ datadir=/usr/local/mysql/var
+
+ socket=/var/tmp/mysql.sock
+
+ port=3306
+
+ user=mysql
+
+ [mysql.server]
+
+ basedir=/usr/local/mysql
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;mysql.server 选项&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Format&lt;/td&gt;
+          &lt;td&gt;Description&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–basedir&lt;/td&gt;
+          &lt;td&gt;Path to MySQL installation directory&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–datadir&lt;/td&gt;
+          &lt;td&gt;Path to MySQL data directory&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–pid-file&lt;/td&gt;
+          &lt;td&gt;File in which server should write its process ID&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;–service-startup-timeout&lt;/td&gt;
+          &lt;td&gt;How long to wait for server startup&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;unixlinux-&quot;&gt;在 Unix/Linux 使用通用的二进制文件安装&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;下载文件&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;安装 mysql&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; groupadd mysql
+ useradd -r -g mysql -s /bin/false mysql 
+ cd /usr/local/apps/
+ tar zxvf /path/to/mysql-VERSION-OS.tar.gz 
+ ln -s full-path-to-mysql-VERSION-OS mysql 
+ cd mysql
+ chown -R mysql . 
+ chgrp -R mysql .
+ scripts/mysql_install_db --user=mysql 
+ chown -R root .
+ chown -R mysql data
+ bin/mysqld_safe --user=mysql &amp;amp;
+ # Next command is optional
+ cp support-files/mysql.server /etc/init.d/mysql.server
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;环境变量配置&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; vi /etc/profile
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;末尾追加&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt;MYSQL_HOME = /usr/local/apps/mysql 
+export PATH=$PATH:$MYSQL_HOME/bin
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;section-4&quot;&gt;其他&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;设置编码格式&lt;/p&gt;
+
+    &lt;p&gt;找到mysql启动配置文件，如my.cnf&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; vi my.cnf
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;追加以下内容&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; [mysqld]   
+ character_set_server = utf8
+
+ [mysql]
+ default-character-set = utf8
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;进入mysql，查看字符编码&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; SHOW VARIABLES LIKE 'character%'
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;其他常用参数&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; [mysqld]   
+ basedir      = path          # 使用给定目录作为根目录(安装目录)。
+ datadir      = path          # 从给定目录读取数据库文件。
+ pid-file     = filename      # 为mysqld程序指定一个存放进程ID的文件(仅适用于UNIX/Linux系统);
+
+
+ socket = /tmp/mysql.sock     # 为MySQL客户程序与服务器之间的本地通信指定一个套接字文件(Linux下默认是/var/lib/mysql/mysql.sock文件)
+ port             = 3306      # 指定MsSQL侦听的端口
+ key_buffer       = 384M      # key_buffer是用于索引块的缓冲区大小，增加它可得到更好处理的索引(对所有读和多重写)。
+                                索引块是缓冲的并且被所有的线程共享，key_buffer的大小视内存大小而定。
+ table_cache      = 512       # 为所有线程打开表的数量。增加该值能增加mysqld要求的文件描述符的数量。可以避免频繁的打开数据表产生的开销
+ sort_buffer_size = 2M        # 每个需要进行排序的线程分配该大小的一个缓冲区。增加这值加速ORDER BY或GROUP BY操作。
+                                注意：该参数对应的分配内存是每连接独占！如果有100个连接，那么实际分配的总共排序缓冲区大小为100×6=600MB
+ read_buffer_size = 2M        # 读查询操作所能使用的缓冲区大小。和sort_buffer_size一样，该参数对应的分配内存也是每连接独享。
+ query_cache_size = 32M       # 指定MySQL查询结果缓冲区的大小
+ read_rnd_buffer_size    = 8M # 改参数在使用行指针排序之后，随机读用的。
+ myisam_sort_buffer_size =64M # MyISAM表发生变化时重新排序所需的缓冲
+ thread_concurrency      = 8 # 最大并发线程数，取值为服务器逻辑CPU数量×2，如果CPU支持H.T超线程，再×2
+ thread_cache            = 8 # #缓存可重用的线程数
+ skip-locking                 # 避免MySQL的外部锁定，减少出错几率增强稳定性。
+ [mysqldump]
+ max_allowed_packet      =16M # 服务器和客户端之间最大能发送的可能信息包
+
+ [myisamchk]
+ key_buffer   = 256M
+ sort_buffer = 256M
+ read_buffer = 2M
+ write_buffer = 2M
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;备份，还原&lt;/p&gt;
+
+    &lt;p&gt;备份&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; mysqldump --socket=/usr/local/apps/mysql/data/mysql/mysql.sock --single-transaction=TRUE  -u root -p emsc &amp;gt; emsc.sql
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;还原&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; mysql --socket=/usr/local/apps/mysql/data/mysql/mysql.sock  -u root -p emsc &amp;lt; emsc.sql
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+</description>
+      </item>
+    
+      <item>
+        <title>在linux下安装jdk7</title>
+        <link>https://sendoh-akira.github.io/2017/08/31/linux%E5%AE%89%E8%A3%85jdk7.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2017/08/31/linux%E5%AE%89%E8%A3%85jdk7.html</guid>
+        <pubDate>Thu, 31 Aug 2017 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;在linux下进行安装jdk7&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;jdk7&quot;&gt;jdk7安装指南&lt;/h1&gt;
+
+&lt;p&gt;参考安装网址&lt;/p&gt;
+
+&lt;p&gt;1.文档地址&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;http://docs.oracle.com/javase/7/docs/webnotes/install/linux/linux-jdk.html
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2.下载jdk地址&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;http://www.oracle.com/technetwork/java/javase/downloads/index.html
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;找到对应的Jdk版本包&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;jdk-7u&amp;lt;version&amp;gt;-linux-i586.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;如：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;jdk-7u1-linux-i586.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;列表为linux平台Jdk7版本&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;文件名&lt;/td&gt;
+      &lt;td&gt;结构&lt;/td&gt;
+      &lt;td&gt;用户权限&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;jdk-7u&lt;version&gt;-linux-x64.tar.gz&lt;/version&gt;&lt;/td&gt;
+      &lt;td&gt;64-bit&lt;/td&gt;
+      &lt;td&gt;anyone&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;jdk-7u&lt;version&gt;-linux-i586.tar.gz&lt;/version&gt;&lt;/td&gt;
+      &lt;td&gt;32-bit&lt;/td&gt;
+      &lt;td&gt;anyone&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;jdk-7u&lt;version&gt;-linux-x64.rpm&lt;/version&gt;&lt;/td&gt;
+      &lt;td&gt;64-bit RPM-based Linux&lt;/td&gt;
+      &lt;td&gt;root&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;jdk-7u&lt;version&gt;-linux-i586.rpm&lt;/version&gt;&lt;/td&gt;
+      &lt;td&gt;32-bit RPM-based Linux&lt;/td&gt;
+      &lt;td&gt;root&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&quot;section&quot;&gt;安装前准备&lt;/h1&gt;
+
+&lt;p&gt;1.检查JDK命令&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;java -version
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2.查询本地 JDK 安装程序情况&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rpm -qa|grep java
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;卸载发现的本地JDK&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;rpm e &amp;lt;package_name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;3.创建相关目录
+Tip:养成好的习惯&lt;/p&gt;
+
+&lt;p&gt;创建一个目录，用来存放各种软件安装包&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd /usr/local  
+mkdir apps
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;jdk&quot;&gt;安装64位jdk&lt;/h1&gt;
+
+&lt;p&gt;文件&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;jdk-7u&amp;lt;version&amp;gt;-linux-x64.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;1.下载文件到本地&lt;/p&gt;
+
+&lt;p&gt;如: jdk下载地址为jdk_tarball_url&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;wget &amp;lt;jdk_tarball_url&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;2.解压tarball&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;tar zxvf jdk-7u&amp;lt;version&amp;gt;-linux-x64.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;3.移动到之前创建的存放软件目录&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mv jdk-7u&amp;lt;version&amp;gt;/ /usr/local/apps/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;linux64jdkrpm&quot;&gt;Linux平台安装64位JDK基于RPM文件&lt;/h1&gt;
+
+&lt;p&gt;文件&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;jdk-7u&amp;lt;version&amp;gt;-linux-x64.rpm
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;1.下载文件到本地&lt;/p&gt;
+
+&lt;p&gt;如: jdk下载地址为jdk_rpm_url&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;wget  &amp;lt;jdk_rpm_url&amp;gt;.rpm
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;2.切换到root用户&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;su - root
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;3.卸载早期版本&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rpm -e &amp;lt;package_name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;4.安装&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rpm -ivh jdk-7u&amp;lt;version&amp;gt;-linux-i586.rpm
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;5.更新&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;rpm -Uvh jdk-7u&amp;lt;version&amp;gt;-linux-i586.rpm
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;section-1&quot;&gt;收尾工作&lt;/h1&gt;
+&lt;p&gt;1.配置环境变量
+编辑配置文件&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo vim /etc/profile
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在该文件的末尾，添加下面内容：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;JAVA_HOME=/usr/local/apps/jdk-7u&amp;lt;version&amp;gt;	
+JRE_HOME=$JAVA_HOME/jre	
+PATH=$PATH:$JAVA_HOME/bin	
+CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar export JAVA_HOME
+export JRE_HOME export PATH export CLASSPATH
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;执行命令，刷新该配置&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;source /etc/profile
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;2.检查安装是否成功&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;java -version
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      </item>
+    
+      <item>
         <title>Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support</title>
         <link>https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html</link>
         <guid isPermaLink="true">https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html</guid>

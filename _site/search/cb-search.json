@@ -3,6 +3,22 @@
 	"data" : [
 	 
 	{
+		"title" : "在linux下安装mysql - 技术",
+		"url" : "/2017/08/31/linux%E5%AE%89%E8%A3%85mysql.html"
+	}
+	
+	,
+	
+    
+	{
+		"title" : "在linux下安装jdk7 - 技术",
+		"url" : "/2017/08/31/linux%E5%AE%89%E8%A3%85jdk7.html"
+	}
+	
+	,
+	
+    
+	{
 		"title" : "Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support - 技术",
 		"url" : "/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html"
 	}

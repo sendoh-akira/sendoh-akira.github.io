@@ -9,8 +9,8 @@
   <!-- 添加搜索关键字 -->
   <meta name="keywords" content="武燕飞,https://sendoh-akira.github.io/">
 
-  <title>分类 | Sendoh Akira</title>
-  <meta name="description" content="">
+  <title>在linux下安装jdk7 | Sendoh Akira</title>
+  <meta name="description" content="  在linux下进行安装jdk7">
 
   <!-- <script src="https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/ecom/esl/2-1-4/esl.js"></script> -->
   <link rel="stylesheet" href="/assets/css/bootstrap.css">
@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="/assets/js/prettify/prettify.css">
   <link rel="shortcut icon" href="/assets/img/favicon_2.png" />
   <link rel="stylesheet" href="/assets/css/duoshuo.css">
-  <link rel="canonical" href="https://sendoh-akira.github.io/pages/class.html">
+  <link rel="canonical" href="https://sendoh-akira.github.io/2017/08/31/linux%E5%AE%89%E8%A3%85jdk7.html">
   <link rel="alternate" type="application/rss+xml" title="Sendoh Akira" href="https://sendoh-akira.github.io/feed.xml" />
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -211,95 +211,266 @@ table .table {
 			</div>
 
 			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 box-shadow fadein-right aside2">
-					<div class="page-content" id="pjax"><p><input type="hidden" id="menuId" value="1" /></p>
-<table class="table table-condensed">
-	<tr>
-		<td align="right">
-			<select onchange="read(this);">
-				<option value="class" selected="selected">按类型</option>
-				<option value="tags">按标签</option>
-				<option value="date">按时间</option>
-			</select>
-		</td>
-	</tr>
+					<div class="page-content" id="pjax"><div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">在linux下安装jdk7</h1>
+    <div class="info">
+	    <p class="post-meta"><i class="fa fa-calendar"></i>&nbsp;2017-08-31</p>
+	    
+		<i class="fa fa-tags"></i>
+		<span class="index-post-tag">
+		
+			<a class="pjaxlink" href="/pages/tags.html#java">java</a>
+		
+		</span>
+	    
+    </div>
+  </header>
+
+  <article class="post-content">
+    <blockquote>
+  <p>在linux下进行安装jdk7</p>
+</blockquote>
+
+<h1 id="jdk7">jdk7安装指南</h1>
+
+<p>参考安装网址</p>
+
+<p>1.文档地址</p>
+
+<pre><code>http://docs.oracle.com/javase/7/docs/webnotes/install/linux/linux-jdk.html
+</code></pre>
+
+<p>2.下载jdk地址</p>
+
+<pre><code>http://www.oracle.com/technetwork/java/javase/downloads/index.html
+</code></pre>
+
+<p>找到对应的Jdk版本包</p>
+<pre><code>jdk-7u&lt;version&gt;-linux-i586.tar.gz
+</code></pre>
+<p>如：</p>
+<pre><code>jdk-7u1-linux-i586.tar.gz
+</code></pre>
+<p>列表为linux平台Jdk7版本</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>文件名</td>
+      <td>结构</td>
+      <td>用户权限</td>
+    </tr>
+    <tr>
+      <td>jdk-7u<version>-linux-x64.tar.gz</version></td>
+      <td>64-bit</td>
+      <td>anyone</td>
+    </tr>
+    <tr>
+      <td>jdk-7u<version>-linux-i586.tar.gz</version></td>
+      <td>32-bit</td>
+      <td>anyone</td>
+    </tr>
+    <tr>
+      <td>jdk-7u<version>-linux-x64.rpm</version></td>
+      <td>64-bit RPM-based Linux</td>
+      <td>root</td>
+    </tr>
+    <tr>
+      <td>jdk-7u<version>-linux-i586.rpm</version></td>
+      <td>32-bit RPM-based Linux</td>
+      <td>root</td>
+    </tr>
+  </tbody>
 </table>
 
-<div class="home">
+<h1 id="section">安装前准备</h1>
 
-	
-	      		<div class="panel panel-default">
-	        			<div class="panel-heading center" id="技术" name="技术">技术</div>
-			              
-			                 <a href="/2017/08/31/linux%E5%AE%89%E8%A3%85mysql.html" class="list-group-item clearfix pjaxlink">
-				            在linux下安装mysql
-				            <span class="badge">2017年08月31日</span>
-				     </a>
-			               
-			                 <a href="/2017/08/31/linux%E5%AE%89%E8%A3%85jdk7.html" class="list-group-item clearfix pjaxlink">
-				            在linux下安装jdk7
-				            <span class="badge">2017年08月31日</span>
-				     </a>
-			               
-			                 <a href="/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html" class="list-group-item clearfix pjaxlink">
-				            Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support
-				            <span class="badge">2016年09月23日</span>
-				     </a>
-			               
-			                 <a href="/2016/09/22/spring_interview_questions_and_answers.html" class="list-group-item clearfix pjaxlink">
-				            Spring Interview Questions and Answers
-				            <span class="badge">2016年09月22日</span>
-				     </a>
-			               
-			                 <a href="/2016/04/05/jni.html" class="list-group-item clearfix pjaxlink">
-				            jni使用详解
-				            <span class="badge">2016年04月05日</span>
-				     </a>
-			               
-			                 <a href="/2015/12/02/life-upsdnudescription.html" class="list-group-item clearfix pjaxlink">
-				            upsdnu使用说明
-				            <span class="badge">2015年12月02日</span>
-				     </a>
-			               
-			                 <a href="/2015/11/22/linux-sduoshcommandnotfound.html" class="list-group-item clearfix pjaxlink">
-				            为什么使用sudo命令执行sh会报command not found错误
-				            <span class="badge">2015年11月22日</span>
-				     </a>
-			               
-			                 <a href="/2015/11/22/java-nextday.html" class="list-group-item clearfix pjaxlink">
-				            计算nextDay的实现
-				            <span class="badge">2015年11月22日</span>
-				     </a>
-			               
-			                 <a href="/2015/11/19/algorithm-hash.html" class="list-group-item clearfix pjaxlink">
-				            数组中只出现一次的数字
-				            <span class="badge">2015年11月19日</span>
-				     </a>
-			               
-			                 <a href="/2015/11/15/linux-command.html" class="list-group-item clearfix pjaxlink">
-				            linux命令操作随记-不定时更新
-				            <span class="badge">2015年11月15日</span>
-				     </a>
-			               
-			                 <a href="/2015/11/09/java-comeputerTestHomework.html" class="list-group-item clearfix pjaxlink">
-				            简单的括号检查程序
-				            <span class="badge">2015年11月09日</span>
-				     </a>
-			               
-			</div>
-	
-	      		<div class="panel panel-default">
-	        			<div class="panel-heading center" id="算法" name="算法">算法</div>
-			              
-			                 <a href="/2016/03/14/suanfa-erchashufencengbianli.html" class="list-group-item clearfix pjaxlink">
-				            二叉树的分层遍历
-				            <span class="badge">2016年03月14日</span>
-				     </a>
-			               
-			</div>
-	
+<p>1.检查JDK命令</p>
 
+<pre><code>java -version
+</code></pre>
+
+<p>2.查询本地 JDK 安装程序情况</p>
+
+<pre><code>rpm -qa|grep java
+</code></pre>
+
+<p>卸载发现的本地JDK</p>
+<pre><code>rpm e &lt;package_name&gt;
+</code></pre>
+<p>3.创建相关目录
+Tip:养成好的习惯</p>
+
+<p>创建一个目录，用来存放各种软件安装包</p>
+<pre><code>cd /usr/local  
+mkdir apps
+</code></pre>
+
+<h1 id="jdk">安装64位jdk</h1>
+
+<p>文件</p>
+
+<pre><code>jdk-7u&lt;version&gt;-linux-x64.tar.gz
+</code></pre>
+
+<p>1.下载文件到本地</p>
+
+<p>如: jdk下载地址为jdk_tarball_url</p>
+<pre><code>wget &lt;jdk_tarball_url&gt;
+</code></pre>
+<p>2.解压tarball</p>
+<pre><code>tar zxvf jdk-7u&lt;version&gt;-linux-x64.tar.gz
+</code></pre>
+<p>3.移动到之前创建的存放软件目录</p>
+
+<pre><code>mv jdk-7u&lt;version&gt;/ /usr/local/apps/
+</code></pre>
+
+<h1 id="linux64jdkrpm">Linux平台安装64位JDK基于RPM文件</h1>
+
+<p>文件</p>
+
+<pre><code>jdk-7u&lt;version&gt;-linux-x64.rpm
+</code></pre>
+
+<p>1.下载文件到本地</p>
+
+<p>如: jdk下载地址为jdk_rpm_url</p>
+<pre><code>wget  &lt;jdk_rpm_url&gt;.rpm
+</code></pre>
+<p>2.切换到root用户</p>
+<pre><code>su - root
+</code></pre>
+<p>3.卸载早期版本</p>
+
+<pre><code>rpm -e &lt;package_name&gt;
+</code></pre>
+
+<p>4.安装</p>
+
+<pre><code>rpm -ivh jdk-7u&lt;version&gt;-linux-i586.rpm
+</code></pre>
+
+<p>5.更新</p>
+<pre><code>rpm -Uvh jdk-7u&lt;version&gt;-linux-i586.rpm
+</code></pre>
+
+<h1 id="section-1">收尾工作</h1>
+<p>1.配置环境变量
+编辑配置文件</p>
+<pre><code>sudo vim /etc/profile
+</code></pre>
+<p>在该文件的末尾，添加下面内容：</p>
+
+<pre><code>JAVA_HOME=/usr/local/apps/jdk-7u&lt;version&gt;	
+JRE_HOME=$JAVA_HOME/jre	
+PATH=$PATH:$JAVA_HOME/bin	
+CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar export JAVA_HOME
+export JRE_HOME export PATH export CLASSPATH
+</code></pre>
+
+<p>执行命令，刷新该配置</p>
+<pre><code>source /etc/profile
+</code></pre>
+<p>2.检查安装是否成功</p>
+<pre><code>java -version
+</code></pre>
+
+  </article>
+
+  <!-- <div class="bdshare">
+    <span class="fenx">分享文章到：</span>
+    <div class="bdsharebuttonbox fl bdshare-button-style0-32">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+        <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    </div>
+</div>
+<script>
+    window._bd_share_config = {
+        "common": {
+            "bdSnsKey": {},
+            "bdText": "",
+            "bdMini": "2",
+            "bdMiniList": false,
+            "bdPic": "",
+            "bdStyle": "1",
+            "bdSize": "24"
+        },
+        "share": {},
+        "image": {
+            "viewList": ["qzone", "tsina", "tqq", "renren", "weixin"],
+            "viewText": "分享到：",
+            "viewSize": "16"
+        },
+        "selectShare": {
+            "bdContainerClass": null,
+            "bdSelectMiniList": ["qzone", "tsina", "tqq", "renren", "weixin"]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script> -->
+<!-- 百度分享 END -->
+<!--多说分享 Begin -->
+
+<!-- <div class="ds-share flat" data-thread-key="/2017/08/31/linux安装jdk7" data-title="在linux下安装jdk7" data-images="" data-content="在linux下安装jdk7" data-url="https://sendoh-akira.github.io/2017/08/31/linux%E5%AE%89%E8%A3%85jdk7.html">
+
+
+  <div id="ds-reset" class="ds-share-inline">
+       <ul  class="ds-share-icons-32" services="weibo,wechat,qq,douban,twitter,facebook,linkedin">
+           <li> <a class="ds-weibo" href="javascript:void(0);" data-service="weibo"></a> </li>
+           <li> <a class="ds-wechat" href="javascript:void(0);" data-service="wechat"></a> </li>
+           <li> <a class="ds-qq" href="javascript:void(0);" data-service="qq"></a> </li>
+           <li> <a class="ds-douban" href="javascript:void(0);" data-service="douban"></a> </li>
+           <li> <a class="ds-twitter" href="javascript:void(0);" data-service="twitter"></a> </li>
+           <li> <a class="ds-facebook" href="javascript:void(0);" data-service="facebook"></a> </li>
+           <li> <a class="ds-linkedin" href="javascript:void(0);" data-service="linkedin"></a> </li>
+       </ul>
+   </div>
+</div> -->
+
+<!--多说分享 End -->
+
+
+<!--sharethis start-->
+
+
+<span st_url='https://sendoh-akira.github.io/2017/08/31/linux%E5%AE%89%E8%A3%85jdk7.html' st_title='在linux下安装jdk7' class='st_facebook_large' displayText='Facebook'></span>
+<span st_url='https://sendoh-akira.github.io/2017/08/31/linux%E5%AE%89%E8%A3%85jdk7.html' st_title='在linux下安装jdk7' class='st_googleplus_large' displayText='Google  '></span>
+<span st_url='https://sendoh-akira.github.io/2017/08/31/linux%E5%AE%89%E8%A3%85jdk7.html' st_title='在linux下安装jdk7'  class='st_twitter_large' displayText='Tweet'></span>
+<span st_url='https://sendoh-akira.github.io/2017/08/31/linux%E5%AE%89%E8%A3%85jdk7.html' st_title='在linux下安装jdk7' class='st_sina_large' displayText='Sina'></span>
+<span st_url='https://sendoh-akira.github.io/2017/08/31/linux%E5%AE%89%E8%A3%85jdk7.html' st_title='在linux下安装jdk7' class='st_email_large' displayText='Email'></span>
+
+<!--sharethis end-->
 
 </div>
+
+  <div class="prevandnext">
+    	  
+	    <div style="margin:0.5em;">
+	    <span>上一篇 ：</span><a class="pjaxlink" href="https://sendoh-akira.github.io/2017/08/31/linux%E5%AE%89%E8%A3%85mysql.html"  title="在linux下安装mysql">在linux下安装mysql</a>
+	    </div>
+	  
+  	  
+	    <div style="margin:0.5em;">
+	    <span>下一篇 ：</span><a class="pjaxlink" href="https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html"  title="Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support">Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support</a>
+	    </div>
+	  
+	  	<div style="margin:0.5em;">
+			<span> 版权所有，转载时必须以链接形式注明原始出处</span>
+	    </div>
+
+  </div>
+
+  <!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="/2017/08/31/linux安装jdk7" data-title="在linux下安装jdk7" data-url=""></div>
+<!-- 多说评论框 end -->
+
 </div>
 			</div>
 
