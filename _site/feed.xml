@@ -718,6 +718,1013 @@ export JRE_HOME export PATH export CLASSPATH
       </item>
     
       <item>
+        <title>CDH环境安装</title>
+        <link>https://sendoh-akira.github.io/2017/08/31/cdh%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2017/08/31/cdh%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85.html</guid>
+        <pubDate>Thu, 31 Aug 2017 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;CDH环境安装&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;section&quot;&gt;安装环境&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;centOS 7.1.1503
+CDH 5.9.0
+mysql 5.6
+JDK 1.8
+ntp 4.2.6
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;font color=&quot;red&quot;&gt;tip: 所有操作均需要管理员(root)权限！&lt;/font&gt;
+
+&lt;h1 id=&quot;section-1&quot;&gt;系统配置文件修改&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;修改系统的sysconfig中的网络配置(master和各个node都需要)&lt;/p&gt;
+
+    &lt;p&gt;查看当前使用网卡,输出内容左上方为使用网卡名称&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; ifconfig 
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;通常一般为ifcfg-eth0，这里以ifcfg-eth0说明&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; vi /etc/sysconfig/network-scripts/ifcfg-eth0
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;对照一下内容作修改新增&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; BOOTPROTO=static
+ ONBOOT=yes
+ IPADDR=192.168.1.200
+ GATEWAY=192.168.1.1
+ NETMASK=255.255.255.0
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;完成后使网卡信息生效&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; service network restart 
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;停用防火墙&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; #临时停用
+ systemctl stop firewalld.service
+ #永久停用
+ systemctl disable firewalld.service 
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;修改hosts文件&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; vi /etc/hosts
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;在文件末尾添加&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; 192.168.1.200  master
+ 192.168.1.201  node1
+ 192.168.1.202  node2
+ 192.168.1.203  node3
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;配置免密码登录&lt;/p&gt;
+
+    &lt;p&gt;master节点：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; #回车即可
+ ssh-keygen -t  rsa 
+ cd .ssh然后执行：
+ cat id_rsa.pub &amp;gt;authorized_keys
+ chmod 600 authorized_keys
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;slave节点:&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; #一路回车
+ ssh-keygen -t  rsa 
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;然后将authorized_keys从master分发到各子节点(master上)&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; scp authorized_keys root@node1:~/.ssh/
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;jdk-&quot;&gt;jdk 安装&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;卸载系统自带的JDK(master和各个node都需要)&lt;/p&gt;
+
+    &lt;p&gt;查看系统中原有的jdk&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; rpm -qa |grep java  
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;卸载现有jdk,拷贝名称依次卸载&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; rpm -e --nodeps javapackages-tools-3.4.1-11.el7.noarch 
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;将下载好的jdk8的rpm包拷贝到每个节点(master和各个node都需要)&lt;/p&gt;
+
+    &lt;p&gt;按路径安装并显示进度&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; rpm -ivh jdk-8u112-linux-x64.rpm
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;编辑/etc/profile文件，配置jdk环境变量&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; vi  /etc/profile
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;配置java环境变量(环境变量配置jdk版本号必须与安装的jdk的版本号一致)&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; JAVA_HOME=/usr/java/jdk1.8.0_112
+ JRE_HOME=/usr/java/jdk1.8.0_112/jre
+ PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+ CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib 
+ export JAVA_HOME JRE_HOME PATH CLASSPATH
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;配置完成后执行使其生效&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; source  /etc/profile  
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;mysqlmaster&quot;&gt;安装mysql(master上执行)&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;yum的方式安装（不建议）&lt;/p&gt;
+
+    &lt;p&gt;由于centos7中无mysql的仓库地址 因此需要先安装repo源&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;下载完成后执行&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; rpm -ivh mysql-community-release-el7-5.noarch.rpm
+ yum install mysql-server
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;离线安装&lt;/p&gt;
+
+    &lt;p&gt;用到的rpm文件&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; MySQL-client-5.6.35-1.el7.x86_64.rpm
+ MySQL-server-5.6.35-1.el7.x86_64.rpm
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;先安装server，再安装client&lt;/p&gt;
+
+    &lt;p&gt;mysql安装完毕后执行&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; #启动mysql
+ mysql  service mysql start
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;设置密码&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; mysqladmin -u root password '123456'  
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;进入数据库&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; mysql -u root -p
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;创建cdh环境需要的数据库&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; #创建hive数据库
+ create database hive DEFAULT CHARSET utf8 COLLATE utf8_general_ci; 
+ #创建amon数据库
+ create database amon DEFAULT CHARSET utf8 COLLATE utf8_general_ci; 
+ #创建oozie数据库
+ create database oozie DEFAULT CHARSET utf8 COLLATE utf8_general_ci; 
+ #创建rman数据库
+ create database rman DEFAULT CHARSET utf8 COLLATE utf8_general_ci; 
+ #创建rema数据库
+ create database rema DEFAULT CHARSET utf8 COLLATE utf8_general_ci; 
+ #创建nas数据库
+ create database nas DEFAULT CHARSET utf8 COLLATE utf8_general_ci; 
+ #创建nms数据库
+ create database nms DEFAULT CHARSET utf8 COLLATE utf8_general_ci; 
+ #创建Sentry数据库
+ create database sentry DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+ #创建hue数据库
+ create database hue DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;分别授权：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; grant all privileges on *.* to 'root'@'%' identified by '123456' with grant option;
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;刷新权限：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; flush privileges;
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;ntpmasternode&quot;&gt;ntp时间同步的安装（master和各个node都需要）&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;下载ntp的rpm离线安装包，然后复制到各个node上&lt;/p&gt;
+
+    &lt;p&gt;如下载ntp-4.2.6.tar.gz  拷贝到master和各个node上，然后解压，进入
+cd ntp-4.2.6&lt;/p&gt;
+
+    &lt;p&gt;然后执行以下步骤&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; ./configure --prefix=/usr/local/ntp --enable-all-clocks --enable-parse-clocks
+ make
+ make install 
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;编译完成后在master上&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; vi /etc/ntp.conf
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;添加&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; server 127.127.1.0
+ fudge 127.127.1.0 stratum 8
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;编译完成后在每个node上&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; vi /etc/ntp.conf
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;添加&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; server  master
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;都修改完成后，master和各个node上分别执行：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; systemctl enable ntpd
+ systemctl start ntpd
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;在各个node上执行&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; ntpdate -u  master
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;font color=&quot;red&quot;&gt;附：ntp服务要修改成随系统启动！！&lt;/font&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;nfs&quot;&gt;安装nfs支持&lt;/h1&gt;
+
+&lt;p&gt;要随系统启动,都需要安装&lt;/p&gt;
+
+&lt;p&gt;安装&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;yum install rpcbind.x86_64
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;启动&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;service rpcbind start 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;font color=&quot;red&quot;&gt;附：rpcbind 服务要随系统启动&lt;/font&gt;
+
+&lt;h1 id=&quot;section-2&quot;&gt;修改系统参数&lt;/h1&gt;
+
+&lt;p&gt;SELINUX(master和node都需要改)&lt;/p&gt;
+
+&lt;p&gt;修改/etc/selinux/config（重启后永久生效）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vi /etc/selinux/config
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;修改内容&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;SELINUX=disabled 	
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;swappiness（master和node都需要改）&lt;/p&gt;
+
+&lt;p&gt;修改/etc/sysctl.conf&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vi  /etc/sysctl.conf
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;修改内容,在这个文档的最后加上这样一行&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vm.swappiness=0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;编辑开机启动文件&lt;/p&gt;
+
+&lt;p&gt;mysql，ntp&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vim /etc/rc.local
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;添加&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;service mysqld start
+systemctl start ntpd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;cloudera-manager-server-agent&quot;&gt;安装Cloudera Manager Server 和Agent&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;主节点master解压安装cloudera manager的目录默认位置在/opt下，解压：
+tar -zxvf cloudera-manager*.tar.gz将解压后的cm-5.9.0和cloudera目录放到/opt目录下。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;为Cloudera Manager 5建立数据库&lt;/p&gt;
+
+    &lt;p&gt;首先需要去MySql的官网下载JDBC驱动，地址：http://dev.mysql.com/downloads/connector/j/&lt;/p&gt;
+
+    &lt;p&gt;找到mysql-connector-java-5.1.35-bin.jar，重命名为mysql-connector.jar放到/opt/cm-5.9.0/share/cmf/lib/中。&lt;/p&gt;
+
+    &lt;p&gt;hive jdbc驱动放置路径：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; /opt/cloudera/parcels/CDH-5.9.0-1.cdh5.9.0.p0.23/lib/hive/lib 
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;ooize jdbc驱动放置路径：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; /var/lib/oozie/lib
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;在主节点初始化CM5的数据库&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; /opt/cm-5.9.0/share/cmf/schema/scm_prepare_database.sh mysql cm -hlocalhost -uroot -p123456 --scm-host localhost scm scm scm（一行）
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;font color=&quot;red&quot;&gt;注:123456为mysql数据库密码&lt;font&gt; 
+
+&lt;/font&gt;&lt;/font&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Agent配置&lt;/p&gt;
+
+    &lt;p&gt;修改/opt/cm-5.9.0/etc/cloudera-scm-agent/config.ini中的server_host为主节点的主机名。&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; vi /opt/cm-5.9.0/etc/cloudera-scm-agent/config.ini
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;修改内容为&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; server_host=master
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;同步Agent到其他节点&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; scp -r /opt/cm-5.9.0 root@node1:/opt/
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;在所有节点创建cloudera-scm用户&lt;/p&gt;
+
+    &lt;p&gt;useradd –system –home=/opt/cm-5.9.0/run/cloudera-scm-server/ –no-create-home –shell=/bin/false –comment “Cloudera SCM User” cloudera-scm&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;准备Parcels，用以安装CDH5&lt;/p&gt;
+
+    &lt;p&gt;将CHD5相关的Parcel包放到主节点的/opt/cloudera/parcel-repo/目录中（parcel-repo需要手动创建）。&lt;/p&gt;
+
+    &lt;p&gt;相关的文件如下&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; CDH-5.9.0-1.cdh5.9.0.p0.23-el7.parcel
+ CDH-5.9.0-1.cdh5.9.0.p0.23-el7.parcel.sha1
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;最后将CDH-5.9.0-1.cdh5.9.0.p0.23-el7.parcel.sha1重命名为CDH-5.9.0-1.cdh5.9.0.p0.23-el7.parcel.sha，这点必须注意，否则，系统会重新下载CDH-5.9.0-1.cdh5.9.0.p0.23-el7.parcel.sha1文件。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;相关启动脚本&lt;/p&gt;
+
+    &lt;p&gt;master&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; #启动服务端
+ /opt/cm-5.9.0/etc/init.d/cloudera-scm-server start
+ #启动Agent服务
+ /opt/cm-5.9.0/etc/init.d/cloudera-scm-agent start
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;slave&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; #启动Agent服务
+ /opt/cm-5.9.0/etc/init.d/cloudera-scm-agent start
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;我们启动的其实是个service脚本，需要停止服务将以上的start参数改为stop就可以了，重启是restart。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;CDH5的安装配置&lt;/p&gt;
+
+    &lt;p&gt;Cloudera Manager Server和Agent都启动以后，就可以进行CDH5的安装配置了。这时可以通过浏览器访问主节点的7180端口(地址为：http://masterIP:7180)测试一下了（由于CM Server的启动需要花点时间，这里可能要等待一会才能访问），默认的用户名和密码均为admin&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;kerberos&quot;&gt;kerberos配置&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;环境
+
+192.168.1.203 node3(kdc主机)
+192.168.1.200 master(kdc从节点)
+192.168.1.202 node2(kdc从节点)
+192.168.1.201 node1(kdc从节点)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;kerberos的安装和配置&lt;/p&gt;
+
+    &lt;font color=&quot;red&quot;&gt;注：kdc主机需要安装krb5-lib-1.13.2,krb5-server-1.13.2,krb5-workstation-1.13.2
+kdc的分节点上只需安装krb5-lib-1.1.3.2,krb5-workstation-1.13.2&lt;/font&gt;
+
+    &lt;p&gt;检查系统中是否已经自带了krb&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; rpm -qa|grep krb5
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;如果有则先卸载：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; rpm -e --nodeps +文件名(包括krb5-lib,krb5-workstation)
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;kdc主机上安装&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; rpm -ivh krb5-lib-1.13.2.rpm
+ rpm -ivh krb5-workstation-1.13.2.rpm
+ rpm -ivh krb5-server-1.13.2.rpm
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;kdc分节点安装&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; rpm -ivh krb5-lib-1.13.2.rpm
+ rpm -ivh krb5-workstation-1.13.2.rpm
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;修改配置文件&lt;/p&gt;
+
+    &lt;p&gt;只有kdc主机上修改&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; vi  /var/kerberos/krb5kdc/kdc.conf
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;修改内容&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; [kdcdefaults]
+ kdc_ports = 88 
+ kdc_tcp_ports = 88 
+	
+ [realms]
+ HADOOP.COM = {
+ #master_key_type = aes256-cts
+ acl_file = /var/kerberos/krb5kdc/kadm5.acl	
+ dict_file = /usr/share/dict/words
+ admin_keytab = /var/kerberos/krb5kdc/kadm5.keytab
+ max_renewable_life = 7d 
+ support_enctypes = aes128-cts:normal des3_hmac_sha1:normal arcfour-hmac:normal des-hmac:normal	
+ }
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;说明：
+ HADOOP.COM:是设定的realms。名字随意。大小写敏感，一般为了识别使用全部大写。
+ supported_enctypes:支持的校验方式。注意把aes256-cts去掉。&lt;/p&gt;
+
+    &lt;p&gt;修改Kerberos的配置信息(kdc主机和节点上都要修改)&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; vi  /etc/krb5.conf
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;krb5.conf修改内容&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; [logging]
+ default = FILE:/var/log/krb5libs.log
+ kdc = FILE:/var/log/krb5kdc.log
+ amdin_server = FILE:/var/log/kadmind.log
+	
+	
+ [libdefaults]
+ default_realm = DAYOU.COM
+ dns_lookup_kdc = false
+ dns_lookup_realm = false
+ ticket_lifetime = 86400
+ renew_lifetime = 604800
+ forwardable = true
+ default_tgs_enctypes = rc4-hmac
+ default_tkt_enctypes = rc4-hmac
+ permitted_enctypes = rc4-hmac
+ udp_preference_limit = 1
+ kdc_timeout = 3000
+	
+ [realms]
+ DAYOU.COM = {
+ kdc = node3
+ admin_server = node3
+ }
+	
+ [domain_realm]
+ .hadoop.com = HADOOP.COM
+ hadoop.com = HADOOP.COM
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;以下kerberos database步骤只在kdc主机上操作：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;创建/初始化kerberos database&lt;/p&gt;
+
+    &lt;p&gt;初始化并启动：完成上面两个配置文件后，就可以进行初始化并启动了。&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; /usr/sbin/kdb5_util create -s -r DAYOU.COM
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;font color=&quot;red&quot;&gt;可能遇到的问题：
+ 如果需要重建数据库,以下两步：&lt;/font&gt;
+
+    &lt;pre&gt;&lt;code&gt; kdb5_util -r DAYOU.COM -m destroy -f
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;将目录/var/kerberos/krb5kdc下的principal相关的文件删除即可&lt;/p&gt;
+
+    &lt;p&gt;当Kerberos database创建好后，可以看到目录 /var/kerberos/krb5kdc 下生成了几个文件&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; kadms.acl
+ kdc.cnf
+ principal
+ principal.kadms
+ principal.kadms.lock
+ principal.ok
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;添加database administrator&lt;/p&gt;
+
+    &lt;p&gt;我们需要为Kerberos database添加administrative principals (即能够管理database的principals)&lt;/p&gt;
+
+    &lt;p&gt;在maste KDC上执行：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; /usr/sbin/kadmin.local -q &quot;addprinc admin/admin&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;并为其设置密码&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; kadmin.local
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;为database administrator设置ACL权限&lt;/p&gt;
+
+    &lt;p&gt;在KDC上我们需要编辑acl文件来设置权限，该acl文件的默认路径是 /var/kerberos/krb5kdc/kadm5.acl（也可以在文件kdc.conf中修改）。Kerberos的kadmind daemon会使用该文件来管理对Kerberos database的访问权限。对于那些可能会对pincipal产生影响的操作，acl文件也能控制哪些principal能操作哪些其他pricipals。&lt;/p&gt;
+
+    &lt;p&gt;为administrator设置权限：将文件/var/kerberos/krb5kdc/kadm5.acl的内容编辑为&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; */admin@DAYOU.COM *
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;代表名称匹配*/admin@HADOOP.COM 都认为是admin，权限是 *。代表全部权限。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;在master KDC启动Kerberos daemons&lt;/p&gt;
+
+    &lt;p&gt;手动启动&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; service krb5kdc start
+ service kadmin start
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;设置开机自动启动&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; chkconfig krb5kdc on
+ chkconfig kadmin on
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;现在KDC已经在工作了。这两个daemons将会在后台运行，可以查看它们的日志文件（/var/log/krb5kdc.log 和 /var/log/kadmind.log）。&lt;/p&gt;
+
+    &lt;p&gt;kdc主机上验证：&lt;/p&gt;
+
+    &lt;p&gt;创建用户：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; kadmin.local
+ #添加用户app1
+ addprinc app1
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;用户列表：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; kadmin.local
+ listprincs
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;然后退出exit
+ 执行kinit app1
+ 然后执行klist  输出显示信息&lt;/p&gt;
+
+    &lt;p&gt;kdc节点上安装成功验证：
+ kinit app1回车输入密码
+ klist输出显示信息
+ KDC创建用户并生成keytab文件：
+ 首先输入kadmin.local回车&lt;/p&gt;
+
+    &lt;p&gt;使用addprinc,delprinc,modprinc,listprincs命令。主要命令：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; # 进入kadmin
+ kadmin.local 
+ #（创建用户）
+ addprinc app1
+	
+ #（删除用户）
+ delprinc app1
+ #（用户列表）
+ listprincs
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;生成keytab:使用xst命令或者ktadd命令：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; #(xxx代表keytab文件存放路径可以自定义，kerberos.keytab文件名可以自己修改，app1代表创建的用户名)
+ kadmin.local
+ xst -k /xxx/kerberos.keytab app1
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;可能遇到的问题：
+ hue启动时报：kinit: KDC can’t fulfill requested option while renewing credentials&lt;/p&gt;
+
+    &lt;p&gt;解决：
+ 先执行kinit -R，回车，会报&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; kinit: KDC can't fulfill requested option while renewing credentials
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;kadmin.local回车&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; modprinc -maxrenewlife 1week krbtgt/DAYOU.COM@DAYOU.COM
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;exit退出即可，然后重启hue&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;sentry&quot;&gt;添加sentry服务&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;访问http://192.168.1.200:7180/&lt;/p&gt;
+
+    &lt;p&gt;登录进去后，在Cluster1上点击展开：选择添加服务&lt;/p&gt;
+
+    &lt;p&gt;然后勾选sentry，继续&lt;/p&gt;
+
+    &lt;p&gt;输入数据库名和密码，然后测试连接，成功后即可。
+ 如果启动报缺少驱动包，在node2节点上（配置sentry服务的节点上）
+ /opt/cloudera/parcels/CDH-5.9.0-1.cdh5.9.0.p0.23/lib/sentry/lib放入驱动包即可。&lt;/p&gt;
+
+    &lt;p&gt;添加sentry用户和组
+ group&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; hive
+ impala
+ hue
+ solr
+ kafka
+ hbase
+ dybdp
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;connect&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; hive
+ impala
+ hue
+ hdfs
+ solr
+ kafka
+ hbase
+ dybdp
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;附加：
+ oozie也和mysql交互，需要放驱动jar包，&lt;/p&gt;
+
+    &lt;p&gt;位置：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; /var/lib/oozie/mysql-connector.jar
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;redissentinel&quot;&gt;Redis分布式环境搭建以及哨兵sentinel配置&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;环境&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; 192.168.1.201 node1(redis主节点)
+ 192.168.1.202 node2(redis从节点)
+ 192.168.1.203 node3(redis从节点)
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;安装&lt;/p&gt;
+
+    &lt;p&gt;首先进入redis解压目录 然后执行make，执行完毕后执行make install&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; cd /redis-3.6.5/
+ make
+ make install
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;node1配置&lt;/p&gt;
+
+    &lt;p&gt;redis.conf&lt;/p&gt;
+
+    &lt;p&gt;把下面对应的注释掉&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; # bind 127.0.0.1  Redis默认不是以守护进程的方式运行，可以通过该配置项修改，使用yes启用守护进程，设置为no
+
+ daemonize no
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;保护模式 ，修改为no&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; protected-mode no
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;设置密码
+ 解开requirepass foobar,修改为&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; #（123456为设置的密码）
+ requirepass 123456 
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;sentinel.conf&lt;/p&gt;
+
+    &lt;p&gt;保护模式(先打开注释)，修改为no&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; protected-mode no
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;添加以下内容&lt;/p&gt;
+
+    &lt;p&gt;先去掉自带的 sentinel monitor mymaster 127.0.0.1 6379&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; #sentinel monitor mymaster 127.0.0.1 6379
+ sentinel monitor mymaster 192.168.1.201 6379 2
+ sentinel down-after-milliseconds mymaster 30000
+ sentinel parallel-syncs mymaster 1
+ sentinel failover-timeout mymaster 180000
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;node2、node3配置完全一样：&lt;/p&gt;
+
+    &lt;p&gt;redis.conf&lt;/p&gt;
+
+    &lt;p&gt;把下面对应的注释掉
+     #bind 127.0.0.1&lt;/p&gt;
+
+    &lt;p&gt;Redis默认不是以守护进程的方式运行，可以通过该配置项修改，使用yes启用守护进程，设置为no&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; daemonize no
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;保护模式，修改为no&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; protected-mode no
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;添加密码&lt;/p&gt;
+
+    &lt;p&gt;解开requirepass foobar,修改为&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; #（123456为设置的密码） 
+ requirepass 123456
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;和主机的主从关系配置，添加&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; slaveof 192.168.1.201 6379
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;添加主机的密码&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; masterauth 123456
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;sentinel.conf&lt;/p&gt;
+
+    &lt;p&gt;保护模式(先打开注释)，修改为no&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; protected-mode no
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;添加以下内容
+ 先去掉自带的sentinel monitor mymaster 127.0.0.1 6379 2&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; sentinel monitor mymaster 127.0.0.1 6379 2
+ sentinel monitor mymaster 192.168.1.201 6379 2
+ sentinel down-after-milliseconds mymaster 30000
+ sentinel parallel-syncs mymaster 1
+ sentinel failover-timeout mymaster 180000
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;启动方式：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; cd /redis-3.6.5/
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;启动node1上的redis：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; redis-server ./redis.conf
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;启动node1上的sentinel：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; redis-sentinel ./sentinel.conf
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;启动node2，node3上的redis：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; redis-server ./redis.conf
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;启动node2，node3上的sentinel：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; redis-sentinel ./sentinel.conf
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;查看验证：&lt;/p&gt;
+
+    &lt;p&gt;在node1上：输入&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; redis-cli -h 192.168.1.201 info Replication
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;回车打印role:master等其他信息&lt;/p&gt;
+
+    &lt;p&gt;在node2上，输入&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; redis-cli -h 192.168.1.202 info Replication
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;回车打印role:slave等其他信息&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;ha&quot;&gt;HA高可用配置&lt;/h1&gt;
+
+&lt;p&gt;需要配置impala  hive  ooize  hdfs的HA
+其中ooize、hdfs 直接可以进入后点击ooize(或hdfs)—操作—启用High Availability
+就可以了。&lt;/p&gt;
+
+&lt;h1 id=&quot;solrldap&quot;&gt;solr配置ldap&lt;/h1&gt;
+
+&lt;p&gt;登录进入CDH页面然后 solr–配置：&lt;/p&gt;
+
+&lt;p&gt;左侧筛选器：solr（服务范围）—安全性：&lt;/p&gt;
+
+&lt;p&gt;a、启用 LDAP 身份验证：勾选上&lt;/p&gt;
+
+&lt;p&gt;b、Solr 安全身份验证：勾选kerberos&lt;/p&gt;
+
+&lt;p&gt;c、LDAP URL 填写：ldap://node3:389&lt;/p&gt;
+
+&lt;p&gt;d、LDAP BaseDN 填写：ou=People,dc=dayou,dc=com&lt;/p&gt;
+
+&lt;p&gt;保存&lt;/p&gt;
+
+&lt;p&gt;然后用浏览器访问http://192.168.1.201:8983/solr，弹框输入用户名和密码即可。&lt;/p&gt;
+
+&lt;p&gt;此用户是ldap上创建过的用户&lt;/p&gt;
+
+&lt;h1 id=&quot;linux&quot;&gt;Linux修改系统时区及时间&lt;/h1&gt;
+
+&lt;p&gt;用root用户登录&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;修改时区（将Asia/shanghai-上海时区写入当前时区）&lt;/p&gt;
+
+    &lt;p&gt;提示是否覆盖,输入Y回车,&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; cp -f /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;然后&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; date
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;查看时区和时间（CST,中国时区）&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;修改时间&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; date -s &quot;2012-11-03 10:25:25&quot;
+ #写入CMOS
+ clock -w  
+
+ 如果service层所处时间和集群所在服务器时间不一致会导致service调用失败！！
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;kafka&quot;&gt;添加kafka服务&lt;/h1&gt;
+
+&lt;p&gt;安装包准备：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;KAFKA-2.0.2-1.2.0.2.p0.5-el7.parcel
+KAFKA-2.0.2-1.2.0.2.p0.5-el7.parcel.sha1
+KAFKA-1.2.0.jar
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;以下步骤都在master上执行：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;相关文件准备&lt;/p&gt;
+
+    &lt;p&gt;把KAFKA-2.0.2-1.2.0.2.p0.5-el7.parcel，KAFKA-2.0.2-1.2.0.2.p0.5-el7.parcel.sha1这两个文件都放在/opt/cloudera/parcel-repo下，&lt;/p&gt;
+
+    &lt;p&gt;然后重命名&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; mv KAFKA-2.0.2-1.2.0.2.p0.5-el7.parcel.sha1 KAFKA-2.0.2-1.2.0.2.p0.5-el7.parcel.sha
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;把KAFKA-1.2.0.jar放在/opt/cloudera/csd下&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;启动cm服务，检查更新parcel，分配并激活percel包&lt;/p&gt;
+
+    &lt;p&gt;访问http://192.168.1.200:7180登录进去后：
+ 点击“主机”–“Parcel”进入后选择“检查新Parcel”，然后它会自动找到kafka，点击操作中的分配，执行完成后，点击激活就行了。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;在CDH中添加kafka服务&lt;/p&gt;
+
+    &lt;p&gt;在CDH中添加kafka服务，修改以下配置：&lt;/p&gt;
+
+    &lt;p&gt;填写Source Brokers List&lt;/p&gt;
+
+    &lt;p&gt;填写Kafka Broker所在节点构成的列表（用逗号分隔），如下(实际根据节点分配)：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; node1:9092,node2:9092,node3:9092
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;填写Destination Brokers List(实际根据节点分配)
+ 若添加了Kafka MirrorMaker，则可填写其所在节点构成的列表；若未添加Kafka MirrorMaker，可填写任意服务器即可，如下：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; node3:9092
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;修改Java Heap Size&lt;/p&gt;
+
+    &lt;p&gt;填写上面列表后，点击继续，出错后，Kafka服务未启动。返回集群配置，打卡Kafka服务配置页，查找“Java Heap Size of Broker”项，将对大小从50MB修改为256MB。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;配置Topic Whitelist&lt;/p&gt;
+
+    &lt;p&gt;配置Topic Whitelist项为正则表达式：(?!x)x  保存更改&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;kafka超级用户配置&lt;/p&gt;
+
+    &lt;p&gt;super users&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; kafka
+ dybdp
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+</description>
+      </item>
+    
+      <item>
         <title>Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support</title>
         <link>https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html</link>
         <guid isPermaLink="true">https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html</guid>
