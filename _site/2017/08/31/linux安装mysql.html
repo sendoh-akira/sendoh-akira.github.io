@@ -169,7 +169,7 @@ table .table {
 							
 								<a href="/pages/tags.html#java" name="java" class="pjaxlink"><i class="fa fa-tags"></i>java(6)</a>
 							
-								<a href="/pages/tags.html#linux" name="linux" class="pjaxlink"><i class="fa fa-tags"></i>linux(2)</a>
+								<a href="/pages/tags.html#linux" name="linux" class="pjaxlink"><i class="fa fa-tags"></i>linux(4)</a>
 							
 								<a href="/pages/tags.html#算法" name="算法" class="pjaxlink"><i class="fa fa-tags"></i>算法(2)</a>
 							
@@ -224,6 +224,8 @@ table .table {
 		
 			<a class="pjaxlink" href="/pages/tags.html#mysql">mysql</a>
 		
+			<a class="pjaxlink" href="/pages/tags.html#linux">linux</a>
+		
 		</span>
 	    
 
@@ -254,8 +256,8 @@ yum install libaio
 
 <p>APT-based systems:</p>
 
-<pre><code># search for info 
-apt-cache search libaio 
+<pre><code># search for info
+apt-cache search libaio
 # install library
 apt-get install libaio
 </code></pre>
@@ -323,19 +325,19 @@ apt-get install libaio
 
     <p>停用：</p>
 
-    <pre><code> enabled=0 disable 
+    <pre><code> enabled=0 disable
 </code></pre>
 
     <p>启用：</p>
 
-    <pre><code> enabled=1 enable 
+    <pre><code> enabled=1 enable
 </code></pre>
 
     <p>安装mysql5.7yum库</p>
 
     <pre><code> [mysql57-community]
 
- name=MySQL 5.7 Community Server baseurl=http://repo.mysql.com/yum/mysql-5.7-community/el/6/$basearch/ 
+ name=MySQL 5.7 Community Server baseurl=http://repo.mysql.com/yum/mysql-5.7-community/el/6/$basearch/
  enabled=1
 
  gpgcheck=1
@@ -345,14 +347,14 @@ apt-get install libaio
 
     <p>安装mysql5.6 yum库</p>
 
-    <pre><code> #Enable to use MySQL 5.6 
+    <pre><code> #Enable to use MySQL 5.6
  [mysql56-community]
 
  name=MySQL 5.6 Community Server
- baseurl=http://repo.mysql.com/yum/mysql-5.6-community/el/6/$basearch/ 
+ baseurl=http://repo.mysql.com/yum/mysql-5.6-community/el/6/$basearch/
  enabled=1
 
- gpgcheck=1 
+ gpgcheck=1
  gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql
 </code></pre>
 
@@ -428,7 +430,7 @@ apt-get install libaio
 
     <p>安全模式下启动服务</p>
 
-    <pre><code> ./bin/mysqld_safe   --user=root --skip-grant-tables &amp; 
+    <pre><code> ./bin/mysqld_safe   --user=root --skip-grant-tables &amp;
 </code></pre>
 
     <p>进入mysql,修改密码
@@ -454,7 +456,7 @@ apt-get install libaio
   <li>
     <p>找到mysql安装目录，这里引用使用MYSQL_HOME</p>
 
-    <pre><code> cd $MYSQL_HOME	
+    <pre><code> cd $MYSQL_HOME
 </code></pre>
   </li>
   <li>
@@ -619,7 +621,7 @@ apt-get install libaio
   <li>
     <p>开机启动Mysql服务设置，进入mysql目录执行下面命令：</p>
 
-    <pre><code> cp mysql.server /etc/init.d/mysql 
+    <pre><code> cp mysql.server /etc/init.d/mysql
  chmod +x /etc/init.d/mysql
 </code></pre>
   </li>
@@ -685,14 +687,14 @@ apt-get install libaio
     <p>安装 mysql</p>
 
     <pre><code> groupadd mysql
- useradd -r -g mysql -s /bin/false mysql 
+ useradd -r -g mysql -s /bin/false mysql
  cd /usr/local/apps/
- tar zxvf /path/to/mysql-VERSION-OS.tar.gz 
- ln -s full-path-to-mysql-VERSION-OS mysql 
+ tar zxvf /path/to/mysql-VERSION-OS.tar.gz
+ ln -s full-path-to-mysql-VERSION-OS mysql
  cd mysql
- chown -R mysql . 
+ chown -R mysql .
  chgrp -R mysql .
- scripts/mysql_install_db --user=mysql 
+ scripts/mysql_install_db --user=mysql
  chown -R root .
  chown -R mysql data
  bin/mysqld_safe --user=mysql &amp;
@@ -708,7 +710,7 @@ apt-get install libaio
 
     <p>末尾追加</p>
 
-    <pre><code>MYSQL_HOME = /usr/local/apps/mysql 
+    <pre><code>MYSQL_HOME = /usr/local/apps/mysql
 export PATH=$PATH:$MYSQL_HOME/bin
 </code></pre>
   </li>

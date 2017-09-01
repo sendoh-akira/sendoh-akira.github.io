@@ -2,7 +2,7 @@
 layout: post
 title: 在linux下安装mysql
 category: 技术
-tags: java mysql
+tags: java mysql linux
 description: 在linux下安装mysql server
 ---
 
@@ -12,16 +12,16 @@ description: 在linux下安装mysql server
 
 MySQL 依赖 libaio,所以先要安装 libaio
 yum-based systems:
-	
+
 	# search for info
 	yum search libaio
 	# install library
 	yum install libaio
-		
-APT-based systems:	
-	
-	# search for info 
-	apt-cache search libaio 
+
+APT-based systems:
+
+	# search for info
+	apt-cache search libaio
 	# install library
 	apt-get install libaio
 
@@ -38,22 +38,22 @@ EL5, EL6, and EL7-based platforms (for example, the corresponding versions of Re
 2. 选择并下载对应系统库到本地
 3. 通过命令安装
 
-	
+
 		sudo yum localinstall platform-and-version-specific-package-name.rpm
-	
-		
+
+
 	EL6-based system:
-	
+
 		sudo yum localinstall mysql57-community-release-el6-{version-number}.noarch.rpm
-	
+
 	EL7-based system:
-	
+
 		sudo yum localinstall mysql57-community-release-el7-{version-number}.noarch.rpm
-	
+
 	EL5-based system:
-	
+
 		sudo rpm -Uvh mysql57-community-release-el5-{version-number}.noarch.rpm
-	
+
 
 4. 检查是否安装成功
 ```
@@ -70,81 +70,81 @@ yum repolist enabled | grep "mysql.*-community.*"
 2. 支持yum-config-manager
 
 	选择要启用/停用的mysql服务
-	
+
 		sudo yum-config-manager --disable mysql57-community
 		sudo yum-config-manager --enable mysql56-community
-	
-	
+
+
 	或者修改配置文件
-	
+
 		vi /etc/yum.repos.d/mysql-community.repo
-	
+
 	停用：
-	
-		enabled=0 disable 
-	
+
+		enabled=0 disable
+
 	启用：
-	
-		enabled=1 enable 
-	
+
+		enabled=1 enable
+
 	安装mysql5.7yum库
-	
-	
+
+
 		[mysql57-community]
 
-		name=MySQL 5.7 Community Server baseurl=http://repo.mysql.com/yum/mysql-5.7-community/el/6/$basearch/ 
+		name=MySQL 5.7 Community Server baseurl=http://repo.mysql.com/yum/mysql-5.7-community/el/6/$basearch/
 		enabled=1
 
 		gpgcheck=1
 
 		gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql
 
-	
+
 
 	安装mysql5.6 yum库
 
-	
-		#Enable to use MySQL 5.6 
+
+		#Enable to use MySQL 5.6
 		[mysql56-community]
 
 		name=MySQL 5.6 Community Server
-		baseurl=http://repo.mysql.com/yum/mysql-5.6-community/el/6/$basearch/ 
+		baseurl=http://repo.mysql.com/yum/mysql-5.6-community/el/6/$basearch/
 		enabled=1
 
-		gpgcheck=1 
+		gpgcheck=1
 		gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql
-	
+
 
 	检查生效的库
-	
+
 		yum repolist enabled | grep mysql
-	
+
 3. 安装MySQL
 
 	安装MySQL
-	
+
 		sudo yum install mysql-community-server
-	
+
 4. 启动MySQL Server
 
 	启动MySQL Server
-	
+
 		sudo service mysqld start
-	
+
 	启动成功输出结果：
-	
+
 		Starting mysqld:[ OK ]
-	
+
 	检查MySQL server 状态
-	
+
 		sudo service mysqld status
-	
+
 	检查MySQL server 状态输出结果
-	
+
 		mysqld (pid 3066) is running.
-	
+
 ## 其他
-	
+
 安全策略
 	```
 	mysql_secure_installation
@@ -164,21 +164,21 @@ yum repolist enabled | grep "mysql.*-community.*"
 	Your password does not satisfy the current policy requirements
 
 	关闭安全策略
-	
+
 		vi /etc/my.cnf  
-	
-	末尾追加 
-	
+
+	末尾追加
+
 		validate_password = OFF
-		
+
 
 	安全模式下修改密码
 
 	安全模式下启动服务
-	
-		./bin/mysqld_safe   --user=root --skip-grant-tables & 
-		
-	
+
+		./bin/mysqld_safe   --user=root --skip-grant-tables &
+
+
 	进入mysql,修改密码
 		mysql -u root
 		mysql -u root
@@ -186,18 +186,18 @@ yum repolist enabled | grep "mysql.*-community.*"
 		UPDATE mysql.user SET Password = PASSWORD('new_password')  WHERE User = 'root';
 
 		FLUSH PRIVILEGES;
-	
+
 2. 使用mysqladmin
-	
+
 		shell> mysqladmin -u root password "new_password"
-		
+
 ## 初始化数据库
 
-   
+
 1. 找到mysql安装目录，这里引用使用MYSQL_HOME
 
-		cd $MYSQL_HOME	
-		
+		cd $MYSQL_HOME
+
 2. 改变文件夹权限修改文件
 
 		chown -R mysql .
@@ -205,13 +205,13 @@ yum repolist enabled | grep "mysql.*-community.*"
 3. 初始化数据库
 
 		scripts/mysql_install_db --user=mysql
-		
+
 	可指定安装选项
-		
+
 		scripts/mysql_install_db --user=mysql \ --basedir=/usr/local/apps/mysql \ --datadir=/usr/local/apps/mysql/data
-	
+
 	mysqlinstalldb 选项
-	
+
 	|Format|Description|Introduced|Deprecated|
 	|--basedir|Path to base directory|||
 	|--builddir|Path to build directory (for out-of-source builds)|||
@@ -231,29 +231,29 @@ yum repolist enabled | grep "mysql.*-community.*"
 	|--user|System login user under which to execute mysqld|||
 	|--verbose|Verbose mode|||
 	|--windows|For internal use|||
-	
+
 4. 设置最终文件权限
-		
+
 		chown -R root .
 		chown -R mysql data
 5. 启动配置
-	
+
 	/etc/my.cnf or /etc/mysql/my.cnf file
-	
+
 		vi	/etc/mysql/my.cnf
-		
+
 ## Mysql服务
 
 1. 开机启动Mysql服务设置，进入mysql目录执行下面命令：
-	
-		cp mysql.server /etc/init.d/mysql 
+
+		cp mysql.server /etc/init.d/mysql
 		chmod +x /etc/init.d/mysql
-	
+
 2. 添加mysql用户
 	chkconfig --add mysql
-	
+
 3. mysql.server 选项设置，在 /etc/my.cnf file
-	
+
 		[mysqld]
 
 		datadir=/usr/local/mysql/var
@@ -267,7 +267,7 @@ yum repolist enabled | grep "mysql.*-community.*"
 		[mysql.server]
 
 		basedir=/usr/local/mysql
-	
+
 4. mysql.server 选项
 
 	|Format|Description|
@@ -280,19 +280,19 @@ yum repolist enabled | grep "mysql.*-community.*"
 
 1. 下载文件
 
-	
+
 
 2. 安装 mysql
 
 		groupadd mysql
-		useradd -r -g mysql -s /bin/false mysql 
+		useradd -r -g mysql -s /bin/false mysql
 		cd /usr/local/apps/
-		tar zxvf /path/to/mysql-VERSION-OS.tar.gz 
-		ln -s full-path-to-mysql-VERSION-OS mysql 
+		tar zxvf /path/to/mysql-VERSION-OS.tar.gz
+		ln -s full-path-to-mysql-VERSION-OS mysql
 		cd mysql
-		chown -R mysql . 
+		chown -R mysql .
 		chgrp -R mysql .
-		scripts/mysql_install_db --user=mysql 
+		scripts/mysql_install_db --user=mysql
 		chown -R root .
 		chown -R mysql data
 		bin/mysqld_safe --user=mysql &
@@ -300,36 +300,36 @@ yum repolist enabled | grep "mysql.*-community.*"
 		cp support-files/mysql.server /etc/init.d/mysql.server
 
 3. 环境变量配置
-	
+
 		vi /etc/profile
-   
+
    末尾追加
-   
-	   MYSQL_HOME = /usr/local/apps/mysql 
+
+	   MYSQL_HOME = /usr/local/apps/mysql
 	   export PATH=$PATH:$MYSQL_HOME/bin
-	   
+
 # 其他
 
 1. 设置编码格式
 
    找到mysql启动配置文件，如my.cnf
-	
+
 		vi my.cnf
-	
+
    追加以下内容
-		
+
 		[mysqld]   
 		character_set_server = utf8
 
 		[mysql]
 		default-character-set = utf8
-	
+
 	进入mysql，查看字符编码
-		
+
 		SHOW VARIABLES LIKE 'character%'
-		
+
 	其他常用参数
-		
+
 		[mysqld]   
 		basedir      = path          # 使用给定目录作为根目录(安装目录)。
 		datadir      = path          # 从给定目录读取数据库文件。
@@ -361,9 +361,9 @@ yum repolist enabled | grep "mysql.*-community.*"
 2. 备份，还原
 
 	备份
-		
+
 		mysqldump --socket=/usr/local/apps/mysql/data/mysql/mysql.sock --single-transaction=TRUE  -u root -p emsc > emsc.sql
-		
+
 	还原
-	
+
 		mysql --socket=/usr/local/apps/mysql/data/mysql/mysql.sock  -u root -p emsc < emsc.sql
