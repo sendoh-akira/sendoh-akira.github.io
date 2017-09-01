@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <!-- 添加搜索关键字 -->
+  <meta name="keywords" content="武燕飞,https://sendoh-akira.github.io/">
+
+  <title>相册 | Sendoh Akira</title>
+  <meta name="description" content="">
+
+  <!-- <script src="https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/ecom/esl/2-1-4/esl.js"></script> -->
+  <link rel="stylesheet" href="/assets/css/bootstrap.css">
+  <link rel="stylesheet" href="/assets/css/font-awesome.css">
+  <link rel="stylesheet" href="/assets/js/fancybox/jquery.fancybox.css" media="screen">
+  <link rel="stylesheet" href="/assets/css/main.css" >
+  <link rel="stylesheet" href="/assets/js/prettify/prettify.css">
+  <link rel="shortcut icon" href="/assets/img/favicon_2.png" />
+
+  <link rel="canonical" href="https://sendoh-akira.github.io/pages/gallery.html">
+  <link rel="alternate" type="application/rss+xml" title="Sendoh Akira" href="https://sendoh-akira.github.io/feed.xml" />
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/assets/css/share.min.css">
+  <link rel="stylesheet" href="/assets/js/gallery/css/blueimp-gallery.css">
+
+
+  <script type="text/javascript" src="/assets/js/echarts.min.js"></script>
+
+  <script type="text/javascript" src="/assets/js/ua-parser.js"></script>
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<style>
+table {
+	width: 100%;
+	max-width: 100%;
+	margin-bottom: 20px
+}
+table>thead>tr>th, table>tbody>tr>th, table>tfoot>tr>th,table>thead>tr>td,table>tbody>tr>td,table>tfoot>tr>td {
+	padding: 8px;
+	line-height: 1.42857143;
+	vertical-align: top;
+	border-top: 1px solid #ddd
+}
+
+table>thead>tr>th {
+	vertical-align: bottom;
+	border-bottom: 2px solid #ddd
+}
+
+table>caption+thead>tr:first-child>th,.table>colgroup+thead>tr:first-child>th,.table>thead:first-child>tr:first-child>th,.table>caption+thead>tr:first-child>td,.table>colgroup+thead>tr:first-child>td,.table>thead:first-child>tr:first-child>td {
+	border-top: 0
+}
+
+table>tbody+tbody {
+	border-top: 2px solid #ddd
+}
+
+table .table {
+	background-color: #fff
+}
+</style>
+</head>
+
+
+  <body>
+
+    <header class="site-header " >
+	<div class="container" >
+		<div class="row">
+			<nav class="navbar navbar-default" role="navigation">
+
+				    <div class="navbar-header col-xs-12 col-sm-12 col-md-3 col-lg-3 center" >
+				   	      <button type="button" class="navbar-toggle" data-toggle="collapse"  data-target="#example-navbar-collapse">
+					         <span class="icon-bar"></span>
+					         <span class="icon-bar"></span>
+					         <span class="icon-bar"></span>
+					      </button>
+					      <div class="sitehome">
+						 	<a href="/" title="首页"><a><a class="site-title" href="/">Sendoh Akira</a>
+						</div>
+				   </div>
+
+
+				  <div class="col-md-6 col-lg-6 hidden-xs hidden-sm center">
+							<nav class="site-nav">
+								    <ul class="nav nav-pills">
+											<li class="select"><a class="page-link pjaxlink" href="/">首页</a></li>
+											<li class="select" ><a class="page-link pjaxlink" href="/pages/archive.html">归档</a></li>
+											<li class="select" ><a class="page-link pjaxlink" href="/pages/gallery.html">相册</a></li>
+											<li class="select"><a class="page-link pjaxlink" href="/pages/about.html">关于</a></li>
+								    </ul>
+							</nav>
+				  </div>
+
+				   <div class="col-md-3 col-lg-3 hidden-xs hidden-sm">
+				   		<!--<div class="search">
+						  	<input type="text" class="search-query st-default-search-input" placeholder="Search">
+				   		</div>-->
+				   		<div class="search-tool" style="float: left;height: 45px;line-height: 45px;margin-left: 12px;">
+							    <input type="text" class="form-control search-content" data-provide="search-content" style="display: inline-block !important;
+							    color: #49525c;
+							    font-size: 14px;
+							    line-height: 13px;
+							    background-color: #e1eaf2;
+							    border: 1px solid #045bb2;
+							    border-radius: 4px;
+							    box-shadow: inset 0 1px 3px rgba(0,0,0,.2),0 1px 0 rgba(255,255,255,.1);
+							    outline: 0;
+							    box-sizing: border-box;
+							    -webkit-transition: all .2s ease-in-out;
+							    transition: all .2s ease-in-out;" placeholder="Search this site" />
+						</div>
+
+
+				   </div>
+
+
+				   <div class="collapse navbar-collapse" id="example-navbar-collapse">
+						<ul class="nav navbar-nav phone-nav center">
+							<li class="phoneselect"><a class="page-link pjaxlink" href="/"><i class="fa fa-home"></i>&nbsp;首页</a></li>
+							<li class="phoneselect"><a class="page-link pjaxlink" href="/pages/archive.html"><i class="fa fa-archive"></i>&nbsp;归档</a></li>
+							<li class="phoneselect"><a class="page-link pjaxlink" href="/pages/about.html"><i class="fa fa-user"></i>&nbsp;关于</a></li>
+						</ul>
+				   </div>
+
+			</nav>
+		</div>
+	</div>
+</header>
+
+
+    <div class="content">
+   	<div class="container">
+   		<div class="row">
+
+			<div class="col-md-3 col-lg-3 hidden-xs hidden-sm aside1 fadein-left">
+				<div class="profile box-shadow center">
+					<div class="overlay"></div>
+					<div class="center gavatar">
+						<a href="" class="profile_gavatar"><img class="circle" src="/assets/img/gavatar_2.png"></a>
+					</div>
+					<div class="address">
+						<h5><span class="fa fa-map-marker"></span> BeiJing, China</h5>
+					</div>
+					<div class="center profile_desc">
+						红衣佳人白衣友<br>朝与同歌暮同酒<br>世人谓我恋长安<br>其实只恋长安某<br><br><br>
+					</div>
+
+				</div>
+
+				<div class="tag-cloud-text">
+					<p class="center">音乐</p>
+				</div>
+				<div class="tag-cloud ">
+					<hr>
+					<div id="player5" class="aplayer"></div>
+				</div>
+				<div class="clear"></div>
+
+				<div class="tag-cloud-text">
+					<a href="/pages/tags.html" title="标签" class="pjaxlink"><p class="center">标签</p></a>
+				</div>
+				<div class="tag-cloud ">
+					<hr>
+					<div class="page-tag">
+							
+								<a href="/pages/tags.html#java" name="java" class="pjaxlink"><i class="fa fa-tags"></i>java(6)</a>
+							
+								<a href="/pages/tags.html#linux" name="linux" class="pjaxlink"><i class="fa fa-tags"></i>linux(4)</a>
+							
+								<a href="/pages/tags.html#算法" name="算法" class="pjaxlink"><i class="fa fa-tags"></i>算法(2)</a>
+							
+								<a href="/pages/tags.html#其他" name="其他" class="pjaxlink"><i class="fa fa-tags"></i>其他(1)</a>
+							
+								<a href="/pages/tags.html#nginx" name="nginx" class="pjaxlink"><i class="fa fa-tags"></i>nginx(1)</a>
+							
+								<a href="/pages/tags.html#大数据" name="大数据" class="pjaxlink"><i class="fa fa-tags"></i>大数据(6)</a>
+							
+								<a href="/pages/tags.html#mysql" name="mysql" class="pjaxlink"><i class="fa fa-tags"></i>mysql(1)</a>
+							
+					</div>
+				</div>
+				<div class="clear"></div>
+				<div class="recentcome box-shadow">
+	 				<p>最近访客 <i class="fa fa-user"></i></p>
+	 				<ul class="ds-recent-visitors" data-num-items="15"></ul>
+	 			</div>
+	 			<div class="comment box-shadow">
+	 				<p>最新评论 <i class="fa fa-comments"></i></p>
+	 				<dl class="ds-recent-comments"  data-num-items="5" data-show-avatars="1" data-show-time="1" data-show-title="1"  data-show-admin="1" data-excerpt-length="50"></dl>
+	 			</div>
+
+
+	 			<div class="recentuse">
+	 					<p>经常出没</p>
+	 					<hr>
+	 					<ul>
+
+	 					</ul>
+	 			</div>
+
+				<div class="friendlink">
+	 					<p>友情链接</p>
+
+	 			</div>
+
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 box-shadow fadein-right aside2">
+					<div class="page-content" id="pjax"><p><input type="hidden" id="galleryHidden" value="gallery" /></p>
+
+<div id="links" class="links"></div>
+<!-- The Gallery as lightbox dialog, should be a child element of the document body -->
+<div id="blueimp-gallery" class="blueimp-gallery">
+    <div class="slides"></div>
+    <h3 class="title"></h3>
+    <a class="prev">‹</a>
+    <a class="next">›</a>
+    <a class="close">×</a>
+    <a class="play-pause"></a>
+    <ol class="indicator"></ol>
+</div>
+</div>
+			</div>
+
+
+
+ 		</div>
+	</div>
+    </div>
+
+
+	<div class="profile_social">
+		<a class="rss" href="/feed.xml" target="_blank"></a>
+		<a class="github" href="https://github.com/wuyanfeigithub"  target="_blank"></a>
+		<a class="weibo" href="https://weibo.com/u/2726632531"  target="_blank"></a>
+	</div>
+
+    <div id="backtotop">
+    		<a href="#"><i class="fa fa-arrow-circle-up"></i></a>
+    </div>
+
+    <div class="pjax_loading"></div>
+
+    <footer class="site-footer" >
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Sendoh Akira's blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>Sendoh Akira</li>
+          <li><a href="mailto:wuyanfeijob@163.com">wuyanfeijob@163.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a class="github" href="https://github.com/wuyanfeigithub"  target="_blank"></a>
+          </li>
+          
+
+          
+          <li>
+            <a class="weibo" href="https://weibo.com/u/2726632531"  target="_blank"></a>
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        <p class="text"></p>
+      </div>
+
+
+    </div>
+    <div class="center sitedesc">
+    	Powered by <a href ="http://jekyllrb.com/">Jekyll</a>  |   &copy; 2016 Sendoh Akira |  Hosted on <a href="https://github.com/wuyanfeigithub"> Github</a>
+
+      
+          <div class="visit">
+              <span id="span_dt_dt" onload="show_date_time();"></span>
+              &nbsp;&nbsp;|&nbsp;&nbsp;
+              
+                  <span id="busuanzi_container_site_pv" style='display:none'>
+                      <span id="site-visit" >小伙伴到访数 :
+                          <span id="busuanzi_value_site_uv"></span>
+                      </span>
+                  </span>
+              
+              
+                  <span>, </span>
+              
+              
+                  <span id="busuanzi_container_page_pv" style='display:none'>
+                      <span id="page-visit">本页阅读量 :
+                          <span id="busuanzi_value_page_pv"></span>
+                      </span>
+                  </span>
+              
+          </div>
+      
+
+      <script type="text/javascript"> var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan  id='cnzz_stat_icon_1260447200'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260447200%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+    </div>
+  </div>
+
+  <script language="javascript">
+  function show_date_time(){
+  window.setTimeout("show_date_time()", 1000);
+  BirthDay=new Date("8/15/2016 11:30:00");//这个日期是可以修改的
+  today=new Date();
+  timeold=(today.getTime()-BirthDay.getTime());
+  sectimeold=timeold/1000
+  secondsold=Math.floor(sectimeold);
+  msPerDay=24*60*60*1000
+  e_daysold=timeold/msPerDay
+  daysold=Math.floor(e_daysold);
+  e_hrsold=(e_daysold-daysold)*24;
+  hrsold=Math.floor(e_hrsold);
+  e_minsold=(e_hrsold-hrsold)*60;
+  minsold=Math.floor((e_hrsold-hrsold)*60);
+  seconds=Math.floor((e_minsold-minsold)*60);
+  span_dt_dt.innerHTML="本站已萌萌哒运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+  }show_date_time();</script>
+
+  <!-- <script type="text/javascript">
+	  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+	  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+	  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+	  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+	  _st('install','8i7AWfTU6yge5uNc4fmc','2.0.0');
+  </script> -->
+
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+  </script>
+
+  <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+
+  <script type="text/javascript" src="/assets/js/jquery.js"></script>
+
+  <script type="text/javascript" src="/assets/js/bootstrap.js"></script>
+  <script type="text/javascript" src="/assets/js/jquery.pjax.js"></script>
+  <!-- <script type="text/javascript" src="/assets/js/echarts.min.js"></script> -->
+  <script type="text/javascript" src="/assets/js/prettify/prettify.js"></script>
+  <script type="text/javascript" src="/assets/js/stickUp.min.js"></script>
+  <script type="text/javascript" src="/assets/js/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/assets/js/fancybox/jquery.mousewheel-3.0.6.pack.js"></script>
+  <script type="text/javascript" src="/assets/js/FileSaver.js"></script>
+  <script type="text/javascript" src="/assets/js/jquery.wordexport.js"></script>
+  <script type="text/javascript" src="/assets/js/jquery.share.min.js"></script>
+
+  <script src="/assets/js/gallery/js/blueimp-helper.js"></script>
+  <script src="/assets/js/gallery/js/blueimp-gallery.js"></script>
+  <script src="/assets/js/gallery/js/blueimp-gallery-fullscreen.js"></script>
+  <script src="/assets/js/gallery/js/blueimp-gallery-indicator.js"></script>
+  <script src="/assets/js/gallery/js/blueimp-gallery-video.js"></script>
+  <script src="/assets/js/gallery/js/blueimp-gallery-vimeo.js"></script>
+  <script src="/assets/js/gallery/js/blueimp-gallery-youtube.js "></script>
+  <script src="/assets/js/gallery/js/jquery.blueimp-gallery.js"></script>
+
+  <script type="text/javascript" src="/assets/js/main.js"></script>
+  <script src="/search/js/bootstrap3-typeahead.min.js"></script>
+  <link rel="stylesheet" href="/search/css/cb-search.css">
+
+
+  <script src="/search/js/cb-search.js"></script>
+
+
+</footer>
+
+
+	<script type="text/javascript" src="/assets/js/mp3/APlayer.min.js"></script>
+  	<script type="text/javascript">
+	  	var ap5 = new APlayer({
+	    element: document.getElementById('player5'),
+	    narrow: false,
+	    autoplay: false,
+	    showlrc: 3,
+	    mutex: true,
+	    theme: '#ad7a86',
+	    mode: 'random',
+	    listmaxheight: '80px',
+	    music: [
+	        {
+	            title: 'あっちゅ～ま青春!',
+	            author: '七森中☆ごらく部',
+	            url: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.mp3',
+	            pic: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.jpg',
+	            lrc: '/assets/js/mp3/lrc/qingchun.lrc'
+	        },
+	        {
+	            title: 'secret base~君がくれたもの~',
+	            author: '茅野愛衣',
+	            url: 'http://devtest.qiniudn.com/secret base~.mp3',
+	            pic: 'http://devtest.qiniudn.com/secret base~.jpg',
+	            lrc: '/assets/js/mp3/lrc/jun.lrc'
+	        },
+	        {
+	            title: '回レ！雪月花',
+	            author: '小倉唯',
+	            url: 'http://devtest.qiniudn.com/回レ！雪月花.mp3',
+	            pic: 'http://devtest.qiniudn.com/回レ！雪月花.jpg',
+	            lrc: '/assets/js/mp3/lrc/xueyuehua.lrc'
+	        }
+	    ]
+	});
+	</script>
+  </body>
+
+</html>

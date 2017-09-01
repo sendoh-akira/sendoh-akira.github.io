@@ -9,6 +9,8 @@
 
   /feed.xml
 
+  /pages/gallery.html
+
   /
 
   /pages/read.html
