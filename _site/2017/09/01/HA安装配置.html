@@ -9,8 +9,8 @@
   <!-- 添加搜索关键字 -->
   <meta name="keywords" content="武燕飞,https://sendoh-akira.github.io/">
 
-  <title>Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support | Sendoh Akira</title>
-  <meta name="description" content="  Nginx(pronounced “engine x”) is a free, open-source, high-performance HTTP server. Nginx is known for its stability, rich feature set, simple configuration...">
+  <title>HA 安装配置 | Sendoh Akira</title>
+  <meta name="description" content="  Elasticsearch HA 安装配置">
 
   <!-- <script src="https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/ecom/esl/2-1-4/esl.js"></script> -->
   <link rel="stylesheet" href="/assets/css/bootstrap.css">
@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="/assets/js/prettify/prettify.css">
   <link rel="shortcut icon" href="/assets/img/favicon_2.png" />
   <link rel="stylesheet" href="/assets/css/duoshuo.css">
-  <link rel="canonical" href="https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html">
+  <link rel="canonical" href="https://sendoh-akira.github.io/2017/09/01/HA%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.html">
   <link rel="alternate" type="application/rss+xml" title="Sendoh Akira" href="https://sendoh-akira.github.io/feed.xml" />
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -216,14 +216,14 @@ table .table {
 					<div class="page-content" id="pjax"><div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support</h1>
+    <h1 class="post-title">HA 安装配置</h1>
     <div class="info">
-	    <p class="post-meta"><i class="fa fa-calendar"></i>&nbsp;2016-09-23</p>
+	    <p class="post-meta"><i class="fa fa-calendar"></i>&nbsp;2017-09-01</p>
 	    
 		<i class="fa fa-tags"></i>
 		<span class="index-post-tag">
 		
-			<a class="pjaxlink" href="/pages/tags.html#nginx">nginx</a>
+			<a class="pjaxlink" href="/pages/tags.html#大数据">大数据</a>
 		
 		</span>
 	    
@@ -232,140 +232,225 @@ table .table {
 
   <article class="post-content">
     <blockquote>
-  <p>Nginx(pronounced “engine x”) is a free, open-source, high-performance HTTP server. Nginx is known for its stability, rich feature set, simple configuration, and low resource consumption. This tutorial shows how you can compile and install Nginx on CentOS server with SSL, PCRE, GeoIP, Zlib, Gzip and DAV supp</p>
+  <p>Elasticsearch HA 安装配置</p>
 </blockquote>
 
-<h1 id="add-a-repo-for-some-packages-that-we-need">Add a repo for some packages that we need:</h1>
+<h1 id="selinux">关闭SElinux、配置防火墙</h1>
 
-<p><a href="https://support.rackspace.com/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat">Install EPEL, IUS, and Remi repositories on CentOS and Red Hat</a></p>
+<p>修改selinux</p>
 
-<p>EPEL(Extra Packages for Enterprise Linux) Repo是Linux发行版中最大的软件仓库之一，免费，丰富的软件包更新。</p>
-
-<pre><code># rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-rpm-macros-6-11.noarch.rpm
+<pre><code>vi /etc/selinux/config
 </code></pre>
 
-<h1 id="pre-installation">Pre-Installation</h1>
+<p>修改内容</p>
 
-<p>First we install httpd-devel, pcre, pcre-devel, zlib, zlib-devel, perl, geoip and geoip-devel gcc gcc-c++ packages like this:</p>
-
-<pre><code># yum install -y httpd-devel pcre perl pcre-devel zlib zlib-devel GeoIP GeoIP-devel  gcc gcc-c++
+<pre><code>#SELINUXTYPE=targeted
+SELINUX=disabled
 </code></pre>
 
-<p>Create group and user for nginx</p>
+<p>使配置立即生效</p>
 
-<pre><code># /usr/sbin/groupadd -f nginx
-# /usr/sbin/useradd -g nginx nginx
+<pre><code>setenforce 0
 </code></pre>
 
-<h1 id="download-required-packages">Download required packages</h1>
+<p>修改防火墙</p>
 
-<pre><code># cd /usr/local/src/
-# wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
-# wget http://zlib.net/zlib-1.2.8.tar.gz
-# wget https://www.openssl.org/source/openssl-1.0.1u.tar.gz
+<pre><code>vi /etc/sysconfig/iptables
+
+#允许组播地址通信
+-A RH-Firewall-1-INPUT -d 224.0.0.18 -j ACCEPT
+#允许VRRP（虚拟路由器冗余协）通信
+-A RH-Firewall-1-INPUT -p    vrrp    -j ACCEPT
+#允许80端口通过防火墙
+-A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
 </code></pre>
 
-<h1 id="now-you-have-to-untar-these-files">Now you have to untar these files.</h1>
+<p>重启防火墙使配置生效</p>
 
-<pre><code># tar -xvf pcre-8.38
-# tar -xvf zlib-1.2.8.tar.gz
-# tar -xvf openssl-1.0.1u.tar.gz
+<pre><code>/etc/init.d/iptables restart
 </code></pre>
 
-<h1 id="download-nginx-source-package">Download Nginx source package</h1>
+<h1 id="haproxy">安装HAProxy</h1>
 
-<p>You need to download Nginx source package from <a href="http://nginx.org/">nginx.org</a>,nginx wiki from <a href="https://www.nginx.com/resources/wiki">nginx wiki</a></p>
+<p>创建HAProxy运行账户和组</p>
 
-<pre><code># cd /usr/local/src/
-# wget  http://nginx.org/download/nginx-1.11.4.tar.gz
-# tar -xvf nginx-1.11.4.tar.gz
-# cd nginx-1.11.4
+<pre><code>#添加haproxy组
+groupadd haproxy
+useradd -g haproxy haproxy -s /bin/false
 </code></pre>
 
-<h1 id="compile-and-install-nginx">Compile and Install Nginx</h1>
+<p>#创建nginx运行账户haproxy并加入到haproxy组，不允许haproxy用户直接登录系统。</p>
 
-<p>Now you can compile and install Nginx with the following commands:</p>
+<p>安装gcc组件</p>
 
-<pre><code># ./configure \
-    --user=nginx  \
-    --group=nginx  \
-    --prefix=/usr/local/develop/nginx  \
-    --sbin-path=/usr/local/develop/nginx/bin/nginx  \
-    --conf-path=/usr/local/develop/nginx/etc/nginx.conf  \
-    --error-log-path=/usr/local/develop/nginx/log/error.log  \
-    --http-log-path=/usr/local/develop/nginx/log/access.log  \
-    --http-client-body-temp-path=/var/lib/nginx/tmp/client_body  \
-    --http-proxy-temp-path=/var/lib/nginx/tmp/proxy  \
-    --http-fastcgi-temp-path=/var/lib/nginx/tmp/fastcgi  \
-    --pid-path=/usr/local/develop/nginx/pid/nginx.pid  \
-    --lock-path=/var/lock/subsys/nginx  \
-    --with-http_ssl_module  \
-    --with-http_realip_module  \
-    --with-http_addition_module  \
-    --with-http_sub_module  \
-    --with-http_dav_module \
-    --with-http_flv_module \
-    --with-http_gzip_static_module \
-    --with-http_stub_status_module \
-    --with-mail \
-    --with-mail_ssl_module \
-    --with-openssl=../openssl-1.0.1u \
-    --with-pcre \
-    --with-pcre=../pcre-8.38 \
-    --with-zlib=../zlib-1.2.8 \
-    --with-http_geoip_module \
+<pre><code>yum install -y gcc
 </code></pre>
 
-<p>You can find out more options by using the following command:</p>
+<p>解压下载好的haproxy-1.6.9.tar.gz包</p>
 
-<pre><code>```
-# ./configure --help
-```
+<pre><code>tar zxvf haproxy-1.6.9.tar.gz
+
+cd haproxy-1.6.9
+
+#编译  uname -r #查看系统内核版本号
+make TARGET=linux3100 CPU=x86_64  PREFIX=/usr/local/haprpxy
+
+#安装
+make install PREFIX=/usr/local/haproxy
 </code></pre>
 
-<p>Now run:</p>
+<p>参数说明：</p>
 
-<pre><code>```
-# make
-# make install
-```
+<pre><code>#TARGET=linux3100
+#使用uname -r查看内核，如：2.6.18-371.el5，此时该参数就为linux26
+#kernel 大于2.6.28的用：TARGET=linux2628
+#CPU=x86_64   #使用uname -r查看系统信息，如x86_64 x86_64 x86_64 	GNU/Linux，此时该参数就为x86_64
+#PREFIX=/usr/local/haprpxy  #/usr/local/haprpxy为haprpxy安装路径
 </code></pre>
 
-<p>Configuration Summary</p>
+<p>设置HAProxy</p>
 
-<pre><code>nginx path prefix: "/usr/local/nginx"
-nginx binary file: "/usr/local/nginx/sbin/nginx"
-nginx configuration prefix: "/usr/local/nginx/conf"
-nginx configuration file: "/usr/local/nginx/conf/nginx.conf"
-nginx pid file: "/usr/local/nginx/logs/nginx.pid"
-nginx error log file: "/usr/local/nginx/logs/error.log"
-nginx http access log file: "/usr/local/nginx/logs/access.log"
-nginx http client request body temporary files: "client_body_temp"
-nginx http proxy temporary files: "proxy_temp"
-nginx http fastcgi temporary files: "fastcgi_temp"
+<pre><code>#创建配置文件目录
+mkdir -p  /usr/local/haproxy/conf
+
+#创建配置文件目录
+mkdir -p /etc/haproxy
+#创建配置文件
+touch  /usr/local/haproxy/conf/haproxy.cfg
+
+#添加配置文件软连接
+ln -s  /usr/local/haproxy/conf/haproxy.cfg   /etc/haproxy/haproxy.cfg
+
+#拷贝错误页面
+cp  -r  /usr/local/src/haproxy-1.6.9/examples/errorfiles  /usr/local/haproxy/errorfiles
+
+#添加软连接
+ln -s  /usr/local/haproxy/errorfiles  /etc/haproxy/errorfiles
+
+#创建日志文件目录
+mkdir -p  /usr/local/haproxy/log
+#创建日志文件
+touch  /usr/local/haproxy/log/haproxy.log
+#添加软连接
+ln -s  /usr/local/haproxy/log/haproxy.log  /var/log/haproxy.log
+#拷贝开机启动文件
+cp /usr/local/src/haproxy-1.6.9/examples/haproxy.init  /etc/rc.d/init.d/haproxy
+
+#添加脚本执行权限
+chmod +x  /etc/rc.d/init.d/haproxy
+#设置开机启动
+chkconfig haproxy on
+#添加软连接
+ln -s  /usr/local/haproxy/sbin/haproxy  /usr/sbin
 </code></pre>
 
-<h1 id="start-nginx-server">Start Nginx Server</h1>
+<p>配置haproxy.cfg参数</p>
 
-<pre><code># /usr/local/develop/nginx/bin/nginx -c /usr/local/develop/nginx/etc/nginx.conf
+<p>备份
+    cp /usr/local/haproxy/conf/haproxy.cfg /usr/local/haproxy/conf/haproxy.cfg-bak</p>
+
+<p>内容</p>
+
+<pre><code>vi  /usr/local/haproxy/conf/haproxy.cfg
 </code></pre>
 
-<h1 id="stop-nginx-server">Stop Nginx Server</h1>
+<p>设置HAProxy日志</p>
 
-<pre><code># /usr/local/develop/nginx/bin/nginx -s stop
+<pre><code>global
+    daemon
+    nbproc 1
+    pidfile /var/run/haproxy.pid
+    ulimit-n 65535
+
+defaults
+    mode tcp                        #mode { tcp|http|health }，tcp 表示4层，http表示7层，health仅作为健康检查使用
+    retries 2                       #尝试2次失败则从集群摘除
+    option redispatch               #如果失效则强制转换其他服务器
+    option abortonclose             #连接数过大自动关闭
+    maxconn 1024                    #最大连接数
+    timeout connect 1d              #连接超时时间，重要，hive查询数据能返回结果的保证
+    timeout client 1d               #同上
+    timeout server 1d               #同上
+    timeout check 2000              #健康检查时间
+    log 127.0.0.1 local0 err #[err warning info debug]
+
+listen  admin_stats                     #定义管理界面
+    bind 0.0.0.0:1090               #管理界面访问IP和端口
+    mode http                       #管理界面所使用的协议
+    maxconn 10          #最大连接数
+    stats refresh 30s               #30秒自动刷新
+    stats uri /                     #访问url
+    stats realm Hive\ Haproxy       #验证窗口提示
+    stats auth admin:123456         #401验证用户名密码
+
+listen hive             #hive后端定义
+    bind 0.0.0.0:10001              #ha作为proxy所绑定的IP和端口
+    mode tcp                        #以4层方式代理，重要
+    balance leastconn               #调度算法 'leastconn' 最少连接数分配，或者 'roundrobin'，轮询分配
+    maxconn 1024                    #最大连接数
+    server node1 192.168.1.201:10000 check inter 180000 rise 1 fall 2
+    server node2 192.168.1.202:10000 check inter 180000 rise 1 fall 2
+#释义：server 主机代名(你自己能看懂就行)，IP:端口 每180000毫秒检查一次。也就是三分钟。
+#hive每有10000端口的请求就会创建一个log，设置短了，/tmp下面会有无数个log文件，删不完。
+
+listen oozie             #oozie后端定义
+    bind 0.0.0.0:11100              #ha作为proxy所绑定的IP和端口
+    mode tcp                        #以4层方式代理，重要
+    balance leastconn               #调度算法 'leastconn' 最少连接数分配，或者 'roundrobin'，轮询分配
+    maxconn 1024                    #最大连接数
+    server node1 192.168.1.201:11000 check inter 180000 rise 1 fall 2
+    server node2 192.168.1.202:11000 check inter 180000 rise 1 fall 2
+#释义：server 主机代名(你自己能看懂就行)，IP:端口 每180000毫秒检查一次。也就是三分钟。
+#oozie每有11001端口的请求就会创建一个log，设置短了，/tmp下面会有无数个log文件，删不完。
+
+
+listen impala             #impala后端定义
+    bind 0.0.0.0:21051              #ha作为proxy所绑定的IP和端口
+    mode tcp                        #以4层方式代理，重要
+    balance leastconn               #调度算法 'leastconn' 最少连接数分配，或者 'roundrobin'，轮询分配
+    maxconn 1024                    #最大连接数
+    server node1 192.168.1.201:21050 check inter 180000 rise 1 fall 2
+    server node2 192.168.1.202:21050 check inter 180000 rise 1 fall 2
+    server node3 192.168.1.203:21050 check inter 180000 rise 1 fall 2
+#释义：server 主机代名(你自己能看懂就行)，IP:端口 每180000毫秒检查一次。也就是三分钟。
+#impala每有11001端口的请求就会创建一个log，设置短了，/tmp下面会有无数个log文件，删不完。
 </code></pre>
 
-<h1 id="testing">Testing</h1>
+<p>haproxy命令</p>
 
-<pre><code># /usr/local/develop/nginx/bin/nginx -V
+<pre><code>#启动
+service haproxy stop  
+
+#关闭
+service haproxy start
+
+#重启
+service haproxy restart  
 </code></pre>
 
-<h1 id="brower">brower</h1>
+<p>编辑，在最下边增加
+    vi  /etc/syslog.conf</p>
 
-<pre><code>http://ip/
+<pre><code># haproxy.log
+local0.*          /var/log/haproxy.log
+local3.*          /var/log/haproxy.log
 </code></pre>
 
-<p><a href="https://www.howtoforge.com/install-nginx-on-centos-5.5-with-ssl-pcre-geoip-zlib-gzip-and-dav-support">reference by the blog</a></p>
+<p>编辑修改</p>
+
+<pre><code>vi  /etc/sysconfig/syslog
+
+#接收远程服务器日志
+SYSLOGD_OPTIONS="-r -m 0"
+#重启syslog  
+service syslog restart  
+</code></pre>
+
+<p>浏览器打开haproxy的监控页面</p>
+
+<p>如下：</p>
+
+<p>http://ip:1090/stats  //说明：1090即haproxy配置文件中监听端口，stats 即haproxy配置文件中的监听名称</p>
 
   </article>
 
@@ -407,7 +492,7 @@ nginx http fastcgi temporary files: "fastcgi_temp"
 <!-- 百度分享 END -->
 <!--多说分享 Begin -->
 
-<!-- <div class="ds-share flat" data-thread-key="/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support" data-title="Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support" data-images="" data-content="Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support" data-url="https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html">
+<!-- <div class="ds-share flat" data-thread-key="/2017/09/01/HA安装配置" data-title="HA 安装配置" data-images="" data-content="HA 安装配置" data-url="https://sendoh-akira.github.io/2017/09/01/HA%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.html">
 
 
   <div id="ds-reset" class="ds-share-inline">
@@ -429,11 +514,11 @@ nginx http fastcgi temporary files: "fastcgi_temp"
 <!--sharethis start-->
 
 
-<span st_url='https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html' st_title='Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support' class='st_facebook_large' displayText='Facebook'></span>
-<span st_url='https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html' st_title='Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support' class='st_googleplus_large' displayText='Google  '></span>
-<span st_url='https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html' st_title='Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support'  class='st_twitter_large' displayText='Tweet'></span>
-<span st_url='https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html' st_title='Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support' class='st_sina_large' displayText='Sina'></span>
-<span st_url='https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html' st_title='Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support' class='st_email_large' displayText='Email'></span>
+<span st_url='https://sendoh-akira.github.io/2017/09/01/HA%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.html' st_title='HA 安装配置' class='st_facebook_large' displayText='Facebook'></span>
+<span st_url='https://sendoh-akira.github.io/2017/09/01/HA%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.html' st_title='HA 安装配置' class='st_googleplus_large' displayText='Google  '></span>
+<span st_url='https://sendoh-akira.github.io/2017/09/01/HA%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.html' st_title='HA 安装配置'  class='st_twitter_large' displayText='Tweet'></span>
+<span st_url='https://sendoh-akira.github.io/2017/09/01/HA%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.html' st_title='HA 安装配置' class='st_sina_large' displayText='Sina'></span>
+<span st_url='https://sendoh-akira.github.io/2017/09/01/HA%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.html' st_title='HA 安装配置' class='st_email_large' displayText='Email'></span>
 
 <!--sharethis end-->
 
@@ -442,12 +527,12 @@ nginx http fastcgi temporary files: "fastcgi_temp"
   <div class="prevandnext">
     	  
 	    <div style="margin:0.5em;">
-	    <span>上一篇 ：</span><a class="pjaxlink" href="https://sendoh-akira.github.io/2017/08/31/cdh%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85.html"  title="CDH环境安装">CDH环境安装</a>
+	    <span>上一篇 ：</span><a class="pjaxlink" href="https://sendoh-akira.github.io/2017/09/01/Hbase%E5%8D%8F%E5%A4%84%E7%90%86%E5%99%A8%E9%83%A8%E7%BD%B2.html"  title="Hbase 协处理器部署">Hbase 协处理器部署</a>
 	    </div>
 	  
   	  
 	    <div style="margin:0.5em;">
-	    <span>下一篇 ：</span><a class="pjaxlink" href="https://sendoh-akira.github.io/2016/09/22/spring_interview_questions_and_answers.html"  title="Spring Interview Questions and Answers">Spring Interview Questions and Answers</a>
+	    <span>下一篇 ：</span><a class="pjaxlink" href="https://sendoh-akira.github.io/2017/09/01/Elasticsearch%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85.html"  title="Elasticsearch 插件安装">Elasticsearch 插件安装</a>
 	    </div>
 	  
 	  	<div style="margin:0.5em;">
@@ -457,7 +542,7 @@ nginx http fastcgi temporary files: "fastcgi_temp"
   </div>
 
   <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support" data-title="Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support" data-url=""></div>
+<div class="ds-thread" data-thread-key="/2017/09/01/HA安装配置" data-title="HA 安装配置" data-url=""></div>
 <!-- 多说评论框 end -->
 
 </div>

@@ -9,8 +9,8 @@
   <!-- 添加搜索关键字 -->
   <meta name="keywords" content="武燕飞,https://sendoh-akira.github.io/">
 
-  <title>Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support | Sendoh Akira</title>
-  <meta name="description" content="  Nginx(pronounced “engine x”) is a free, open-source, high-performance HTTP server. Nginx is known for its stability, rich feature set, simple configuration...">
+  <title>cdh重启步骤 | Sendoh Akira</title>
+  <meta name="description" content="  cdh重启步骤">
 
   <!-- <script src="https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/ecom/esl/2-1-4/esl.js"></script> -->
   <link rel="stylesheet" href="/assets/css/bootstrap.css">
@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="/assets/js/prettify/prettify.css">
   <link rel="shortcut icon" href="/assets/img/favicon_2.png" />
   <link rel="stylesheet" href="/assets/css/duoshuo.css">
-  <link rel="canonical" href="https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html">
+  <link rel="canonical" href="https://sendoh-akira.github.io/2017/09/01/cdh%E9%87%8D%E5%90%AF%E6%AD%A5%E9%AA%A4.html">
   <link rel="alternate" type="application/rss+xml" title="Sendoh Akira" href="https://sendoh-akira.github.io/feed.xml" />
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -216,14 +216,14 @@ table .table {
 					<div class="page-content" id="pjax"><div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support</h1>
+    <h1 class="post-title">cdh重启步骤</h1>
     <div class="info">
-	    <p class="post-meta"><i class="fa fa-calendar"></i>&nbsp;2016-09-23</p>
+	    <p class="post-meta"><i class="fa fa-calendar"></i>&nbsp;2017-09-01</p>
 	    
 		<i class="fa fa-tags"></i>
 		<span class="index-post-tag">
 		
-			<a class="pjaxlink" href="/pages/tags.html#nginx">nginx</a>
+			<a class="pjaxlink" href="/pages/tags.html#大数据">大数据</a>
 		
 		</span>
 	    
@@ -232,140 +232,106 @@ table .table {
 
   <article class="post-content">
     <blockquote>
-  <p>Nginx(pronounced “engine x”) is a free, open-source, high-performance HTTP server. Nginx is known for its stability, rich feature set, simple configuration, and low resource consumption. This tutorial shows how you can compile and install Nginx on CentOS server with SSL, PCRE, GeoIP, Zlib, Gzip and DAV supp</p>
+  <p>cdh重启步骤</p>
 </blockquote>
 
-<h1 id="add-a-repo-for-some-packages-that-we-need">Add a repo for some packages that we need:</h1>
+<h1 id="ntp">ntp服务启动</h1>
 
-<p><a href="https://support.rackspace.com/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat">Install EPEL, IUS, and Remi repositories on CentOS and Red Hat</a></p>
+<p>在master、node1、node2、node3上分别执行</p>
 
-<p>EPEL(Extra Packages for Enterprise Linux) Repo是Linux发行版中最大的软件仓库之一，免费，丰富的软件包更新。</p>
-
-<pre><code># rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-rpm-macros-6-11.noarch.rpm
+<pre><code>systemctl enable ntpd
+systemctl start ntpd
 </code></pre>
 
-<h1 id="pre-installation">Pre-Installation</h1>
+<p>在master上执行 date 查看时间，如果和北京时间差距很多，需要重置</p>
 
-<p>First we install httpd-devel, pcre, pcre-devel, zlib, zlib-devel, perl, geoip and geoip-devel gcc gcc-c++ packages like this:</p>
-
-<pre><code># yum install -y httpd-devel pcre perl pcre-devel zlib zlib-devel GeoIP GeoIP-devel  gcc gcc-c++
+<pre><code>date -s "2017-03-06 10:25:25"
+clock -w
 </code></pre>
 
-<p>Create group and user for nginx</p>
+<p>然后在node1、node2上分别执行同步命令：</p>
 
-<pre><code># /usr/sbin/groupadd -f nginx
-# /usr/sbin/useradd -g nginx nginx
+<pre><code>ntpdate -u  master
 </code></pre>
 
-<h1 id="download-required-packages">Download required packages</h1>
+<h1 id="rpc">rpc服务启动</h1>
 
-<pre><code># cd /usr/local/src/
-# wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
-# wget http://zlib.net/zlib-1.2.8.tar.gz
-# wget https://www.openssl.org/source/openssl-1.0.1u.tar.gz
+<p>在master、node1、node2、node3上分别执行：</p>
+
+<pre><code>#启动rpc服务
+service rpcbind start
 </code></pre>
 
-<h1 id="now-you-have-to-untar-these-files">Now you have to untar these files.</h1>
+<h1 id="cloudera-manager-serveragent">启动Cloudera Manager Server和agent</h1>
 
-<pre><code># tar -xvf pcre-8.38
-# tar -xvf zlib-1.2.8.tar.gz
-# tar -xvf openssl-1.0.1u.tar.gz
+<p>在master上：</p>
+
+<pre><code>#启动server
+/opt/cm-5.9.0/etc/init.d/cloudera-scm-server start
+#启动agent
+/opt/cm-5.9.0/etc/init.d/cloudera-scm-agent start
 </code></pre>
 
-<h1 id="download-nginx-source-package">Download Nginx source package</h1>
+<p>在slave上：</p>
 
-<p>You need to download Nginx source package from <a href="http://nginx.org/">nginx.org</a>,nginx wiki from <a href="https://www.nginx.com/resources/wiki">nginx wiki</a></p>
-
-<pre><code># cd /usr/local/src/
-# wget  http://nginx.org/download/nginx-1.11.4.tar.gz
-# tar -xvf nginx-1.11.4.tar.gz
-# cd nginx-1.11.4
+<pre><code>#启动agent
+/opt/cm-5.9.0/etc/init.d/cloudera-scm-agent start
 </code></pre>
 
-<h1 id="compile-and-install-nginx">Compile and Install Nginx</h1>
+<h1 id="kerberos">启动kerberos</h1>
 
-<p>Now you can compile and install Nginx with the following commands:</p>
+<p>在node3(主节点)上启动kerberos kdc：</p>
 
-<pre><code># ./configure \
-    --user=nginx  \
-    --group=nginx  \
-    --prefix=/usr/local/develop/nginx  \
-    --sbin-path=/usr/local/develop/nginx/bin/nginx  \
-    --conf-path=/usr/local/develop/nginx/etc/nginx.conf  \
-    --error-log-path=/usr/local/develop/nginx/log/error.log  \
-    --http-log-path=/usr/local/develop/nginx/log/access.log  \
-    --http-client-body-temp-path=/var/lib/nginx/tmp/client_body  \
-    --http-proxy-temp-path=/var/lib/nginx/tmp/proxy  \
-    --http-fastcgi-temp-path=/var/lib/nginx/tmp/fastcgi  \
-    --pid-path=/usr/local/develop/nginx/pid/nginx.pid  \
-    --lock-path=/var/lock/subsys/nginx  \
-    --with-http_ssl_module  \
-    --with-http_realip_module  \
-    --with-http_addition_module  \
-    --with-http_sub_module  \
-    --with-http_dav_module \
-    --with-http_flv_module \
-    --with-http_gzip_static_module \
-    --with-http_stub_status_module \
-    --with-mail \
-    --with-mail_ssl_module \
-    --with-openssl=../openssl-1.0.1u \
-    --with-pcre \
-    --with-pcre=../pcre-8.38 \
-    --with-zlib=../zlib-1.2.8 \
-    --with-http_geoip_module \
+<pre><code>service krb5kdc start
+service kadmin start
 </code></pre>
 
-<p>You can find out more options by using the following command:</p>
+<h1 id="redissentinel">启动redis和sentinel</h1>
 
-<pre><code>```
-# ./configure --help
-```
+<p>node1(主节点)：</p>
+
+<pre><code>#redis server
+redis-server ./redis.conf
+#redis-sentinel
+redis-sentinel ./sentinel.conf
 </code></pre>
 
-<p>Now run:</p>
+<p>node2(从节点)，node3(从节点):</p>
 
-<pre><code>```
-# make
-# make install
-```
+<pre><code>#redis server
+redis-server ./redis.conf
+#redis-sentinel
+redis-sentinel ./sentinel.conf
 </code></pre>
 
-<p>Configuration Summary</p>
+<h1 id="es">启动ES</h1>
 
-<pre><code>nginx path prefix: "/usr/local/nginx"
-nginx binary file: "/usr/local/nginx/sbin/nginx"
-nginx configuration prefix: "/usr/local/nginx/conf"
-nginx configuration file: "/usr/local/nginx/conf/nginx.conf"
-nginx pid file: "/usr/local/nginx/logs/nginx.pid"
-nginx error log file: "/usr/local/nginx/logs/error.log"
-nginx http access log file: "/usr/local/nginx/logs/access.log"
-nginx http client request body temporary files: "client_body_temp"
-nginx http proxy temporary files: "proxy_temp"
-nginx http fastcgi temporary files: "fastcgi_temp"
+<p>在node1、node2、node3上</p>
+
+<p>切到es用户</p>
+
+<pre><code>su - es
 </code></pre>
 
-<h1 id="start-nginx-server">Start Nginx Server</h1>
+<p>进入elasticsearch-5.2.1/目录</p>
 
-<pre><code># /usr/local/develop/nginx/bin/nginx -c /usr/local/develop/nginx/etc/nginx.conf
+<pre><code>cd elasticsearch-5.2.1/
+cd bin
+#后台启动
+./elasticsearch -d
 </code></pre>
 
-<h1 id="stop-nginx-server">Stop Nginx Server</h1>
+<p>启动kibana(在node1节点)</p>
 
-<pre><code># /usr/local/develop/nginx/bin/nginx -s stop
+<pre><code>cd kibana-5.2.1-linux-x86_64/
+cd bin
+./kibana
 </code></pre>
 
-<h1 id="testing">Testing</h1>
+<p>然后在浏览器中访问http://192.168.1.201:5601即可，账号和密码分别为：</p>
 
-<pre><code># /usr/local/develop/nginx/bin/nginx -V
+<pre><code>elastic  changeme
 </code></pre>
-
-<h1 id="brower">brower</h1>
-
-<pre><code>http://ip/
-</code></pre>
-
-<p><a href="https://www.howtoforge.com/install-nginx-on-centos-5.5-with-ssl-pcre-geoip-zlib-gzip-and-dav-support">reference by the blog</a></p>
 
   </article>
 
@@ -407,7 +373,7 @@ nginx http fastcgi temporary files: "fastcgi_temp"
 <!-- 百度分享 END -->
 <!--多说分享 Begin -->
 
-<!-- <div class="ds-share flat" data-thread-key="/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support" data-title="Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support" data-images="" data-content="Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support" data-url="https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html">
+<!-- <div class="ds-share flat" data-thread-key="/2017/09/01/cdh重启步骤" data-title="cdh重启步骤" data-images="" data-content="cdh重启步骤" data-url="https://sendoh-akira.github.io/2017/09/01/cdh%E9%87%8D%E5%90%AF%E6%AD%A5%E9%AA%A4.html">
 
 
   <div id="ds-reset" class="ds-share-inline">
@@ -429,11 +395,11 @@ nginx http fastcgi temporary files: "fastcgi_temp"
 <!--sharethis start-->
 
 
-<span st_url='https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html' st_title='Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support' class='st_facebook_large' displayText='Facebook'></span>
-<span st_url='https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html' st_title='Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support' class='st_googleplus_large' displayText='Google  '></span>
-<span st_url='https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html' st_title='Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support'  class='st_twitter_large' displayText='Tweet'></span>
-<span st_url='https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html' st_title='Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support' class='st_sina_large' displayText='Sina'></span>
-<span st_url='https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html' st_title='Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support' class='st_email_large' displayText='Email'></span>
+<span st_url='https://sendoh-akira.github.io/2017/09/01/cdh%E9%87%8D%E5%90%AF%E6%AD%A5%E9%AA%A4.html' st_title='cdh重启步骤' class='st_facebook_large' displayText='Facebook'></span>
+<span st_url='https://sendoh-akira.github.io/2017/09/01/cdh%E9%87%8D%E5%90%AF%E6%AD%A5%E9%AA%A4.html' st_title='cdh重启步骤' class='st_googleplus_large' displayText='Google  '></span>
+<span st_url='https://sendoh-akira.github.io/2017/09/01/cdh%E9%87%8D%E5%90%AF%E6%AD%A5%E9%AA%A4.html' st_title='cdh重启步骤'  class='st_twitter_large' displayText='Tweet'></span>
+<span st_url='https://sendoh-akira.github.io/2017/09/01/cdh%E9%87%8D%E5%90%AF%E6%AD%A5%E9%AA%A4.html' st_title='cdh重启步骤' class='st_sina_large' displayText='Sina'></span>
+<span st_url='https://sendoh-akira.github.io/2017/09/01/cdh%E9%87%8D%E5%90%AF%E6%AD%A5%E9%AA%A4.html' st_title='cdh重启步骤' class='st_email_large' displayText='Email'></span>
 
 <!--sharethis end-->
 
@@ -441,13 +407,9 @@ nginx http fastcgi temporary files: "fastcgi_temp"
 
   <div class="prevandnext">
     	  
-	    <div style="margin:0.5em;">
-	    <span>上一篇 ：</span><a class="pjaxlink" href="https://sendoh-akira.github.io/2017/08/31/cdh%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85.html"  title="CDH环境安装">CDH环境安装</a>
-	    </div>
-	  
   	  
 	    <div style="margin:0.5em;">
-	    <span>下一篇 ：</span><a class="pjaxlink" href="https://sendoh-akira.github.io/2016/09/22/spring_interview_questions_and_answers.html"  title="Spring Interview Questions and Answers">Spring Interview Questions and Answers</a>
+	    <span>下一篇 ：</span><a class="pjaxlink" href="https://sendoh-akira.github.io/2017/09/01/Hbase%E5%8D%8F%E5%A4%84%E7%90%86%E5%99%A8%E9%83%A8%E7%BD%B2.html"  title="Hbase 协处理器部署">Hbase 协处理器部署</a>
 	    </div>
 	  
 	  	<div style="margin:0.5em;">
@@ -457,7 +419,7 @@ nginx http fastcgi temporary files: "fastcgi_temp"
   </div>
 
   <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support" data-title="Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support" data-url=""></div>
+<div class="ds-thread" data-thread-key="/2017/09/01/cdh重启步骤" data-title="cdh重启步骤" data-url=""></div>
 <!-- 多说评论框 end -->
 
 </div>

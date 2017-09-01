@@ -9,8 +9,8 @@
   <!-- 添加搜索关键字 -->
   <meta name="keywords" content="武燕飞,https://sendoh-akira.github.io/">
 
-  <title>Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support | Sendoh Akira</title>
-  <meta name="description" content="  Nginx(pronounced “engine x”) is a free, open-source, high-performance HTTP server. Nginx is known for its stability, rich feature set, simple configuration...">
+  <title>Elasticsearch 插件安装 | Sendoh Akira</title>
+  <meta name="description" content="  Elasticsearch 插件安装">
 
   <!-- <script src="https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/ecom/esl/2-1-4/esl.js"></script> -->
   <link rel="stylesheet" href="/assets/css/bootstrap.css">
@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="/assets/js/prettify/prettify.css">
   <link rel="shortcut icon" href="/assets/img/favicon_2.png" />
   <link rel="stylesheet" href="/assets/css/duoshuo.css">
-  <link rel="canonical" href="https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html">
+  <link rel="canonical" href="https://sendoh-akira.github.io/2017/09/01/Elasticsearch%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85.html">
   <link rel="alternate" type="application/rss+xml" title="Sendoh Akira" href="https://sendoh-akira.github.io/feed.xml" />
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -216,14 +216,14 @@ table .table {
 					<div class="page-content" id="pjax"><div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support</h1>
+    <h1 class="post-title">Elasticsearch 插件安装</h1>
     <div class="info">
-	    <p class="post-meta"><i class="fa fa-calendar"></i>&nbsp;2016-09-23</p>
+	    <p class="post-meta"><i class="fa fa-calendar"></i>&nbsp;2017-09-01</p>
 	    
 		<i class="fa fa-tags"></i>
 		<span class="index-post-tag">
 		
-			<a class="pjaxlink" href="/pages/tags.html#nginx">nginx</a>
+			<a class="pjaxlink" href="/pages/tags.html#大数据">大数据</a>
 		
 		</span>
 	    
@@ -232,140 +232,172 @@ table .table {
 
   <article class="post-content">
     <blockquote>
-  <p>Nginx(pronounced “engine x”) is a free, open-source, high-performance HTTP server. Nginx is known for its stability, rich feature set, simple configuration, and low resource consumption. This tutorial shows how you can compile and install Nginx on CentOS server with SSL, PCRE, GeoIP, Zlib, Gzip and DAV supp</p>
+  <p>Elasticsearch 插件安装</p>
 </blockquote>
 
-<h1 id="add-a-repo-for-some-packages-that-we-need">Add a repo for some packages that we need:</h1>
+<h1 id="x-pack">安装安全插件x-pack</h1>
 
-<p><a href="https://support.rackspace.com/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat">Install EPEL, IUS, and Remi repositories on CentOS and Red Hat</a></p>
+<p>安装插件命令</p>
 
-<p>EPEL(Extra Packages for Enterprise Linux) Repo是Linux发行版中最大的软件仓库之一，免费，丰富的软件包更新。</p>
+<ol>
+  <li>
+    <p>在线安装</p>
 
-<pre><code># rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-rpm-macros-6-11.noarch.rpm
+    <pre><code>   bin/elasticsearch-plugin install x-pack
+</code></pre>
+  </li>
+  <li>
+    <p>离线安装</p>
+
+    <p>下载安装包</p>
+
+    <pre><code> https://artifacts.elastic.co/downloads/packs/x-pack/x-pack-5.2.1.zip
 </code></pre>
 
-<h1 id="pre-installation">Pre-Installation</h1>
+    <p>然后放在/home/es目录下。进入bin目录</p>
 
-<p>First we install httpd-devel, pcre, pcre-devel, zlib, zlib-devel, perl, geoip and geoip-devel gcc gcc-c++ packages like this:</p>
-
-<pre><code># yum install -y httpd-devel pcre perl pcre-devel zlib zlib-devel GeoIP GeoIP-devel  gcc gcc-c++
+    <pre><code> cd  /home/es/elasticsearch-5.2.1/bin
 </code></pre>
 
-<p>Create group and user for nginx</p>
+    <p>然后执行</p>
 
-<pre><code># /usr/sbin/groupadd -f nginx
-# /usr/sbin/useradd -g nginx nginx
+    <pre><code> ./elasticsearch-plugin install /home/es/x-pack-5.2.1.zip
+</code></pre>
+  </li>
+</ol>
+
+<p>默认用户名密码为：</p>
+
+<pre><code>elastic:changeme
 </code></pre>
 
-<h1 id="download-required-packages">Download required packages</h1>
+<p>移除插件命令</p>
 
-<pre><code># cd /usr/local/src/
-# wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
-# wget http://zlib.net/zlib-1.2.8.tar.gz
-# wget https://www.openssl.org/source/openssl-1.0.1u.tar.gz
+<pre><code>bin/elasticsearch-plugin remove x-pack
 </code></pre>
 
-<h1 id="now-you-have-to-untar-these-files">Now you have to untar these files.</h1>
+<h1 id="kibana">kibana安装（图形化界面组件）</h1>
 
-<pre><code># tar -xvf pcre-8.38
-# tar -xvf zlib-1.2.8.tar.gz
-# tar -xvf openssl-1.0.1u.tar.gz
+<p>下载kibana-5.2.1-linux-x86_64.tar.gz，然后放置在/home/es</p>
+
+<pre><code>wget kibana-5.2.1-linux-x86_64.tar.gz
+mv kibana-5.2.1-linux-x86_64.tar.gz /home/es
 </code></pre>
 
-<h1 id="download-nginx-source-package">Download Nginx source package</h1>
+<p>然后使用es用户进行解压</p>
 
-<p>You need to download Nginx source package from <a href="http://nginx.org/">nginx.org</a>,nginx wiki from <a href="https://www.nginx.com/resources/wiki">nginx wiki</a></p>
-
-<pre><code># cd /usr/local/src/
-# wget  http://nginx.org/download/nginx-1.11.4.tar.gz
-# tar -xvf nginx-1.11.4.tar.gz
-# cd nginx-1.11.4
+<pre><code>tar -zxvf  kibana-5.2.1-linux-x86_64.tar.gz
 </code></pre>
 
-<h1 id="compile-and-install-nginx">Compile and Install Nginx</h1>
+<p>修改kibana.yml配置文件</p>
 
-<p>Now you can compile and install Nginx with the following commands:</p>
+<pre><code>vi  /home/es/kibana-5.2.1-linux-x86_64/config/kibana.yml
 
-<pre><code># ./configure \
-    --user=nginx  \
-    --group=nginx  \
-    --prefix=/usr/local/develop/nginx  \
-    --sbin-path=/usr/local/develop/nginx/bin/nginx  \
-    --conf-path=/usr/local/develop/nginx/etc/nginx.conf  \
-    --error-log-path=/usr/local/develop/nginx/log/error.log  \
-    --http-log-path=/usr/local/develop/nginx/log/access.log  \
-    --http-client-body-temp-path=/var/lib/nginx/tmp/client_body  \
-    --http-proxy-temp-path=/var/lib/nginx/tmp/proxy  \
-    --http-fastcgi-temp-path=/var/lib/nginx/tmp/fastcgi  \
-    --pid-path=/usr/local/develop/nginx/pid/nginx.pid  \
-    --lock-path=/var/lock/subsys/nginx  \
-    --with-http_ssl_module  \
-    --with-http_realip_module  \
-    --with-http_addition_module  \
-    --with-http_sub_module  \
-    --with-http_dav_module \
-    --with-http_flv_module \
-    --with-http_gzip_static_module \
-    --with-http_stub_status_module \
-    --with-mail \
-    --with-mail_ssl_module \
-    --with-openssl=../openssl-1.0.1u \
-    --with-pcre \
-    --with-pcre=../pcre-8.38 \
-    --with-zlib=../zlib-1.2.8 \
-    --with-http_geoip_module \
+#解开注解并修改：
+server.host: "192.168.1.211"
+#解开注解并修改：
+#elasticsearch.url: "http://192.168.1.211:9200"
+#解开注解并修改：
+elasticsearch.username: "elastic"
+elasticsearch.password: "changeme"
 </code></pre>
 
-<p>You can find out more options by using the following command:</p>
+<p>然后进入kibana安装目录</p>
 
-<pre><code>```
-# ./configure --help
-```
+<pre><code>cd /home/es/kibana-5.2.1-linux-x86_64/bin
 </code></pre>
 
-<p>Now run:</p>
+<p>执行，安装x-pack组件</p>
 
-<pre><code>```
-# make
-# make install
-```
+<pre><code>./kibana-plugin install file:///home/es/x-pack-5.2.1.zip
 </code></pre>
 
-<p>Configuration Summary</p>
+<p>启动kibana</p>
 
-<pre><code>nginx path prefix: "/usr/local/nginx"
-nginx binary file: "/usr/local/nginx/sbin/nginx"
-nginx configuration prefix: "/usr/local/nginx/conf"
-nginx configuration file: "/usr/local/nginx/conf/nginx.conf"
-nginx pid file: "/usr/local/nginx/logs/nginx.pid"
-nginx error log file: "/usr/local/nginx/logs/error.log"
-nginx http access log file: "/usr/local/nginx/logs/access.log"
-nginx http client request body temporary files: "client_body_temp"
-nginx http proxy temporary files: "proxy_temp"
-nginx http fastcgi temporary files: "fastcgi_temp"
+<p>先启动ES</p>
+
+<p>首先进入bin目录</p>
+
+<pre><code>cd /home/es/kibana-5.2.1-linux-x86_64/bin
 </code></pre>
 
-<h1 id="start-nginx-server">Start Nginx Server</h1>
+<p>然后执行</p>
 
-<pre><code># /usr/local/develop/nginx/bin/nginx -c /usr/local/develop/nginx/etc/nginx.conf
+<pre><code>./kibana
 </code></pre>
 
-<h1 id="stop-nginx-server">Stop Nginx Server</h1>
+<p>验证</p>
 
-<pre><code># /usr/local/develop/nginx/bin/nginx -s stop
+<p>在浏览器上输入：http://192.168.1.211:5601/ 可以打开Kibana，此时需要输入用户名和密码登录，默认分别是 elastic 和 changeme</p>
+
+<h1 id="elasearchik">Elasearch安装IK分词器</h1>
+
+<p>下载地址</p>
+
+<p><a href="https://github.com/medcl/elasticsearch-analysis-ik">https://github.com/medcl/elasticsearch-analysis-ik</a></p>
+
+<p>在windows下解压到当前文件夹，首先查看pom文件版本号，修改为与es匹配的版本</p>
+
+<p>如5.2.1</p>
+
+<pre><code>&lt;elasticsearch.version&gt;5.2.1&lt;/elasticsearch.version&gt;
 </code></pre>
 
-<h1 id="testing">Testing</h1>
+<p>在文件夹内右键此处打开命令窗口，输出命令</p>
 
-<pre><code># /usr/local/develop/nginx/bin/nginx -V
+<pre><code>mvn clean package
 </code></pre>
 
-<h1 id="brower">brower</h1>
+<p>如果电脑没有安装maven，可以把下载的ik项目导入eclipse里进行打包。
+eclipse-import &gt; maven project &gt; –修改jre环境为jdk环境</p>
 
-<pre><code>http://ip/
+<p>打包成功以后，会生成一个target文件夹(可以在控制台窗口显示target包所在目录)，找到elasticsearch-analysis-ik-5.2.1.zip，这就是我们需要的安装文件。</p>
+
+<p>将elasticsearch-analysis-ik-5.2.1.zip上传到/home/es/elasticsearch-5.2.1/plugins目录下，然后进入plugins目录下</p>
+
+<p>修改文件夹权限</p>
+
+<pre><code>chown es:es elasticsearch-analysis-ik-5.2.1.zip
 </code></pre>
 
-<p><a href="https://www.howtoforge.com/install-nginx-on-centos-5.5-with-ssl-pcre-geoip-zlib-gzip-and-dav-support">reference by the blog</a></p>
+<p>切换成es用户，进行解压unzip elasticsearch-analysis-ik-5.2.1.zip 生成一个elasticsearch文件夹</p>
+
+<pre><code>su -es  
+
+unzip elasticsearch-analysis-ik-5.2.1.zip
+</code></pre>
+
+<p>然后重命名为ik</p>
+
+<pre><code>mv elasticsearch ik
+</code></pre>
+
+<p>最后删除elasticsearch-analysis-ik-5.2.1.zip压缩包</p>
+
+<pre><code>rm -rf elasticsearch-analysis-ik-5.2.1.zip
+</code></pre>
+
+<p>配置分词器</p>
+
+<p>更改配置文件</p>
+
+<pre><code>vi elasticsearch-5.2.1/plugins/analysis-ik/config/IKAnalyzer.cfg.xml
+
+#配置内容
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"&gt;
+&lt;properties&gt;
+        &lt;comment&gt;IK Analyzer 扩展配置&lt;/comment&gt;
+        &lt;!--用户可以在这里配置自己的扩展字典 --&gt;
+        &lt;entrykey="ext_dict"&gt; custom/mydict.dic;custom/sougou.dic;custom/single_word_low_freq.dicen&lt;/entrykey&gt;
+        &lt;!--用户可以在这里配置自己的扩展停止词字典--&gt;
+        &lt;entry key="ext_stopwords"&gt;custom/ext_stopword.dic&lt;/entry&gt;
+        &lt;!--用户可以在这里配置远程扩展字典 --&gt;
+        &lt;!-- &lt;entry key="remote_ext_dict"&gt;words_location&lt;/entry&gt; --&gt;
+        &lt;!--用户可以在这里配置远程扩展停止词字典--&gt;
+        &lt;!-- &lt;entry key="remote_ext_stopwords"&gt;words_location&lt;/entry&gt; --&gt;
+&lt;/properties&gt;
+</code></pre>
 
   </article>
 
@@ -407,7 +439,7 @@ nginx http fastcgi temporary files: "fastcgi_temp"
 <!-- 百度分享 END -->
 <!--多说分享 Begin -->
 
-<!-- <div class="ds-share flat" data-thread-key="/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support" data-title="Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support" data-images="" data-content="Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support" data-url="https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html">
+<!-- <div class="ds-share flat" data-thread-key="/2017/09/01/Elasticsearch插件安装" data-title="Elasticsearch 插件安装" data-images="" data-content="Elasticsearch 插件安装" data-url="https://sendoh-akira.github.io/2017/09/01/Elasticsearch%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85.html">
 
 
   <div id="ds-reset" class="ds-share-inline">
@@ -429,11 +461,11 @@ nginx http fastcgi temporary files: "fastcgi_temp"
 <!--sharethis start-->
 
 
-<span st_url='https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html' st_title='Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support' class='st_facebook_large' displayText='Facebook'></span>
-<span st_url='https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html' st_title='Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support' class='st_googleplus_large' displayText='Google  '></span>
-<span st_url='https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html' st_title='Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support'  class='st_twitter_large' displayText='Tweet'></span>
-<span st_url='https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html' st_title='Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support' class='st_sina_large' displayText='Sina'></span>
-<span st_url='https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html' st_title='Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support' class='st_email_large' displayText='Email'></span>
+<span st_url='https://sendoh-akira.github.io/2017/09/01/Elasticsearch%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85.html' st_title='Elasticsearch 插件安装' class='st_facebook_large' displayText='Facebook'></span>
+<span st_url='https://sendoh-akira.github.io/2017/09/01/Elasticsearch%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85.html' st_title='Elasticsearch 插件安装' class='st_googleplus_large' displayText='Google  '></span>
+<span st_url='https://sendoh-akira.github.io/2017/09/01/Elasticsearch%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85.html' st_title='Elasticsearch 插件安装'  class='st_twitter_large' displayText='Tweet'></span>
+<span st_url='https://sendoh-akira.github.io/2017/09/01/Elasticsearch%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85.html' st_title='Elasticsearch 插件安装' class='st_sina_large' displayText='Sina'></span>
+<span st_url='https://sendoh-akira.github.io/2017/09/01/Elasticsearch%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85.html' st_title='Elasticsearch 插件安装' class='st_email_large' displayText='Email'></span>
 
 <!--sharethis end-->
 
@@ -442,12 +474,12 @@ nginx http fastcgi temporary files: "fastcgi_temp"
   <div class="prevandnext">
     	  
 	    <div style="margin:0.5em;">
-	    <span>上一篇 ：</span><a class="pjaxlink" href="https://sendoh-akira.github.io/2017/08/31/cdh%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85.html"  title="CDH环境安装">CDH环境安装</a>
+	    <span>上一篇 ：</span><a class="pjaxlink" href="https://sendoh-akira.github.io/2017/09/01/HA%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.html"  title="HA 安装配置">HA 安装配置</a>
 	    </div>
 	  
   	  
 	    <div style="margin:0.5em;">
-	    <span>下一篇 ：</span><a class="pjaxlink" href="https://sendoh-akira.github.io/2016/09/22/spring_interview_questions_and_answers.html"  title="Spring Interview Questions and Answers">Spring Interview Questions and Answers</a>
+	    <span>下一篇 ：</span><a class="pjaxlink" href="https://sendoh-akira.github.io/2017/09/01/Elasticsearch%E5%AE%89%E8%A3%85.html"  title="Elasticsearch 安装">Elasticsearch 安装</a>
 	    </div>
 	  
 	  	<div style="margin:0.5em;">
@@ -457,7 +489,7 @@ nginx http fastcgi temporary files: "fastcgi_temp"
   </div>
 
   <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support" data-title="Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support" data-url=""></div>
+<div class="ds-thread" data-thread-key="/2017/09/01/Elasticsearch插件安装" data-title="Elasticsearch 插件安装" data-url=""></div>
 <!-- 多说评论框 end -->
 
 </div>

@@ -6,6 +6,753 @@
     <description></description>
     
       <item>
+        <title>cdh重启步骤</title>
+        <link>https://sendoh-akira.github.io/2017/09/01/cdh%E9%87%8D%E5%90%AF%E6%AD%A5%E9%AA%A4.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2017/09/01/cdh%E9%87%8D%E5%90%AF%E6%AD%A5%E9%AA%A4.html</guid>
+        <pubDate>Fri, 01 Sep 2017 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;cdh重启步骤&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;ntp&quot;&gt;ntp服务启动&lt;/h1&gt;
+
+&lt;p&gt;在master、node1、node2、node3上分别执行&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;systemctl enable ntpd
+systemctl start ntpd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;在master上执行 date 查看时间，如果和北京时间差距很多，需要重置&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;date -s &quot;2017-03-06 10:25:25&quot;
+clock -w
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后在node1、node2上分别执行同步命令：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ntpdate -u  master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;rpc&quot;&gt;rpc服务启动&lt;/h1&gt;
+
+&lt;p&gt;在master、node1、node2、node3上分别执行：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#启动rpc服务
+service rpcbind start
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;cloudera-manager-serveragent&quot;&gt;启动Cloudera Manager Server和agent&lt;/h1&gt;
+
+&lt;p&gt;在master上：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#启动server
+/opt/cm-5.9.0/etc/init.d/cloudera-scm-server start
+#启动agent
+/opt/cm-5.9.0/etc/init.d/cloudera-scm-agent start
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;在slave上：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#启动agent
+/opt/cm-5.9.0/etc/init.d/cloudera-scm-agent start
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;kerberos&quot;&gt;启动kerberos&lt;/h1&gt;
+
+&lt;p&gt;在node3(主节点)上启动kerberos kdc：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;service krb5kdc start
+service kadmin start
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;redissentinel&quot;&gt;启动redis和sentinel&lt;/h1&gt;
+
+&lt;p&gt;node1(主节点)：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#redis server
+redis-server ./redis.conf
+#redis-sentinel
+redis-sentinel ./sentinel.conf
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;node2(从节点)，node3(从节点):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#redis server
+redis-server ./redis.conf
+#redis-sentinel
+redis-sentinel ./sentinel.conf
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;es&quot;&gt;启动ES&lt;/h1&gt;
+
+&lt;p&gt;在node1、node2、node3上&lt;/p&gt;
+
+&lt;p&gt;切到es用户&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;su - es
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;进入elasticsearch-5.2.1/目录&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd elasticsearch-5.2.1/
+cd bin
+#后台启动
+./elasticsearch -d
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;启动kibana(在node1节点)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd kibana-5.2.1-linux-x86_64/
+cd bin
+./kibana
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后在浏览器中访问http://192.168.1.201:5601即可，账号和密码分别为：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;elastic  changeme
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      </item>
+    
+      <item>
+        <title>Hbase 协处理器部署</title>
+        <link>https://sendoh-akira.github.io/2017/09/01/Hbase%E5%8D%8F%E5%A4%84%E7%90%86%E5%99%A8%E9%83%A8%E7%BD%B2.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2017/09/01/Hbase%E5%8D%8F%E5%A4%84%E7%90%86%E5%99%A8%E9%83%A8%E7%BD%B2.html</guid>
+        <pubDate>Fri, 01 Sep 2017 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;Hbase 协处理器部署&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;jar&quot;&gt;将写好的协处理器代码打jar包&lt;/h1&gt;
+
+&lt;p&gt;在项目中pom文件中加入&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;build&amp;gt;
+      &amp;lt;plugins&amp;gt;
+      &amp;lt;plugin&amp;gt;
+      &amp;lt;artifactId&amp;gt;maven-assembly-plugin&amp;lt;/artifactId&amp;gt;
+      &amp;lt;configuration&amp;gt;
+        &amp;lt;descriptorRefs&amp;gt;
+      &amp;lt;descriptorRef&amp;gt;jar-with-dependencies&amp;lt;/descriptorRef&amp;gt;
+        &amp;lt;/descriptorRefs&amp;gt;
+        &amp;lt;archive&amp;gt;
+          &amp;lt;manifest&amp;gt;
+            &amp;lt;mainClass&amp;gt;watchfile.WatchFile&amp;lt;/mainClass&amp;gt;
+          &amp;lt;/manifest&amp;gt;
+        &amp;lt;/archive&amp;gt;
+      &amp;lt;/configuration&amp;gt;
+      &amp;lt;executions&amp;gt;
+        &amp;lt;execution&amp;gt;
+          &amp;lt;id&amp;gt;make-assembly&amp;lt;/id&amp;gt;
+          &amp;lt;phase&amp;gt;package&amp;lt;/phase&amp;gt;
+          &amp;lt;goals&amp;gt;
+            &amp;lt;goal&amp;gt;single&amp;lt;/goal&amp;gt;
+          &amp;lt;/goals&amp;gt;
+        &amp;lt;/execution&amp;gt;
+      &amp;lt;/executions&amp;gt;
+    &amp;lt;/plugin&amp;gt;
+      &amp;lt;/plugins&amp;gt;
+&amp;lt;/build&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;运行maven打包命令&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mvn clean package
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;jarjarhdfs&quot;&gt;将打好包的协处理器jar（包含依赖包的jar）上传到hdfs&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;hdfs dfs -put dybdp-coprocessor-1.0.0.jar /user/dybdp/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;jar-1&quot;&gt;修改jar文件权限&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;hhadoop fs -setfacl -m user:hbase:rwx /user/dybdp/dybdp-coprocessor-1.0.0.jar
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;dybdpco&quot;&gt;给表dybdp_co添加协处理器&lt;/h1&gt;
+
+&lt;p&gt;进入habase&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;disable dybdp_co
+alter 'dybdp_co' , METHOD =&amp;gt; 'table_att', 'coprocessor' =&amp;gt; ' hdfs://nameservice1/user/dybdp/dybdp-coprocessor-1.0.0.jar|com.dybdp.es.coprocessor.HbaseEsIndexCoprocesser|1002'
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;coprocessor的值是一个字符串，由以下几个部分组成：
+jar地址（如果在配置文件中定义了CLASS_PATH可以不填）|类名（包含包路径）|优先级|自定义属性&lt;/p&gt;
+
+&lt;h1 id=&quot;dybdpco-1&quot;&gt;启用表dybdp_co&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;enable dybdp_co
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      </item>
+    
+      <item>
+        <title>HA 安装配置</title>
+        <link>https://sendoh-akira.github.io/2017/09/01/HA%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2017/09/01/HA%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.html</guid>
+        <pubDate>Fri, 01 Sep 2017 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;Elasticsearch HA 安装配置&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;selinux&quot;&gt;关闭SElinux、配置防火墙&lt;/h1&gt;
+
+&lt;p&gt;修改selinux&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vi /etc/selinux/config
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;修改内容&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#SELINUXTYPE=targeted
+SELINUX=disabled
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;使配置立即生效&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;setenforce 0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;修改防火墙&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vi /etc/sysconfig/iptables
+
+#允许组播地址通信
+-A RH-Firewall-1-INPUT -d 224.0.0.18 -j ACCEPT
+#允许VRRP（虚拟路由器冗余协）通信
+-A RH-Firewall-1-INPUT -p    vrrp    -j ACCEPT
+#允许80端口通过防火墙
+-A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;重启防火墙使配置生效&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/etc/init.d/iptables restart
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;haproxy&quot;&gt;安装HAProxy&lt;/h1&gt;
+
+&lt;p&gt;创建HAProxy运行账户和组&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#添加haproxy组
+groupadd haproxy
+useradd -g haproxy haproxy -s /bin/false
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;#创建nginx运行账户haproxy并加入到haproxy组，不允许haproxy用户直接登录系统。&lt;/p&gt;
+
+&lt;p&gt;安装gcc组件&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;yum install -y gcc
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;解压下载好的haproxy-1.6.9.tar.gz包&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tar zxvf haproxy-1.6.9.tar.gz
+
+cd haproxy-1.6.9
+
+#编译  uname -r #查看系统内核版本号
+make TARGET=linux3100 CPU=x86_64  PREFIX=/usr/local/haprpxy
+
+#安装
+make install PREFIX=/usr/local/haproxy
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;参数说明：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#TARGET=linux3100
+#使用uname -r查看内核，如：2.6.18-371.el5，此时该参数就为linux26
+#kernel 大于2.6.28的用：TARGET=linux2628
+#CPU=x86_64   #使用uname -r查看系统信息，如x86_64 x86_64 x86_64 	GNU/Linux，此时该参数就为x86_64
+#PREFIX=/usr/local/haprpxy  #/usr/local/haprpxy为haprpxy安装路径
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;设置HAProxy&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#创建配置文件目录
+mkdir -p  /usr/local/haproxy/conf
+
+#创建配置文件目录
+mkdir -p /etc/haproxy
+#创建配置文件
+touch  /usr/local/haproxy/conf/haproxy.cfg
+
+#添加配置文件软连接
+ln -s  /usr/local/haproxy/conf/haproxy.cfg   /etc/haproxy/haproxy.cfg
+
+#拷贝错误页面
+cp  -r  /usr/local/src/haproxy-1.6.9/examples/errorfiles  /usr/local/haproxy/errorfiles
+
+#添加软连接
+ln -s  /usr/local/haproxy/errorfiles  /etc/haproxy/errorfiles
+
+#创建日志文件目录
+mkdir -p  /usr/local/haproxy/log
+#创建日志文件
+touch  /usr/local/haproxy/log/haproxy.log
+#添加软连接
+ln -s  /usr/local/haproxy/log/haproxy.log  /var/log/haproxy.log
+#拷贝开机启动文件
+cp /usr/local/src/haproxy-1.6.9/examples/haproxy.init  /etc/rc.d/init.d/haproxy
+
+#添加脚本执行权限
+chmod +x  /etc/rc.d/init.d/haproxy
+#设置开机启动
+chkconfig haproxy on
+#添加软连接
+ln -s  /usr/local/haproxy/sbin/haproxy  /usr/sbin
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;配置haproxy.cfg参数&lt;/p&gt;
+
+&lt;p&gt;备份
+    cp /usr/local/haproxy/conf/haproxy.cfg /usr/local/haproxy/conf/haproxy.cfg-bak&lt;/p&gt;
+
+&lt;p&gt;内容&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vi  /usr/local/haproxy/conf/haproxy.cfg
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;设置HAProxy日志&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;global
+    daemon
+    nbproc 1
+    pidfile /var/run/haproxy.pid
+    ulimit-n 65535
+
+defaults
+    mode tcp                        #mode { tcp|http|health }，tcp 表示4层，http表示7层，health仅作为健康检查使用
+    retries 2                       #尝试2次失败则从集群摘除
+    option redispatch               #如果失效则强制转换其他服务器
+    option abortonclose             #连接数过大自动关闭
+    maxconn 1024                    #最大连接数
+    timeout connect 1d              #连接超时时间，重要，hive查询数据能返回结果的保证
+    timeout client 1d               #同上
+    timeout server 1d               #同上
+    timeout check 2000              #健康检查时间
+    log 127.0.0.1 local0 err #[err warning info debug]
+
+listen  admin_stats                     #定义管理界面
+    bind 0.0.0.0:1090               #管理界面访问IP和端口
+    mode http                       #管理界面所使用的协议
+    maxconn 10          #最大连接数
+    stats refresh 30s               #30秒自动刷新
+    stats uri /                     #访问url
+    stats realm Hive\ Haproxy       #验证窗口提示
+    stats auth admin:123456         #401验证用户名密码
+
+listen hive             #hive后端定义
+    bind 0.0.0.0:10001              #ha作为proxy所绑定的IP和端口
+    mode tcp                        #以4层方式代理，重要
+    balance leastconn               #调度算法 'leastconn' 最少连接数分配，或者 'roundrobin'，轮询分配
+    maxconn 1024                    #最大连接数
+    server node1 192.168.1.201:10000 check inter 180000 rise 1 fall 2
+    server node2 192.168.1.202:10000 check inter 180000 rise 1 fall 2
+#释义：server 主机代名(你自己能看懂就行)，IP:端口 每180000毫秒检查一次。也就是三分钟。
+#hive每有10000端口的请求就会创建一个log，设置短了，/tmp下面会有无数个log文件，删不完。
+
+listen oozie             #oozie后端定义
+    bind 0.0.0.0:11100              #ha作为proxy所绑定的IP和端口
+    mode tcp                        #以4层方式代理，重要
+    balance leastconn               #调度算法 'leastconn' 最少连接数分配，或者 'roundrobin'，轮询分配
+    maxconn 1024                    #最大连接数
+    server node1 192.168.1.201:11000 check inter 180000 rise 1 fall 2
+    server node2 192.168.1.202:11000 check inter 180000 rise 1 fall 2
+#释义：server 主机代名(你自己能看懂就行)，IP:端口 每180000毫秒检查一次。也就是三分钟。
+#oozie每有11001端口的请求就会创建一个log，设置短了，/tmp下面会有无数个log文件，删不完。
+
+
+listen impala             #impala后端定义
+    bind 0.0.0.0:21051              #ha作为proxy所绑定的IP和端口
+    mode tcp                        #以4层方式代理，重要
+    balance leastconn               #调度算法 'leastconn' 最少连接数分配，或者 'roundrobin'，轮询分配
+    maxconn 1024                    #最大连接数
+    server node1 192.168.1.201:21050 check inter 180000 rise 1 fall 2
+    server node2 192.168.1.202:21050 check inter 180000 rise 1 fall 2
+    server node3 192.168.1.203:21050 check inter 180000 rise 1 fall 2
+#释义：server 主机代名(你自己能看懂就行)，IP:端口 每180000毫秒检查一次。也就是三分钟。
+#impala每有11001端口的请求就会创建一个log，设置短了，/tmp下面会有无数个log文件，删不完。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;haproxy命令&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#启动
+service haproxy stop  
+
+#关闭
+service haproxy start
+
+#重启
+service haproxy restart  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;编辑，在最下边增加
+    vi  /etc/syslog.conf&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# haproxy.log
+local0.*          /var/log/haproxy.log
+local3.*          /var/log/haproxy.log
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;编辑修改&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vi  /etc/sysconfig/syslog
+
+#接收远程服务器日志
+SYSLOGD_OPTIONS=&quot;-r -m 0&quot;
+#重启syslog  
+service syslog restart  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;浏览器打开haproxy的监控页面&lt;/p&gt;
+
+&lt;p&gt;如下：&lt;/p&gt;
+
+&lt;p&gt;http://ip:1090/stats  //说明：1090即haproxy配置文件中监听端口，stats 即haproxy配置文件中的监听名称&lt;/p&gt;
+</description>
+      </item>
+    
+      <item>
+        <title>Elasticsearch 插件安装</title>
+        <link>https://sendoh-akira.github.io/2017/09/01/Elasticsearch%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2017/09/01/Elasticsearch%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85.html</guid>
+        <pubDate>Fri, 01 Sep 2017 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;Elasticsearch 插件安装&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;x-pack&quot;&gt;安装安全插件x-pack&lt;/h1&gt;
+
+&lt;p&gt;安装插件命令&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;在线安装&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt;   bin/elasticsearch-plugin install x-pack
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;离线安装&lt;/p&gt;
+
+    &lt;p&gt;下载安装包&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; https://artifacts.elastic.co/downloads/packs/x-pack/x-pack-5.2.1.zip
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;然后放在/home/es目录下。进入bin目录&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; cd  /home/es/elasticsearch-5.2.1/bin
+&lt;/code&gt;&lt;/pre&gt;
+
+    &lt;p&gt;然后执行&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; ./elasticsearch-plugin install /home/es/x-pack-5.2.1.zip
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;默认用户名密码为：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;elastic:changeme
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;移除插件命令&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;bin/elasticsearch-plugin remove x-pack
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;kibana&quot;&gt;kibana安装（图形化界面组件）&lt;/h1&gt;
+
+&lt;p&gt;下载kibana-5.2.1-linux-x86_64.tar.gz，然后放置在/home/es&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;wget kibana-5.2.1-linux-x86_64.tar.gz
+mv kibana-5.2.1-linux-x86_64.tar.gz /home/es
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后使用es用户进行解压&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tar -zxvf  kibana-5.2.1-linux-x86_64.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;修改kibana.yml配置文件&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vi  /home/es/kibana-5.2.1-linux-x86_64/config/kibana.yml
+
+#解开注解并修改：
+server.host: &quot;192.168.1.211&quot;
+#解开注解并修改：
+#elasticsearch.url: &quot;http://192.168.1.211:9200&quot;
+#解开注解并修改：
+elasticsearch.username: &quot;elastic&quot;
+elasticsearch.password: &quot;changeme&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后进入kibana安装目录&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd /home/es/kibana-5.2.1-linux-x86_64/bin
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;执行，安装x-pack组件&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./kibana-plugin install file:///home/es/x-pack-5.2.1.zip
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;启动kibana&lt;/p&gt;
+
+&lt;p&gt;先启动ES&lt;/p&gt;
+
+&lt;p&gt;首先进入bin目录&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd /home/es/kibana-5.2.1-linux-x86_64/bin
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后执行&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./kibana
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;验证&lt;/p&gt;
+
+&lt;p&gt;在浏览器上输入：http://192.168.1.211:5601/ 可以打开Kibana，此时需要输入用户名和密码登录，默认分别是 elastic 和 changeme&lt;/p&gt;
+
+&lt;h1 id=&quot;elasearchik&quot;&gt;Elasearch安装IK分词器&lt;/h1&gt;
+
+&lt;p&gt;下载地址&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/medcl/elasticsearch-analysis-ik&quot;&gt;https://github.com/medcl/elasticsearch-analysis-ik&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;在windows下解压到当前文件夹，首先查看pom文件版本号，修改为与es匹配的版本&lt;/p&gt;
+
+&lt;p&gt;如5.2.1&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;elasticsearch.version&amp;gt;5.2.1&amp;lt;/elasticsearch.version&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;在文件夹内右键此处打开命令窗口，输出命令&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mvn clean package
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果电脑没有安装maven，可以把下载的ik项目导入eclipse里进行打包。
+eclipse-import &amp;gt; maven project &amp;gt; –修改jre环境为jdk环境&lt;/p&gt;
+
+&lt;p&gt;打包成功以后，会生成一个target文件夹(可以在控制台窗口显示target包所在目录)，找到elasticsearch-analysis-ik-5.2.1.zip，这就是我们需要的安装文件。&lt;/p&gt;
+
+&lt;p&gt;将elasticsearch-analysis-ik-5.2.1.zip上传到/home/es/elasticsearch-5.2.1/plugins目录下，然后进入plugins目录下&lt;/p&gt;
+
+&lt;p&gt;修改文件夹权限&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;chown es:es elasticsearch-analysis-ik-5.2.1.zip
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;切换成es用户，进行解压unzip elasticsearch-analysis-ik-5.2.1.zip 生成一个elasticsearch文件夹&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;su -es  
+
+unzip elasticsearch-analysis-ik-5.2.1.zip
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后重命名为ik&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mv elasticsearch ik
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;最后删除elasticsearch-analysis-ik-5.2.1.zip压缩包&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rm -rf elasticsearch-analysis-ik-5.2.1.zip
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;配置分词器&lt;/p&gt;
+
+&lt;p&gt;更改配置文件&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vi elasticsearch-5.2.1/plugins/analysis-ik/config/IKAnalyzer.cfg.xml
+
+#配置内容
+&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;
+&amp;lt;!DOCTYPE properties SYSTEM &quot;http://java.sun.com/dtd/properties.dtd&quot;&amp;gt;
+&amp;lt;properties&amp;gt;
+        &amp;lt;comment&amp;gt;IK Analyzer 扩展配置&amp;lt;/comment&amp;gt;
+        &amp;lt;!--用户可以在这里配置自己的扩展字典 --&amp;gt;
+        &amp;lt;entrykey=&quot;ext_dict&quot;&amp;gt; custom/mydict.dic;custom/sougou.dic;custom/single_word_low_freq.dicen&amp;lt;/entrykey&amp;gt;
+        &amp;lt;!--用户可以在这里配置自己的扩展停止词字典--&amp;gt;
+        &amp;lt;entry key=&quot;ext_stopwords&quot;&amp;gt;custom/ext_stopword.dic&amp;lt;/entry&amp;gt;
+        &amp;lt;!--用户可以在这里配置远程扩展字典 --&amp;gt;
+        &amp;lt;!-- &amp;lt;entry key=&quot;remote_ext_dict&quot;&amp;gt;words_location&amp;lt;/entry&amp;gt; --&amp;gt;
+        &amp;lt;!--用户可以在这里配置远程扩展停止词字典--&amp;gt;
+        &amp;lt;!-- &amp;lt;entry key=&quot;remote_ext_stopwords&quot;&amp;gt;words_location&amp;lt;/entry&amp;gt; --&amp;gt;
+&amp;lt;/properties&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      </item>
+    
+      <item>
+        <title>Elasticsearch 安装</title>
+        <link>https://sendoh-akira.github.io/2017/09/01/Elasticsearch%E5%AE%89%E8%A3%85.html</link>
+        <guid isPermaLink="true">https://sendoh-akira.github.io/2017/09/01/Elasticsearch%E5%AE%89%E8%A3%85.html</guid>
+        <pubDate>Fri, 01 Sep 2017 00:00:00 +0800</pubDate>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;Elasticsearch 安装&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;section&quot;&gt;安装环境概述&lt;/h1&gt;
+
+&lt;p&gt;3台机器部署：
+  node1:192.168.1.201
+  node2:192.168.1.202
+  node3:192.168.1.203
+  jdk8、es5.2.1、kibana5.2.1、x-pack、ik&lt;/p&gt;
+
+&lt;p&gt;node1、node2、node3都需要安装&lt;/p&gt;
+
+&lt;h1 id=&quot;root&quot;&gt;创建或使用已有的非root用户&lt;/h1&gt;
+
+&lt;p&gt;Es只能以非root用户启用&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;useradd es
+passwd  es
+#回车输入密码
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&quot;root-1&quot;&gt;使用root用户登录&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;su - root
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;修改文件/etc/sysctl.conf&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vi /etc/sysctl.conf
+
+#在文件末尾处添加
+vm.max_map_count=655360
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;生效并查看是否更改成功（此步骤必须执行，才可以刷新sysctl.conf生效）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sysctl -p
+
+#显示以下内容表示更改成功
+vm.max_map_count = 262144
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;修改文件/etc/security/limits.conf&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vi /etc/security/limits.conf
+
+#在文件末尾处添加 * 为匹配所有用户
+* hard nofile 65536
+* soft nofile 131072
+* soft nproc 2048
+* hard nproc 4096
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;修改后用es用户登录查看是否成功&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ulimit -Hn
+
+#输出以下内容标识修改成功
+65536
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;使用es用户登录解压 elasticsearch-5.1.1.tar.gz&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tar –zxvf elasticsearch-5.1.1.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;font color=&quot;red&quot;&gt;注意：解压过程中每个es会生成一个uuid，所以不要scp拷贝，这样uuid一样会出问题，每台机器要分开解压&lt;/font&gt;
+
+&lt;p&gt;修改Es配置文件&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vi  /opt/elasticsearch/config/elasticsearch.yml
+
+#此机器elasticsearch节点名称，各机器不能重复
+cluster.name: es-cluster
+
+#本机ip
+network.host: 192.168.1.203  
+
+#各个机器的名称
+node.name: node1
+
+#数据存放目录（可修改）  
+path.data: /home/es/elasticsearch-5.2.1/data
+
+#日志存放目录（可修改）  
+path.logs: /home/es/elasticsearch-5.2.1/logs
+
+bootstrap.memory_lock: false
+
+#(此项如果没有则添加上)
+bootstrap.system_call_filter: false
+
+#设置集群中master节点的初始列表，可以通过这些节点来自动发现新加入集群的节点(配置两个，三个都可以)
+discovery.zen.ping.unicast.hosts: [&quot;192.168.1.201&quot;, &quot;192.168.1.202&quot;]
+
+#设置这个参数来保证集群中的节点可以知道其它N个有master资格的节点。默认为1，对于大的集群来说，可以设置大一点的值（2-4）  
+discovery.zen.minimum_master_nodes: 2
+
+#(不需要配置)
+http.cors.enabled: true
+#(不需要配置)
+http.cors.allow-origin: &quot;*&quot;
+
+action.auto_create_index: .security,.monitoring*,.watches,.triggered_watches,.watcher-history*
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;修改jvm.options ，看机器配置，越大越好，默认为2g&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vi  /home/es/elasticsearch-5.2.1/config/jvm.options
+
+-Xms256m
+-Xmx256m
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;修改90-nproc.conf(需要使用root用户进行修改)
+注：该目录下也可能是20-nproc.conf这个文件，名字不固定&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vi /etc/security/limits.d/90-nproc.conf
+
+# * soft nproc 1024 改为 soft nproc 2048
+* soft nproc 2048
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;启动Es&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd elasticsearch/bin
+
+./elasticsearch
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;参考文档&lt;/p&gt;
+
+&lt;p&gt;Es java api&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/java-search.html&quot;&gt;https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/java-search.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;es分页&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.sojson.com/blog/90.html&quot;&gt;http://www.sojson.com/blog/90.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;x-pack 安全&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.elastic.co/guide/en/x-pack/current/_how_authentication_works.html&quot;&gt;https://www.elastic.co/guide/en/x-pack/current/_how_authentication_works.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;esik分词器&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/fenglailea/article/details/55506775&quot;&gt;http://blog.csdn.net/fenglailea/article/details/55506775&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;es 高亮&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/lu_wei_wei/article/details/51055209&quot;&gt;http://blog.csdn.net/lu_wei_wei/article/details/51055209&lt;/a&gt;&lt;/p&gt;
+</description>
+      </item>
+    
+      <item>
         <title>在linux下安装mysql</title>
         <link>https://sendoh-akira.github.io/2017/08/31/linux%E5%AE%89%E8%A3%85mysql.html</link>
         <guid isPermaLink="true">https://sendoh-akira.github.io/2017/08/31/linux%E5%AE%89%E8%A3%85mysql.html</guid>

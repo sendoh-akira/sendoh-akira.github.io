@@ -21,7 +21,19 @@
 
   /page3/
 
+  /page4/
 
+
+
+  /2017/09/01/cdh%E9%87%8D%E5%90%AF%E6%AD%A5%E9%AA%A4.html
+
+  /2017/09/01/Hbase%E5%8D%8F%E5%A4%84%E7%90%86%E5%99%A8%E9%83%A8%E7%BD%B2.html
+
+  /2017/09/01/HA%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.html
+
+  /2017/09/01/Elasticsearch%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85.html
+
+  /2017/09/01/Elasticsearch%E5%AE%89%E8%A3%85.html
 
   /2017/08/31/linux%E5%AE%89%E8%A3%85mysql.html
 

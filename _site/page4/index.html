@@ -9,8 +9,8 @@
   <!-- 添加搜索关键字 -->
   <meta name="keywords" content="武燕飞,https://sendoh-akira.github.io/">
 
-  <title>Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support | Sendoh Akira</title>
-  <meta name="description" content="  Nginx(pronounced “engine x”) is a free, open-source, high-performance HTTP server. Nginx is known for its stability, rich feature set, simple configuration...">
+  <title> | Sendoh Akira</title>
+  <meta name="description" content="">
 
   <!-- <script src="https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/ecom/esl/2-1-4/esl.js"></script> -->
   <link rel="stylesheet" href="/assets/css/bootstrap.css">
@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="/assets/js/prettify/prettify.css">
   <link rel="shortcut icon" href="/assets/img/favicon_2.png" />
   <link rel="stylesheet" href="/assets/css/duoshuo.css">
-  <link rel="canonical" href="https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html">
+  <link rel="canonical" href="https://sendoh-akira.github.io/page4/">
   <link rel="alternate" type="application/rss+xml" title="Sendoh Akira" href="https://sendoh-akira.github.io/feed.xml" />
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -213,253 +213,374 @@ table .table {
 			</div>
 
 			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 box-shadow fadein-right aside2">
-					<div class="page-content" id="pjax"><div class="post">
+					<div class="page-content" id="pjax"><div>
 
-  <header class="post-header">
-    <h1 class="post-title">Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support</h1>
-    <div class="info">
-	    <p class="post-meta"><i class="fa fa-calendar"></i>&nbsp;2016-09-23</p>
-	    
-		<i class="fa fa-tags"></i>
-		<span class="index-post-tag">
-		
-			<a class="pjaxlink" href="/pages/tags.html#nginx">nginx</a>
-		
-		</span>
-	    
-    </div>
-  </header>
+   
 
-  <article class="post-content">
-    <blockquote>
-  <p>Nginx(pronounced “engine x”) is a free, open-source, high-performance HTTP server. Nginx is known for its stability, rich feature set, simple configuration, and low resource consumption. This tutorial shows how you can compile and install Nginx on CentOS server with SSL, PCRE, GeoIP, Zlib, Gzip and DAV supp</p>
+		<div class="postbox">
+			<!-- <div class="post-format-icon">
+                <a class="item-date pjaxlink" href="/2015/11/19/algorithm-hash.html"><span>技术</span></a>
+      </div> -->
+			<div class="allpost">
+				<div class="title"><a class="pjaxlink" href="/2015/11/19/algorithm-hash.html">数组中只出现一次的数字</a></div>
+				<hr>
+				<div class="info">
+					<i class="fa fa-calendar"></i>&nbsp;2015-11-19
+          &nbsp;&nbsp;
+          
+				  <i class="fa fa-tasks"></i>
+					<span class="index-post-tag">
+						
+							<a class="pjaxlink" href="/pages/class.html#技术">技术</a>
+						
+					</span>
+					
+
+          
+				      <i class="fa fa-tags"></i>
+					<span class="index-post-tag">
+						
+							<a class="pjaxlink" href="/pages/tags.html#算法">算法</a>
+						
+					</span>
+					
+
+
+
+				</div>
+				<div class="contentAbstract"><blockquote>
+  <p>在牛客上看到了很多这种题目 今天总结一下吧</p>
 </blockquote>
 
-<h1 id="add-a-repo-for-some-packages-that-we-need">Add a repo for some packages that we need:</h1>
-
-<p><a href="https://support.rackspace.com/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat">Install EPEL, IUS, and Remi repositories on CentOS and Red Hat</a></p>
-
-<p>EPEL(Extra Packages for Enterprise Linux) Repo是Linux发行版中最大的软件仓库之一，免费，丰富的软件包更新。</p>
-
-<pre><code># rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-rpm-macros-6-11.noarch.rpm
-</code></pre>
-
-<h1 id="pre-installation">Pre-Installation</h1>
-
-<p>First we install httpd-devel, pcre, pcre-devel, zlib, zlib-devel, perl, geoip and geoip-devel gcc gcc-c++ packages like this:</p>
-
-<pre><code># yum install -y httpd-devel pcre perl pcre-devel zlib zlib-devel GeoIP GeoIP-devel  gcc gcc-c++
-</code></pre>
-
-<p>Create group and user for nginx</p>
-
-<pre><code># /usr/sbin/groupadd -f nginx
-# /usr/sbin/useradd -g nginx nginx
-</code></pre>
-
-<h1 id="download-required-packages">Download required packages</h1>
-
-<pre><code># cd /usr/local/src/
-# wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
-# wget http://zlib.net/zlib-1.2.8.tar.gz
-# wget https://www.openssl.org/source/openssl-1.0.1u.tar.gz
-</code></pre>
-
-<h1 id="now-you-have-to-untar-these-files">Now you have to untar these files.</h1>
-
-<pre><code># tar -xvf pcre-8.38
-# tar -xvf zlib-1.2.8.tar.gz
-# tar -xvf openssl-1.0.1u.tar.gz
-</code></pre>
-
-<h1 id="download-nginx-source-package">Download Nginx source package</h1>
-
-<p>You need to download Nginx source package from <a href="http://nginx.org/">nginx.org</a>,nginx wiki from <a href="https://www.nginx.com/resources/wiki">nginx wiki</a></p>
-
-<pre><code># cd /usr/local/src/
-# wget  http://nginx.org/download/nginx-1.11.4.tar.gz
-# tar -xvf nginx-1.11.4.tar.gz
-# cd nginx-1.11.4
-</code></pre>
-
-<h1 id="compile-and-install-nginx">Compile and Install Nginx</h1>
-
-<p>Now you can compile and install Nginx with the following commands:</p>
-
-<pre><code># ./configure \
-    --user=nginx  \
-    --group=nginx  \
-    --prefix=/usr/local/develop/nginx  \
-    --sbin-path=/usr/local/develop/nginx/bin/nginx  \
-    --conf-path=/usr/local/develop/nginx/etc/nginx.conf  \
-    --error-log-path=/usr/local/develop/nginx/log/error.log  \
-    --http-log-path=/usr/local/develop/nginx/log/access.log  \
-    --http-client-body-temp-path=/var/lib/nginx/tmp/client_body  \
-    --http-proxy-temp-path=/var/lib/nginx/tmp/proxy  \
-    --http-fastcgi-temp-path=/var/lib/nginx/tmp/fastcgi  \
-    --pid-path=/usr/local/develop/nginx/pid/nginx.pid  \
-    --lock-path=/var/lock/subsys/nginx  \
-    --with-http_ssl_module  \
-    --with-http_realip_module  \
-    --with-http_addition_module  \
-    --with-http_sub_module  \
-    --with-http_dav_module \
-    --with-http_flv_module \
-    --with-http_gzip_static_module \
-    --with-http_stub_status_module \
-    --with-mail \
-    --with-mail_ssl_module \
-    --with-openssl=../openssl-1.0.1u \
-    --with-pcre \
-    --with-pcre=../pcre-8.38 \
-    --with-zlib=../zlib-1.2.8 \
-    --with-http_geoip_module \
-</code></pre>
-
-<p>You can find out more options by using the following command:</p>
-
-<pre><code>```
-# ./configure --help
-```
-</code></pre>
-
-<p>Now run:</p>
-
-<pre><code>```
-# make
-# make install
-```
-</code></pre>
-
-<p>Configuration Summary</p>
-
-<pre><code>nginx path prefix: "/usr/local/nginx"
-nginx binary file: "/usr/local/nginx/sbin/nginx"
-nginx configuration prefix: "/usr/local/nginx/conf"
-nginx configuration file: "/usr/local/nginx/conf/nginx.conf"
-nginx pid file: "/usr/local/nginx/logs/nginx.pid"
-nginx error log file: "/usr/local/nginx/logs/error.log"
-nginx http access log file: "/usr/local/nginx/logs/access.log"
-nginx http client request body temporary files: "client_body_temp"
-nginx http proxy temporary files: "proxy_temp"
-nginx http fastcgi temporary files: "fastcgi_temp"
-</code></pre>
-
-<h1 id="start-nginx-server">Start Nginx Server</h1>
-
-<pre><code># /usr/local/develop/nginx/bin/nginx -c /usr/local/develop/nginx/etc/nginx.conf
-</code></pre>
-
-<h1 id="stop-nginx-server">Stop Nginx Server</h1>
-
-<pre><code># /usr/local/develop/nginx/bin/nginx -s stop
-</code></pre>
-
-<h1 id="testing">Testing</h1>
-
-<pre><code># /usr/local/develop/nginx/bin/nginx -V
-</code></pre>
-
-<h1 id="brower">brower</h1>
-
-<pre><code>http://ip/
-</code></pre>
-
-<p><a href="https://www.howtoforge.com/install-nginx-on-centos-5.5-with-ssl-pcre-geoip-zlib-gzip-and-dav-support">reference by the blog</a></p>
-
-  </article>
-
-  <!-- <div class="bdshare">
-    <span class="fenx">分享文章到：</span>
-    <div class="bdsharebuttonbox fl bdshare-button-style0-32">
-        <a href="#" class="bds_more" data-cmd="more"></a>
-        <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
-        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-        <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
-        <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
-        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
-    </div>
 </div>
-<script>
-    window._bd_share_config = {
-        "common": {
-            "bdSnsKey": {},
-            "bdText": "",
-            "bdMini": "2",
-            "bdMiniList": false,
-            "bdPic": "",
-            "bdStyle": "1",
-            "bdSize": "24"
-        },
-        "share": {},
-        "image": {
-            "viewList": ["qzone", "tsina", "tqq", "renren", "weixin"],
-            "viewText": "分享到：",
-            "viewSize": "16"
-        },
-        "selectShare": {
-            "bdContainerClass": null,
-            "bdSelectMiniList": ["qzone", "tsina", "tqq", "renren", "weixin"]
-        }
-    };
-    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
-</script> -->
-<!-- 百度分享 END -->
-<!--多说分享 Begin -->
+			</div>
+			<a href="/2015/11/19/algorithm-hash.html"  class="readmore pjaxlink">Read More <i class="glyphicon glyphicon-chevron-right"></i></a>
+		</div>
 
-<!-- <div class="ds-share flat" data-thread-key="/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support" data-title="Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support" data-images="" data-content="Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support" data-url="https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html">
+   
 
+		<div class="postbox">
+			<!-- <div class="post-format-icon">
+                <a class="item-date pjaxlink" href="/2015/11/15/linux-command.html"><span>技术</span></a>
+      </div> -->
+			<div class="allpost">
+				<div class="title"><a class="pjaxlink" href="/2015/11/15/linux-command.html">linux命令操作随记-不定时更新</a></div>
+				<hr>
+				<div class="info">
+					<i class="fa fa-calendar"></i>&nbsp;2015-11-15
+          &nbsp;&nbsp;
+          
+				  <i class="fa fa-tasks"></i>
+					<span class="index-post-tag">
+						
+							<a class="pjaxlink" href="/pages/class.html#技术">技术</a>
+						
+					</span>
+					
 
-  <div id="ds-reset" class="ds-share-inline">
-       <ul  class="ds-share-icons-32" services="weibo,wechat,qq,douban,twitter,facebook,linkedin">
-           <li> <a class="ds-weibo" href="javascript:void(0);" data-service="weibo"></a> </li>
-           <li> <a class="ds-wechat" href="javascript:void(0);" data-service="wechat"></a> </li>
-           <li> <a class="ds-qq" href="javascript:void(0);" data-service="qq"></a> </li>
-           <li> <a class="ds-douban" href="javascript:void(0);" data-service="douban"></a> </li>
-           <li> <a class="ds-twitter" href="javascript:void(0);" data-service="twitter"></a> </li>
-           <li> <a class="ds-facebook" href="javascript:void(0);" data-service="facebook"></a> </li>
-           <li> <a class="ds-linkedin" href="javascript:void(0);" data-service="linkedin"></a> </li>
-       </ul>
-   </div>
-</div> -->
-
-<!--多说分享 End -->
+          
+				      <i class="fa fa-tags"></i>
+					<span class="index-post-tag">
+						
+							<a class="pjaxlink" href="/pages/tags.html#linux">linux</a>
+						
+					</span>
+					
 
 
-<!--sharethis start-->
 
-
-<span st_url='https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html' st_title='Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support' class='st_facebook_large' displayText='Facebook'></span>
-<span st_url='https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html' st_title='Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support' class='st_googleplus_large' displayText='Google  '></span>
-<span st_url='https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html' st_title='Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support'  class='st_twitter_large' displayText='Tweet'></span>
-<span st_url='https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html' st_title='Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support' class='st_sina_large' displayText='Sina'></span>
-<span st_url='https://sendoh-akira.github.io/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html' st_title='Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support' class='st_email_large' displayText='Email'></span>
-
-<!--sharethis end-->
+				</div>
+				<div class="contentAbstract"><blockquote>
+  <p>使用linux的时候常常有些命令记不住 所以开一篇随时记录</p>
+</blockquote>
 
 </div>
+			</div>
+			<a href="/2015/11/15/linux-command.html"  class="readmore pjaxlink">Read More <i class="glyphicon glyphicon-chevron-right"></i></a>
+		</div>
 
-  <div class="prevandnext">
-    	  
-	    <div style="margin:0.5em;">
-	    <span>上一篇 ：</span><a class="pjaxlink" href="https://sendoh-akira.github.io/2017/08/31/cdh%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85.html"  title="CDH环境安装">CDH环境安装</a>
-	    </div>
+   
+
+		<div class="postbox">
+			<!-- <div class="post-format-icon">
+                <a class="item-date pjaxlink" href="/2015/11/09/java-comeputerTestHomework.html"><span>技术</span></a>
+      </div> -->
+			<div class="allpost">
+				<div class="title"><a class="pjaxlink" href="/2015/11/09/java-comeputerTestHomework.html">简单的括号检查程序</a></div>
+				<hr>
+				<div class="info">
+					<i class="fa fa-calendar"></i>&nbsp;2015-11-09
+          &nbsp;&nbsp;
+          
+				  <i class="fa fa-tasks"></i>
+					<span class="index-post-tag">
+						
+							<a class="pjaxlink" href="/pages/class.html#技术">技术</a>
+						
+					</span>
+					
+
+          
+				      <i class="fa fa-tags"></i>
+					<span class="index-post-tag">
+						
+							<a class="pjaxlink" href="/pages/tags.html#java">java</a>
+						
+					</span>
+					
+
+
+
+				</div>
+				<div class="contentAbstract"><blockquote>
+  <p>一个很简单的括号语法检查器</p>
+</blockquote>
+
+</div>
+			</div>
+			<a href="/2015/11/09/java-comeputerTestHomework.html"  class="readmore pjaxlink">Read More <i class="glyphicon glyphicon-chevron-right"></i></a>
+		</div>
+
+   
+
+		<div class="postbox">
+			<!-- <div class="post-format-icon">
+                <a class="item-date pjaxlink" href="/2014/10/03/other.html"><span></span></a>
+      </div> -->
+			<div class="allpost">
+				<div class="title"><a class="pjaxlink" href="/2014/10/03/other.html">Other</a></div>
+				<hr>
+				<div class="info">
+					<i class="fa fa-calendar"></i>&nbsp;2014-10-03
+          &nbsp;&nbsp;
+          
+
+          
+
+
+
+				</div>
+				<div class="contentAbstract"><p>技术点</p>
+
+</div>
+			</div>
+			<a href="/2014/10/03/other.html"  class="readmore pjaxlink">Read More <i class="glyphicon glyphicon-chevron-right"></i></a>
+		</div>
+
+   
+
+	
+		<div class="pagination center">
+
+			  <a class="pjaxlink" href="/index.html"><span class="x1" style="margin-left:5px;">首页</span></a>
+			  
+			    <a class="pjaxlink"  href="/page3"><span class="x1" style="margin-right:5px;"><i class="glyphicon glyphicon-chevron-left"></i></span></a>
+			  
+
+			 
+    			 
+
+        		  
+
+      		  
+
+			  
+				    
+				      <a class="pjaxlink" href="/index.html"><span class="x1">1</span></a>
+				    
+			  
+				    
+				      <a class="pjaxlink" href="/page2"><span class="x1">2</span></a>
+				    
+			  
+				    
+				      <a class="pjaxlink" href="/page3"><span class="x1">3</span></a>
+				    
+			  
+				    
+				      <span class="active_page x1">4</span>
+				    
+			  
+
+			  
+			  <a class="pjaxlink" href="/page4/"><span class="x1" style="margin-left:5px;">末页</span></a>
+			  <span  style="margin-left:5px;">第4页 / 共4页</span>
+		</div>
+	
+
+<!--
+	<div class="pagination">
 	  
-  	  
-	    <div style="margin:0.5em;">
-	    <span>下一篇 ：</span><a class="pjaxlink" href="https://sendoh-akira.github.io/2016/09/22/spring_interview_questions_and_answers.html"  title="Spring Interview Questions and Answers">Spring Interview Questions and Answers</a>
-	    </div>
+	    
+	      <a class="pagination-item newer" href="/page3">更新的博文</a>
+	    
 	  
-	  	<div style="margin:0.5em;">
-			<span> 版权所有，转载时必须以链接形式注明原始出处</span>
-	    </div>
 
-  </div>
+	  
+	    <span class="pagination-item older">已经是最后一页</span>
+	  
+	</div>
 
-  <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support" data-title="Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support" data-url=""></div>
-<!-- 多说评论框 end -->
 
+  <ul class="post-list">
+    
+      <li>
+        <span class="post-meta">Sep 1, 2017</span>
+
+        <h2>
+          <a class="post-link" href="/2017/09/01/cdh%E9%87%8D%E5%90%AF%E6%AD%A5%E9%AA%A4.html">cdh重启步骤</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 1, 2017</span>
+
+        <h2>
+          <a class="post-link" href="/2017/09/01/Hbase%E5%8D%8F%E5%A4%84%E7%90%86%E5%99%A8%E9%83%A8%E7%BD%B2.html">Hbase 协处理器部署</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 1, 2017</span>
+
+        <h2>
+          <a class="post-link" href="/2017/09/01/HA%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.html">HA 安装配置</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 1, 2017</span>
+
+        <h2>
+          <a class="post-link" href="/2017/09/01/Elasticsearch%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85.html">Elasticsearch 插件安装</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 1, 2017</span>
+
+        <h2>
+          <a class="post-link" href="/2017/09/01/Elasticsearch%E5%AE%89%E8%A3%85.html">Elasticsearch 安装</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 31, 2017</span>
+
+        <h2>
+          <a class="post-link" href="/2017/08/31/linux%E5%AE%89%E8%A3%85mysql.html">在linux下安装mysql</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 31, 2017</span>
+
+        <h2>
+          <a class="post-link" href="/2017/08/31/linux%E5%AE%89%E8%A3%85jdk7.html">在linux下安装jdk7</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 31, 2017</span>
+
+        <h2>
+          <a class="post-link" href="/2017/08/31/cdh%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85.html">CDH环境安装</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 23, 2016</span>
+
+        <h2>
+          <a class="post-link" href="/2016/09/23/install-nginx-on-centos-with-ssl-pcre-geoip-zlib-gzip-and-dav-support.html">Install Nginx On CentOS With SSL, PCRE, GeoIP, Zlib, Gzip And DAV Support</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 22, 2016</span>
+
+        <h2>
+          <a class="post-link" href="/2016/09/22/spring_interview_questions_and_answers.html">Spring Interview Questions and Answers</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 5, 2016</span>
+
+        <h2>
+          <a class="post-link" href="/2016/04/05/jni.html">jni使用详解</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 14, 2016</span>
+
+        <h2>
+          <a class="post-link" href="/2016/03/14/suanfa-erchashufencengbianli.html">二叉树的分层遍历</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 2, 2015</span>
+
+        <h2>
+          <a class="post-link" href="/2015/12/02/life-upsdnudescription.html">upsdnu使用说明</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 22, 2015</span>
+
+        <h2>
+          <a class="post-link" href="/2015/11/22/linux-sduoshcommandnotfound.html">为什么使用sudo命令执行sh会报command not found错误</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 22, 2015</span>
+
+        <h2>
+          <a class="post-link" href="/2015/11/22/java-nextday.html">计算nextDay的实现</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 19, 2015</span>
+
+        <h2>
+          <a class="post-link" href="/2015/11/19/algorithm-hash.html">数组中只出现一次的数字</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 15, 2015</span>
+
+        <h2>
+          <a class="post-link" href="/2015/11/15/linux-command.html">linux命令操作随记-不定时更新</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 9, 2015</span>
+
+        <h2>
+          <a class="post-link" href="/2015/11/09/java-comeputerTestHomework.html">简单的括号检查程序</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 3, 2014</span>
+
+        <h2>
+          <a class="post-link" href="/2014/10/03/other.html">Other</a>
+        </h2>
+      </li>
+    
+  </ul>
+-->
+  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+
+</div>
 </div>
 			</div>
 
