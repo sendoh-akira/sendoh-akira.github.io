@@ -1,15 +1,6 @@
 $(document).ready(function() {
 
 
-
-	//导出页面内容
-	$("i.jquery-word-export").click(function(event) {
-		var title = $(this).attr("title");
-
-		$("article.post-content").wordExport(title);
-	});
-
-
 	$(function() {
 
 
@@ -46,7 +37,7 @@ $(document).ready(function() {
 
 	$(document).pjax('.pjaxlink', '#pjax', {
 		fragment: "#pjax",
-		timeout: 10000
+		timeout: 1000
 	});
 
 
@@ -54,13 +45,27 @@ $(document).ready(function() {
 		$(".pjax_loading").css("display", "block");
 	});
 
+	//导出页面内容
+	$("i.jquery-word-export").click(function(event) {
+		var title = $(this).attr("title");
+		$("article.post-content").wordExport(title);
+	});
 
 	$(document).on('pjax:complete', function() {
 
+		$(".pjax_loading").css("display", "none");
 		var shareUrl = "/assets/js/jquery.share.min.js";
 		var exportUrl = "/assets/js/jquery.wordexport.js";
+		var fileSaverUlr = "/assets/js/FileSaver.js";
 		$.getScript(shareUrl);
-		$.getScript(exportUrl);
+		$.getScript(fileSaverUlr);
+		$.getScript(exportUrl, function() {
+			//导出页面内容
+			$("i.jquery-word-export").click(function(event) {
+				var title = $(this).attr("title");
+				$("article.post-content").wordExport(title);
+			});
+		});
 
 	});
 
