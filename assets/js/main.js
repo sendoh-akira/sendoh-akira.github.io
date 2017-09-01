@@ -5,6 +5,7 @@ $(document).ready(function() {
 	//导出页面内容
 	$("i.jquery-word-export").click(function(event) {
 		var title = $(this).attr("title");
+
 		$("article.post-content").wordExport(title);
 	});
 
@@ -55,48 +56,11 @@ $(document).ready(function() {
 
 
 	$(document).on('pjax:complete', function() {
-		$.getScript(
-			"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML",
-			function() {
-				MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-			});
 
-		var url = "/assets/js/jquery.share.min.js";
-
-		$.getScript(
-			url,
-			function() {
-
-			});
-
-
-		$("pre").addClass("prettyprint linenums");
-
-		prettyPrint();
-
-		pajx_loadDuoshuo(); //pjax加载完成之后调用重载多说函数
-
-		$(".pjax_loading").css("display", "none");
-
-		$('.bookpiclist .bookpic').hover(
-			function() {
-				$(this).find('.booklabel').stop().animate({
-					bottom: 0
-				}, 200);
-				$(this).find('img').stop().animate({
-					top: -30
-				}, 500);
-			},
-			function() {
-				$(this).find('.booklabel').stop().animate({
-					bottom: -40
-				}, 200);
-				$(this).find('img').stop().animate({
-					top: 0
-				}, 300);
-			}
-		);
-
+		var shareUrl = "/assets/js/jquery.share.min.js";
+		var exportUrl = "/assets/js/jquery.wordexport.js";
+		$.getScript(shareUrl);
+		$.getScript(exportUrl);
 
 	});
 
