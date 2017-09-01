@@ -53,12 +53,18 @@ $(document).ready(function() {
 
 	$(document).on('pjax:complete', function() {
 
-		$(".pjax_loading").css("display", "none");
+
 		var shareUrl = "/assets/js/jquery.share.min.js";
 		var exportUrl = "/assets/js/jquery.wordexport.js";
 		var fileSaverUlr = "/assets/js/FileSaver.js";
 		$.getScript(shareUrl);
-		$.getScript(fileSaverUlr);
+		$.getScript(fileSaverUlr, function() {
+			if (!$("pre").hasClass("prettyprint")) {
+				$("pre").addClass("prettyprint linenums");
+			}
+			prettyPrint();
+		});
+
 		$.getScript(exportUrl, function() {
 			//导出页面内容
 			$("i.jquery-word-export").click(function(event) {
@@ -67,6 +73,7 @@ $(document).ready(function() {
 			});
 		});
 
+		$(".pjax_loading").css("display", "none");
 	});
 
 
