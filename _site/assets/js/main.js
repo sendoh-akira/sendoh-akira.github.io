@@ -1,7 +1,15 @@
 $(document).ready(function() {
 
-	$(function() {
 
+
+	//导出页面内容
+	$("i.jquery-word-export").click(function(event) {
+		var title = $(this).attr("title");
+		$("article.post-content").wordExport(title);
+	});
+
+
+	$(function() {
 
 
 		$(window).scroll(function() {
@@ -45,12 +53,22 @@ $(document).ready(function() {
 		$(".pjax_loading").css("display", "block");
 	});
 
+
 	$(document).on('pjax:complete', function() {
 		$.getScript(
 			"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML",
 			function() {
 				MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
 			});
+
+		var url = "/assets/js/jquery.share.min.js";
+
+		$.getScript(
+			url,
+			function() {
+
+			});
+
 
 		$("pre").addClass("prettyprint linenums");
 
