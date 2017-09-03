@@ -15,9 +15,10 @@ $(document).ready(function() {
 		$.ajax({
 			url: 'https://api.flickr.com/services/rest/',
 			data: {
-				format: 'json',
-				method: 'flickr.interestingness.getList',
-				api_key: '7617adae70159d09ba78cfec73c13be3' // jshint ignore:line
+				format: 'json',    
+				method: 'flickr.people.getPhotos',//flickr.interestingness.getList   
+				api_key: '5b8e8c4dda6644ef6d5012ce7ca911d9' ,// jshint ignore:line   
+				user_id: 'wuyanfei'
 			},
 			dataType: 'jsonp',
 			jsonp: 'jsoncallback'
