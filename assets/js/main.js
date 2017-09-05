@@ -1,16 +1,62 @@
 $(document).ready(function() {
 
-
+	_500px.init({
+		  sdk_key: '5f86a2a67c5cb5fbd65161a335a579cb77babc44'
+		});
+	
 	var galleryHidden = $("#galleryHidden").val();
 
 	if ("gallery" == galleryHidden) {
 		loadGallery();
 	}
 
+	function load500px(){
+		
+		
+		_500px.api('/photos', {feature: 'popular',image_size:4, page: 1}, function (response) {
+			if (response.success) {
+			
+			//alert('There are ' + response.data.photos.length + ' photos.');				
+			
+				
+			var carouselLinks = []
+			var linksContainer = $('#links')
+			var image_url ;
+				// Add the demo images as links with thumbnails to the page:
+			$.each(response.data.photos, function(index, photo) {
+					
+					console.log(photo);
+					
+					image_url = photo.image_url;
+				
+					$('<a/>')
+						.append($("<img width='280' height='250' >").prop('src', image_url))
+						.prop('href', image_url)
+						.prop('title', photo.name)
+						.attr('data-gallery', '')
+						.appendTo(linksContainer)
+					carouselLinks.push({
+						href: image_url,
+						title: photo.name
+					})
+				})
+			
+			// Initialize the Gallery as image carousel:
+			blueimp.Gallery(carouselLinks, {
+				container: '#blueimp-image-carousel',
+				carousel: true
+			})
+				
+				
+			} else {
+				console.log('Unable to complete request: ' + response.status + ' - ' + response.error_message)
+				//alert('Unable to complete request: ' + response.status + ' - ' + response.error_message);
+			}
+		});
+	}
+	
+	function loadFlickr(){
 
-
-	//载入相册
-	function loadGallery() {
 		// Load demo images from flickr:
 		$.ajax({
 			url: 'https://api.flickr.com/services/rest/',  
@@ -84,6 +130,13 @@ $(document).ready(function() {
 			carousel: true
 		})
 
+		
+	}
+	
+
+	//载入相册
+	function loadGallery() {
+		load500px();
 	}
 
 
