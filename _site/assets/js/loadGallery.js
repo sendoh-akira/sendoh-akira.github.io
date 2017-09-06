@@ -35,7 +35,7 @@ function load500px(param){
 			// Add the demo images as links with thumbnails to the page:
 		$.each(response.data.photos, function(index, photo) {
 				
-				console.log(photo);
+				//console.log(photo);
 				
 				images = photo.images;
 				var size_1 = images[0].url;
@@ -150,11 +150,11 @@ function loadFlickr(){
 function loadGallery(obj,pagenum,rpp) {
 
 	if(!rpp){
-		rpp=64;
+		rpp=20;
 	}
 	
 	var value = $(obj).val();
-	var param = {feature: value,image_size:'2,2048',rpp:rpp, page: pagenum} ;
+	var param = {feature: value,image_size:'3,2048',rpp:rpp, page: pagenum} ;
 	if('user'==value){
 		param.username='wuyanfei';
 	}
