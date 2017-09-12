@@ -43,6 +43,14 @@ permalink: /pages/music.html
 			pic: 'http://devtest.qiniudn.com/回レ！雪月花.jpg',
 			lrc: '{{site.baseurl}}/assets/mp3/xueyuehua.lrc'
 		}
+		,
+		{
+			title: '飘雪',
+			author: '陈慧娴',
+			url: '{{site.baseurl}}/assets/mp3/chenhuixian_piaoxue.mp3',
+			pic: '{{site.baseurl}}/assets/mp3/chenhuixian_piaoxue.png',
+			lrc: '{{site.baseurl}}/assets/mp3/chenhuixian_piaoxue.lrc'
+		}
 	]
 });
 </script>
