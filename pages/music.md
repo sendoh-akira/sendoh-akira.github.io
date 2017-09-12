@@ -24,22 +24,34 @@ permalink: /pages/music.html
 	music: [
 		
 		{
-			title: '飘雪',
-			author: '陈慧娴',
-			url: '{{site.baseurl}}/assets/mp3/chenhuixian_piaoxue.mp3',
-			pic: '{{site.baseurl}}/assets/mp3/chenhuixian_piaoxue.png',
-			lrc: '{{site.baseurl}}/assets/mp3/chenhuixian_piaoxue.lrc'
-		},
-		
-		{
 			title: '斑马,斑马',
 			author: '宋冬野',
 			url: '{{site.baseurl}}/assets/mp3/songdongye_banma.mp3',
 			pic: '{{site.baseurl}}/assets/mp3/songdongye_banma.png',
 			lrc: '{{site.baseurl}}/assets/mp3/songdongye_banma.lrc'
 		},
-		
 		{
+			title: '飘雪',
+			author: '陈慧娴',
+			url: '{{site.baseurl}}/assets/mp3/chenhuixian_piaoxue.mp3',
+			pic: '{{site.baseurl}}/assets/mp3/chenhuixian_piaoxue.png',
+			lrc: '{{site.baseurl}}/assets/mp3/chenhuixian_piaoxue.lrc'
+		},
+		{
+			title: '成都',
+			author: '赵雷',
+			url: '{{site.baseurl}}/assets/mp3/zhaolei_chengdu.mp3',
+			pic: '{{site.baseurl}}/assets/mp3/zhaolei_chengdu.png',
+			lrc: '{{site.baseurl}}/assets/mp3/zhaolei_chengdu.lrc'
+		}
+		
+		
+	]
+});
+</script>
+
+<!--
+{
 			title: 'あっちゅ～ま青春!',
 			author: '七森中☆ごらく部',
 			url: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.mp3',
@@ -60,7 +72,4 @@ permalink: /pages/music.html
 			pic: 'http://devtest.qiniudn.com/回レ！雪月花.jpg',
 			lrc: '{{site.baseurl}}/assets/mp3/xueyuehua.lrc'
 		}
-		
-	]
-});
-</script>
+-->
