@@ -24,6 +24,7 @@
   <link rel="alternate" type="application/rss+xml" title="Sendoh Akira" href="https://sendoh-akira.github.io/feed.xml" />
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/assets/css/share.min.css">
+  <link rel="stylesheet" href="/assets/css/music.css">
   <link rel="stylesheet" href="/assets/js/gallery/css/blueimp-gallery.css">
 
 
@@ -86,18 +87,19 @@ table .table {
 				   </div>
 
 
-				  <div class="col-md-6 col-lg-6 hidden-xs hidden-sm center">
+				  <div class="col-md-7 col-lg-7 hidden-xs hidden-sm center">
 							<nav class="site-nav">
 								    <ul class="nav nav-pills">
 											<li class="select"><a class="page-link pjaxlink" href="/">首页</a></li>
 											<li class="select" ><a class="page-link pjaxlink" href="/pages/archive.html">归档</a></li>
 											<li class="select" ><a class="page-link pjaxlink" href="/pages/gallery.html">相册</a></li>
+											<li class="select" ><a class="page-link pjaxlink" href="/pages/music.html">音乐</a></li>
 											<li class="select"><a class="page-link pjaxlink" href="/pages/about.html">关于</a></li>
 								    </ul>
 							</nav>
 				  </div>
 
-				   <div class="col-md-3 col-lg-3 hidden-xs hidden-sm">
+				   <div class="col-md-2 col-lg-2 hidden-xs hidden-sm">
 				   		<!--<div class="search">
 						  	<input type="text" class="search-query st-default-search-input" placeholder="Search">
 				   		</div>-->
@@ -154,14 +156,7 @@ table .table {
 
 				</div>
 
-				<div class="tag-cloud-text">
-					<p class="center">音乐</p>
-				</div>
-				<div class="tag-cloud ">
-					<hr>
-					<div id="player5" class="aplayer"></div>
-				</div>
-				<div class="clear"></div>
+			
 
 				<div class="tag-cloud-text">
 					<a href="/pages/tags.html" title="标签" class="pjaxlink"><p class="center">标签</p></a>
@@ -403,6 +398,9 @@ table .table {
   <script type="text/javascript" src="/assets/js/500px.js"></script>
   
   <script type="text/javascript" src="/assets/js/loadGallery.js"></script>
+  <script type="text/javascript" src="/assets/js/mp3/APlayer.min.js"></script>
+
+  
   <script type="text/javascript" src="/assets/js/main.js"></script>
   <script src="/search/js/bootstrap3-typeahead.min.js"></script>
   <link rel="stylesheet" href="/search/css/cb-search.css">
@@ -414,42 +412,7 @@ table .table {
 </footer>
 
 
-	<script type="text/javascript" src="/assets/js/mp3/APlayer.min.js"></script>
-  	<script type="text/javascript">
-	  	var ap5 = new APlayer({
-	    element: document.getElementById('player5'),
-	    narrow: false,
-	    autoplay: false,
-	    showlrc: 3,
-	    mutex: true,
-	    theme: '#ad7a86',
-	    mode: 'random',
-	    listmaxheight: '80px',
-	    music: [
-	        {
-	            title: 'あっちゅ～ま青春!',
-	            author: '七森中☆ごらく部',
-	            url: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.mp3',
-	            pic: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.jpg',
-	            lrc: '/assets/js/mp3/lrc/qingchun.lrc'
-	        },
-	        {
-	            title: 'secret base~君がくれたもの~',
-	            author: '茅野愛衣',
-	            url: 'http://devtest.qiniudn.com/secret base~.mp3',
-	            pic: 'http://devtest.qiniudn.com/secret base~.jpg',
-	            lrc: '/assets/js/mp3/lrc/jun.lrc'
-	        },
-	        {
-	            title: '回レ！雪月花',
-	            author: '小倉唯',
-	            url: 'http://devtest.qiniudn.com/回レ！雪月花.mp3',
-	            pic: 'http://devtest.qiniudn.com/回レ！雪月花.jpg',
-	            lrc: '/assets/js/mp3/lrc/xueyuehua.lrc'
-	        }
-	    ]
-	});
-	</script>
+	
   </body>
 
 </html>

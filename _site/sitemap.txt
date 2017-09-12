@@ -13,6 +13,8 @@
 
   /
 
+  /pages/music.html
+
   /pages/read.html
 
   /sitemap.txt

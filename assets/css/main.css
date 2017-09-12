@@ -547,7 +547,7 @@ blockquote {
    width:100%;}
    .site-nav .nav li{
     float : left;
-    min-width: 24.6%;
+    min-width: 18%;
     position: relative;}
   .site-nav .page-link {
     padding : 0;
