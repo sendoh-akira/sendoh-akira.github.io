@@ -27,21 +27,21 @@ permalink: /pages/music.html
 			author: '七森中☆ごらく部',
 			url: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.mp3',
 			pic: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.jpg',
-			lrc: '{{site.baseurl}}/assets/js/mp3/lrc/qingchun.lrc'
+			lrc: '{{site.baseurl}}/assets/mp3/qingchun.lrc'
 		},
 		{
 			title: 'secret base~君がくれたもの~',
 			author: '茅野愛衣',
 			url: 'http://devtest.qiniudn.com/secret base~.mp3',
 			pic: 'http://devtest.qiniudn.com/secret base~.jpg',
-			lrc: '{{site.baseurl}}/assets/js/mp3/lrc/jun.lrc'
+			lrc: '{{site.baseurl}}/assets/mp3/jun.lrc'
 		},
 		{
 			title: '回レ！雪月花',
 			author: '小倉唯',
 			url: 'http://devtest.qiniudn.com/回レ！雪月花.mp3',
 			pic: 'http://devtest.qiniudn.com/回レ！雪月花.jpg',
-			lrc: '{{site.baseurl}}/assets/js/mp3/lrc/xueyuehua.lrc'
+			lrc: '{{site.baseurl}}/assets/mp3/xueyuehua.lrc'
 		}
 	]
 });
