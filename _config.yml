@@ -25,7 +25,7 @@ gems: [jekyll-paginate]
 author:
   name: 武燕飞
   email: wuyanfeijob@163.com
-  link: http://wuyanfeigithub.io/
+  link: http://sendoh.cc/
   weibo: https://weibo.com/u/2726632531
   github: https://github.com/wuyanfeigithub
   github_username:  wuyanfeigithub
@@ -33,7 +33,7 @@ author:
   weibo_username:
 
 # 站点信息
-title: Sendoh
+title: Sendoh Akira
 description:
 
 rss_url: /feed.xml
