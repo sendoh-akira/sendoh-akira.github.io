@@ -13,6 +13,7 @@ permalink: /pages/music.html
 <script type="text/javascript" src="{{ "/assets/js/mp3/APlayer.min.js" | prepend: site.baseurl }}"></script>
 <script type="text/javascript">
 	var host = window.location.host ;
+	
 	if(host.indexOf("127.0.0.1")!=-1 || host.indexOf("localhost")!=-1 ){
 		host = '';
 	}
