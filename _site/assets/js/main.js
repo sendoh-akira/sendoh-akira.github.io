@@ -1,5 +1,6 @@
 $(document).ready(function() {
-
+	
+	loadGitment() ;
 	initGallery();
 	
 	
@@ -99,6 +100,7 @@ $(document).ready(function() {
 			loadGallery(obj,1);
 		}
 
+		
 		$(".pjax_loading").css("display", "none");
 	});
 
@@ -140,20 +142,55 @@ $(document).ready(function() {
 
 });
 
-function pajx_loadDuoshuo() {
+function loadGitment() {
 
+	var url = "https://api.github.com/repos/sendoh-akira/sendoh-akira.github.io/issues/comments?0=0" ;
+	
+	var  visitors = $('.ds-recent-visitors'); 
+	
+	var vdn =  $(visitors).attr('data-num-items');
+	
+	var comments = $('.ds-recent-comments');
+	
+	var cdn = $(comments).attr('data-num-items');
+	
+	$(comments).empty();
+	$(visitors).empty();
+	
+	$.getJSON(url+"&callback=?", function(result) {
+		var data = result.data ;
+		
+		
+		if(data){
+			$.each(data, function(index, d) {
+	
+				
+				//载入最近访客
+				var a = $('<a>').prop('style','color: #1756a9;').prop('href','https://github.com/'+d.user.login).prop('target','_blank');
+				var img =$('<img>').prop('style','width: 44px;height: 44px;border-radius: 3px').prop('src', d.user.avatar_url);
+				a.append(img).appendTo(visitors);
+				
+				
+				//载入最新评论
+				/*var li = $('<li>').prop('style','position: relative; min-height: 60px;padding-left: 60px;margin: 19px 0;');
+				var divMain = $('<div>').prop('style','position: relative;border: 1px solid #CFD8DC;border-radius: 0;');
+				var divHeader = $('<div>').prop('style','margin: 12px 15px;color: #666;background-color: #fff; border-radius: 3px;');
+				
+				var spanTime = '<span >'+d.created_at+'</span>';
+				divHeader.append($('<a>').prop('style','font-weight: 600;color: #666;').prop('href','https://github.com/'+d.user.login).prop('target','_blank')).append(spanTime);
+				
+				var divBody = $('<div>').prop('style','color: #333;font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";font-size: 16px;line-height: 1.5;word-wrap: break-word;position: relative;margin: 12px 15px;overflow: hidden;border-radius: 3px;');
+				var bodyP = '<p >'+d.body+'</p>';
+				divBody.append(bodyP);
+				
+				divMain.append(divHeader).append(divBody);
+				li.append(a).append(divMain).appendTo(comments);*/
+				
+				
+			})
+		}
+	});
 
-	var dus = $('.ds-thread');
-
-	if ($(dus).length == 1) {
-
-		var el = document.createElement('div');
-		el.setAttribute('data-thread-key', $(dus).attr("data-thread-key")); //必选参数
-		el.setAttribute('data-url', $(dus).attr("data-url"));
-		DUOSHUO.EmbedThread(el);
-		$(dus).html(el);
-
-	}
 
 }
 

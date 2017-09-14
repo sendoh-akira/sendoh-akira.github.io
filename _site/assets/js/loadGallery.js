@@ -13,7 +13,6 @@ function initGallery(){
 }	
 	
 	
-
 function load500px(param){
 	
 	
