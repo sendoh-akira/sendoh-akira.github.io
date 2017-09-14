@@ -1,7 +1,7 @@
 <div id="container"></div>
-<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<link rel="stylesheet" href="{{ "/assets/css/gitment.css" | prepend: site.baseurl }}">
 <script type="text/javascript" src="{{ "/assets/js/jquery.js" | prepend: site.baseurl }}"></script>
-<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script src="{{ "/assets/js/gitment.browser.js" | prepend: site.baseurl }}"></script>
 <script>
 var gitment = new Gitment({
   id: '{{ page.id }}', // 可选。默认为 location.href
@@ -14,8 +14,5 @@ var gitment = new Gitment({
 })
 gitment.render('container');
 
-if($('.gitment-comments-init-btn').is(":visible")==true){
-	console.log(1);
-	gitment.init();
-}
+
 </script>
