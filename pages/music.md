@@ -12,6 +12,7 @@ permalink: /pages/music.html
 
 <script type="text/javascript" src="{{ "/assets/js/mp3/APlayer.min.js" | prepend: site.baseurl }}"></script>
 <script type="text/javascript">
+
 	var ap5 = new APlayer({
 	element: document.getElementById('player5'),
 	narrow: false,
@@ -26,23 +27,23 @@ permalink: /pages/music.html
 		{
 			title: '斑马,斑马',
 			author: '宋冬野',
-			url: '{{site.baseurl}}/assets/mp3/songdongye_banma.mp3',
-			pic: '{{site.baseurl}}/assets/mp3/songdongye_banma.png',
-			lrc: '{{site.baseurl}}/assets/mp3/songdongye_banma.lrc'
+			url: window.location.host+'/assets/mp3/songdongye_banma.mp3',
+			pic: window.location.host+'/assets/mp3/songdongye_banma.png',
+			lrc: window.location.host+'/assets/mp3/songdongye_banma.lrc'
 		},
 		{
 			title: '飘雪',
 			author: '陈慧娴',
-			url: '{{site.baseurl}}/assets/mp3/chenhuixian_piaoxue.mp3',
-			pic: '{{site.baseurl}}/assets/mp3/chenhuixian_piaoxue.png',
-			lrc: '{{site.baseurl}}/assets/mp3/chenhuixian_piaoxue.lrc'
+			url: window.location.host+'/assets/mp3/chenhuixian_piaoxue.mp3',
+			pic: window.location.host+'/assets/mp3/chenhuixian_piaoxue.png',
+			lrc: window.location.host+'/assets/mp3/chenhuixian_piaoxue.lrc'
 		},
 		{
 			title: '成都',
 			author: '赵雷',
-			url: '{{site.baseurl}}/assets/mp3/zhaolei_chengdu.mp3',
-			pic: '{{site.baseurl}}/assets/mp3/zhaolei_chengdu.png',
-			lrc: '{{site.baseurl}}/assets/mp3/zhaolei_chengdu.lrc'
+			url: window.location.host+'/assets/mp3/zhaolei_chengdu.mp3',
+			pic: window.location.host+'/assets/mp3/zhaolei_chengdu.png',
+			lrc: window.location.host+'/assets/mp3/zhaolei_chengdu.lrc'
 		}
 		
 		
