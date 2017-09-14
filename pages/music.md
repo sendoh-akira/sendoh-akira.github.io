@@ -27,23 +27,23 @@ permalink: /pages/music.html
 		{
 			title: '斑马,斑马',
 			author: '宋冬野',
-			url: window.location.host+'/assets/mp3/songdongye_banma.mp3',
-			pic: window.location.host+'/assets/mp3/songdongye_banma.png',
-			lrc: window.location.host+'/assets/mp3/songdongye_banma.lrc'
+			url: '127.0.0.1:'+window.location.port+'/assets/mp3/songdongye_banma.mp3',
+			pic: '127.0.0.1:'+window.location.port+'/assets/mp3/songdongye_banma.png',
+			lrc: '127.0.0.1:'+window.location.port+'/assets/mp3/songdongye_banma.lrc'
 		},
 		{
 			title: '飘雪',
 			author: '陈慧娴',
-			url: window.location.host+'/assets/mp3/chenhuixian_piaoxue.mp3',
-			pic: window.location.host+'/assets/mp3/chenhuixian_piaoxue.png',
-			lrc: window.location.host+'/assets/mp3/chenhuixian_piaoxue.lrc'
+			url: '127.0.0.1:'+window.location.port+'/assets/mp3/chenhuixian_piaoxue.mp3',
+			pic: '127.0.0.1:'+window.location.port+'/assets/mp3/chenhuixian_piaoxue.png',
+			lrc: '127.0.0.1:'+window.location.port+'/assets/mp3/chenhuixian_piaoxue.lrc'
 		},
 		{
 			title: '成都',
 			author: '赵雷',
-			url: window.location.host+'/assets/mp3/zhaolei_chengdu.mp3',
-			pic: window.location.host+'/assets/mp3/zhaolei_chengdu.png',
-			lrc: window.location.host+'/assets/mp3/zhaolei_chengdu.lrc'
+			url: '127.0.0.1:'+window.location.port+'/assets/mp3/zhaolei_chengdu.mp3',
+			pic: '127.0.0.1:'+window.location.port+'/assets/mp3/zhaolei_chengdu.png',
+			lrc: '127.0.0.1:'+window.location.port+'/assets/mp3/zhaolei_chengdu.lrc'
 		}
 		
 		
