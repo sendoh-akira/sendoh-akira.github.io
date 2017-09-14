@@ -1,7 +1,11 @@
 <div id="container"></div>
+
 <link rel="stylesheet" href="{{ "/assets/css/gitment.css" | prepend: site.baseurl }}">
+
 <script type="text/javascript" src="{{ "/assets/js/jquery.js" | prepend: site.baseurl }}"></script>
 <script src="{{ "/assets/js/gitment.browser.js" | prepend: site.baseurl }}"></script>
+
+
 <script>
 var gitment = new Gitment({
   id: '{{ page.id }}', // 可选。默认为 location.href
@@ -13,6 +17,4 @@ var gitment = new Gitment({
   },
 })
 gitment.render('container');
-
-
 </script>
