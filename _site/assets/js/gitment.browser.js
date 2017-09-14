@@ -2898,7 +2898,7 @@ function renderComments(_ref2, instance) {
     errorBlock.className = 'gitment-comments-error';
 
     if (error === _constants.NOT_INITIALIZED_ERROR && user.login && user.login.toLowerCase() === instance.owner.toLowerCase()) {
-		debugger;
+	
 	 instance.init().catch(function(e){
 		var initHint = document.createElement('div');
 		  var initButton = document.createElement('button');
