@@ -160,31 +160,45 @@ function loadGitment() {
 	$.getJSON(url+"&callback=?", function(result) {
 		var data = result.data ;
 		
-		
+		//去除重复的访客记录。
+		var qc='';
 		if(data){
 			$.each(data, function(index, d) {
 	
-				
-				//载入最近访客
-				var a = $('<a>').prop('style','color: #1756a9;').prop('href','https://github.com/'+d.user.login).prop('target','_blank');
-				var img =$('<img>').prop('style','width: 44px;height: 44px;border-radius: 3px').prop('src', d.user.avatar_url);
-				a.append(img).appendTo(visitors);
-				
-				
+				if(qc.indexOf(d.user.login)<0){
+					//载入最近访客
+					var vLi = $('<li>').prop('style','margin-bottom: 7px; margin-right: 3px;position: relative;');
+					var vA = $('<a>').prop('style','color: #1756a9;').prop('href','https://github.com/'+d.user.login).prop('target','_blank');
+					var vImg =$('<img>').prop('style','margin-left:8px;width: 44px;height: 44px;border-radius: 3px;-webkit-border-radius: 4px;').prop('src', d.user.avatar_url);
+					var vDate = '<span style="display: block;height: 20px;line-height: 20px;margin-top: 2px;">'+d.updated_at.substr(0,9)+'</span>';
+					vA.append(vImg).append(vDate);
+					vLi.append(vA).appendTo(visitors);
+				}							
+				qc=qc+','+d.user.login;
 				//载入最新评论
-				/*var li = $('<li>').prop('style','position: relative; min-height: 60px;padding-left: 60px;margin: 19px 0;');
-				var divMain = $('<div>').prop('style','position: relative;border: 1px solid #CFD8DC;border-radius: 0;');
-				var divHeader = $('<div>').prop('style','margin: 12px 15px;color: #666;background-color: #fff; border-radius: 3px;');
 				
-				var spanTime = '<span >'+d.created_at+'</span>';
-				divHeader.append($('<a>').prop('style','font-weight: 600;color: #666;').prop('href','https://github.com/'+d.user.login).prop('target','_blank')).append(spanTime);
+				var issue_url = d.issue_url;
+				$.getJSON(issue_url+"?1=1&callback=?",function(r){
+					var issue = r.data;
+					var li = $('<li>').prop('style','font-size: 13px;list-style: none;line-height: 20px;');
 				
-				var divBody = $('<div>').prop('style','color: #333;font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";font-size: 16px;line-height: 1.5;word-wrap: break-word;position: relative;margin: 12px 15px;overflow: hidden;border-radius: 3px;');
-				var bodyP = '<p >'+d.body+'</p>';
-				divBody.append(bodyP);
-				
-				divMain.append(divHeader).append(divBody);
-				li.append(a).append(divMain).appendTo(comments);*/
+					var liA = $('<a>').prop('style','display: block;padding: 5px;transition: all .3s ease-out;border-bottom: 1px solid #ddd; margin: 5px 0;').prop('href',issue.body).prop('target','_blank');
+					
+					
+					var liAAvatar = $('<div>').prop('style','float: left;');
+					var aimg = '<img alt="" src="'+d.user.avatar_url+'" style="border-radius: 50%;"  height="32" width="32">';
+					liAAvatar.append(aimg);
+					
+					var bauthor = '<p style="">'+d.user.login+' 在「'+issue.title+'」中说: '+'</p>';
+					var btext = '<p style="font-size: 12px;">'+d.body+'</p>';
+					var liABody = $('<div>').prop('style','margin-left: 40px;');
+					liABody.append(bauthor).append(btext);
+					
+					liA.append(liAAvatar).append(liABody);
+					
+					li.append(liA);
+					li.appendTo(comments);
+				})
 				
 				
 			})
