@@ -4,6 +4,7 @@ title: 相册
 permalink: /pages/gallery.html
 ---
 
+<link rel="stylesheet" href="{{ "/assets/js/gallery/css/blueimp-gallery.css" | prepend: site.baseurl }}">
 <input type="hidden" id="galleryHidden" value="gallery"/>
 <input type="hidden" id="galleryPageNum" value="1"/>
 
@@ -33,3 +34,8 @@ permalink: /pages/gallery.html
     <a class="play-pause"></a>
     <ol class="indicator"></ol>
 </div>
+
+
+
+<script type="text/javascript" src="{{ "/assets/js/loadGallery.js" | prepend: site.baseurl }}"></script>
+

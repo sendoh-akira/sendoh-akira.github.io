@@ -1,17 +1,43 @@
 
-function initGallery(){
-	_500px.init({
-		  sdk_key: '5f86a2a67c5cb5fbd65161a335a579cb77babc44'
-		});
-		
-	var galleryHidden = $("#galleryHidden").val();
-
-	if ("gallery" == galleryHidden) {
-		var obj = $('#selGallery');
-		loadGallery(obj,1);
-	}
-}	
+$(function(){
 	
+	$.getScript("/assets/js/gallery/js/blueimp-gallery.js");
+	$.getScript("/assets/js/gallery/js/jquery.blueimp-gallery.js");
+
+	$.getScript("/assets/js/500px.js",function(){
+		_500px.init({
+			  sdk_key: '5f86a2a67c5cb5fbd65161a335a579cb77babc44'
+			});
+			
+		var galleryHidden = $("#galleryHidden").val();
+
+		if ("gallery" == galleryHidden) {
+			var obj = $('#selGallery');
+			loadGallery(obj,1);
+		}
+	});
+
+
+	$(window).scroll(function() {
+		
+		var scrollTop = $(window).scrollTop();
+		if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+		
+			var galleryHidden = $("#galleryHidden").val();
+			var pageNum = $("#galleryPageNum").val();
+			var nextPageNum = parseInt(pageNum)+1;
+			$("#galleryPageNum").val(nextPageNum);
+			if ("gallery" == galleryHidden) {
+				var obj = $('#selGallery');
+				loadGallery(obj,nextPageNum,20);
+			}
+		}
+		
+	});
+	
+})
+
+
 	
 function load500px(param){
 	

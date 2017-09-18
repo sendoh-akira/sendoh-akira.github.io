@@ -1,45 +1,7 @@
 $(document).ready(function() {
 	
-	initGallery();
-	
-	
 	$(function() {
 	
-
-		$(window).scroll(function() {
-			
-			var scrollTop = $(window).scrollTop();
-			
-			if ( scrollTop > 150) {
-				$("#backtotop").addClass("showme");
-			} else {
-				$("#backtotop").removeClass("showme");
-			}
-			
-			if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
-			
-				var galleryHidden = $("#galleryHidden").val();
-				var pageNum = $("#galleryPageNum").val();
-				var nextPageNum = parseInt(pageNum)+1;
-				$("#galleryPageNum").val(nextPageNum);
-				if ("gallery" == galleryHidden) {
-					var obj = $('#selGallery');
-					loadGallery(obj,nextPageNum,20);
-				}
-			}
-			
-		});
-
-		$("#backtotop").click(function() {
-			$('body,html').animate({
-				scrollTop: 0
-			}, 400);
-			return false;
-		});
-
-		$("pre").addClass("prettyprint linenums");
-		prettyPrint();
-
 		$('.navbar-wrapper').stickUp();
 		$("a#single_image").fancybox();
 		$("a.group").fancybox({
@@ -51,56 +13,17 @@ $(document).ready(function() {
 		});
 	});
 
-
-
 	$(document).pjax('.pjaxlink', '#pjax', {
 		fragment: "#pjax",
 		timeout: 1000
 	});
 
+	$(document).on('pjax:complete', function() {
+		$(".pjax_loading").css("display", "none");
+	});
 
 	$(document).on('pjax:send', function() { //pjax链接点击后显示加载动画；
 		$(".pjax_loading").css("display", "block");
-	});
-
-	//导出页面内容
-	$("i.jquery-word-export").click(function(event) {
-		var title = $(this).attr("title");
-		$("article.post-content").wordExport(title);
-	});
-
-	$(document).on('pjax:complete', function() {
-
-
-		var shareUrl = "/assets/js/jquery.share.min.js";
-		var exportUrl = "/assets/js/jquery.wordexport.js";
-		var fileSaverUlr = "/assets/js/FileSaver.js";
-		$.getScript(shareUrl);
-		$.getScript(fileSaverUlr, function() {
-			if (!$("pre").hasClass("prettyprint")) {
-				$("pre").addClass("prettyprint linenums");
-			}
-			prettyPrint();
-		});
-
-		$.getScript(exportUrl, function() {
-			//导出页面内容
-			$("i.jquery-word-export").click(function(event) {
-				var title = $(this).attr("title");
-				$("article.post-content").wordExport(title);
-			});
-		});
-
-		//加载相册
-		var galleryHidden = $("#galleryHidden").val();
-
-		if ("gallery" == galleryHidden) {
-			var obj = $('#selGallery');
-			loadGallery(obj,1);
-		}
-
-		
-		$(".pjax_loading").css("display", "none");
 	});
 
 
@@ -137,10 +60,9 @@ $(document).ready(function() {
 		}
 	);
 
-
+	
 
 });
-
 
 
 function read(v) {
@@ -160,3 +82,4 @@ function read(v) {
 
 
 }
+

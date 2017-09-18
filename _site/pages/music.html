@@ -17,23 +17,17 @@
   <link rel="stylesheet" href="/assets/css/font-awesome.css">
   <link rel="stylesheet" href="/assets/js/fancybox/jquery.fancybox.css" media="screen">
   <link rel="stylesheet" href="/assets/css/main.css" >
-  <link rel="stylesheet" href="/assets/js/prettify/prettify.css">
+  <link rel="stylesheet" href="/search/css/cb-search.css">
   <link rel="shortcut icon" href="/assets/img/favicon_2.png" />
 
   <link rel="canonical" href="https://sendoh-akira.github.io/pages/music.html">
   <link rel="alternate" type="application/rss+xml" title="Sendoh Akira" href="https://sendoh-akira.github.io/feed.xml" />
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/assets/css/share.min.css">
-  <link rel="stylesheet" href="/assets/css/music.css">
-  <link rel="stylesheet" href="/assets/js/gallery/css/blueimp-gallery.css">
 
 
-  <script type="text/javascript" src="/assets/js/echarts.min.js"></script>
-
-  <script type="text/javascript" src="/assets/js/ua-parser.js"></script>
   <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
+  <script type="text/javascript" src="/assets/js/jquery.js"></script>]
+  <script type="text/javascript" src="/assets/js/jquery.pjax.js"></script>
+  <script type="text/javascript" src="/assets/js/bootstrap.js"></script> 
 
 <style>
 table {
@@ -209,73 +203,54 @@ table .table {
 			</div>
 
 			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 box-shadow fadein-right aside2">
-					<div class="page-content" id="pjax"><div id="player5" class="aplayer"></div>
+					<div class="page-content" id="pjax"><link rel="stylesheet" href="/assets/css/music.css" />
 
-<script type="text/javascript" src="/assets/js/mp3/APlayer.min.js"></script>
+<div id="player5" class="aplayer"></div>
 
 <script type="text/javascript">
 	
+var APlayerUrl = "/assets/js/mp3/APlayer.min.js";
+$.getScript(APlayerUrl, function() {
 	var ap5 = new APlayer({
-	element: document.getElementById('player5'),
-	narrow: false,
-	autoplay: false,
-	showlrc: 3,
-	mutex: true,
-	theme: '#ad7a86',
-	mode: 'random',
-	listmaxheight: '69px',
-	music: [
-		
-		{
-			title: '斑马,斑马',
-			author: '宋冬野',
-			url: '../assets/mp3/songdongye_banma.mp3',
-			pic: '../assets/mp3/songdongye_banma.png',
-			lrc: '../assets/mp3/songdongye_banma.lrc'
-		},
-		{
-			title: '飘雪',
-			author: '陈慧娴',
-			url: '../assets/mp3/chenhuixian_piaoxue.mp3',
-			pic: '../assets/mp3/chenhuixian_piaoxue.png',
-			lrc: '../assets/mp3/chenhuixian_piaoxue.lrc'
-		},
-		{
-			title: '成都',
-			author: '赵雷',
-			url: '../assets/mp3/zhaolei_chengdu.mp3',
-			pic: '../assets/mp3/zhaolei_chengdu.png',
-			lrc: '../assets/mp3/zhaolei_chengdu.lrc'
-		}
-		
-		
-	]
+		element: document.getElementById('player5'),
+		narrow: false,
+		autoplay: false,
+		showlrc: 3,
+		mutex: true,
+		theme: '#ad7a86',
+		mode: 'random',
+		listmaxheight: '69px',
+		music: [
+			
+			{
+				title: '斑马,斑马',
+				author: '宋冬野',
+				url: '../assets/mp3/songdongye_banma.mp3',
+				pic: '../assets/mp3/songdongye_banma.png',
+				lrc: '../assets/mp3/songdongye_banma.lrc'
+			},
+			{
+				title: '飘雪',
+				author: '陈慧娴',
+				url: '../assets/mp3/chenhuixian_piaoxue.mp3',
+				pic: '../assets/mp3/chenhuixian_piaoxue.png',
+				lrc: '../assets/mp3/chenhuixian_piaoxue.lrc'
+			},
+			{
+				title: '成都',
+				author: '赵雷',
+				url: '../assets/mp3/zhaolei_chengdu.mp3',
+				pic: '../assets/mp3/zhaolei_chengdu.png',
+				lrc: '../assets/mp3/zhaolei_chengdu.lrc'
+			}
+			
+			
+		]
+	});
 });
+
 </script>
 
-<!--
-{
-			title: 'あっちゅ～ま青春!',
-			author: '七森中☆ごらく部',
-			url: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.mp3',
-			pic: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.jpg',
-			lrc: '/assets/mp3/qingchun.lrc'
-		},
-		{
-			title: 'secret base~君がくれたもの~',
-			author: '茅野愛衣',
-			url: 'http://devtest.qiniudn.com/secret base~.mp3',
-			pic: 'http://devtest.qiniudn.com/secret base~.jpg',
-			lrc: '/assets/mp3/jun.lrc'
-		},
-		{
-			title: '回レ！雪月花',
-			author: '小倉唯',
-			url: 'http://devtest.qiniudn.com/回レ！雪月花.mp3',
-			pic: 'http://devtest.qiniudn.com/回レ！雪月花.jpg',
-			lrc: '/assets/mp3/xueyuehua.lrc'
-		}
--->
 </div>
 			</div>
 
@@ -304,7 +279,7 @@ table .table {
 
     <h2 class="footer-heading">Sendoh Akira's blog</h2>
 
-    <div class="footer-col-wrapper">
+    <!--<div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
           <li>Sendoh Akira</li>
@@ -333,7 +308,7 @@ table .table {
       </div>
 
 
-    </div>
+    </div> -->
     <div class="center sitedesc">
     	Powered by <a href ="http://jekyllrb.com/">Jekyll</a>  |   &copy; 2016 Sendoh Akira |  Hosted on <a href="https://github.com/wuyanfeigithub"> Github</a>
 
@@ -413,38 +388,12 @@ table .table {
   <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
   </script>
 
-  <script type="text/javascript" src="/assets/js/jquery.js"></script>
-
-  <script type="text/javascript" src="/assets/js/bootstrap.js"></script>
-  <script type="text/javascript" src="/assets/js/jquery.pjax.js"></script>
-  <!-- <script type="text/javascript" src="/assets/js/echarts.min.js"></script> -->
-  <script type="text/javascript" src="/assets/js/prettify/prettify.js"></script>
   <script type="text/javascript" src="/assets/js/stickUp.min.js"></script>
   <script type="text/javascript" src="/assets/js/fancybox/jquery.fancybox.pack.js"></script>
   <script type="text/javascript" src="/assets/js/fancybox/jquery.mousewheel-3.0.6.pack.js"></script>
-  <script type="text/javascript" src="/assets/js/FileSaver.js"></script>
-  <script type="text/javascript" src="/assets/js/jquery.wordexport.js"></script>
-  <script type="text/javascript" src="/assets/js/jquery.share.min.js"></script>
 
-  <script src="/assets/js/gallery/js/blueimp-helper.js"></script>
-  <script src="/assets/js/gallery/js/blueimp-gallery.js"></script>
-  <script src="/assets/js/gallery/js/blueimp-gallery-fullscreen.js"></script>
-  <script src="/assets/js/gallery/js/blueimp-gallery-indicator.js"></script>
-  <script src="/assets/js/gallery/js/blueimp-gallery-video.js"></script>
-  <script src="/assets/js/gallery/js/blueimp-gallery-vimeo.js"></script>
-  <script src="/assets/js/gallery/js/blueimp-gallery-youtube.js "></script>
-  <script src="/assets/js/gallery/js/jquery.blueimp-gallery.js"></script>
-  <script type="text/javascript" src="/assets/js/500px.js"></script>
-  
-  <script type="text/javascript" src="/assets/js/loadGallery.js"></script>
-  <script type="text/javascript" src="/assets/js/mp3/APlayer.min.js"></script>
-
-  <script src="/assets/js/gitment.browser.js"></script>
   <script type="text/javascript" src="/assets/js/main.js"></script>
   <script src="/search/js/bootstrap3-typeahead.min.js"></script>
-  <link rel="stylesheet" href="/search/css/cb-search.css">
-
-
   <script src="/search/js/cb-search.js"></script>
 
 
@@ -459,7 +408,7 @@ table .table {
 	
 		function loadGitment() {
 
-			var url = "https://api.github.com/repos/sendoh-akira/sendoh-akira.github.io/issues/comments?client_id=6179bc18e56d3482381e&client_secret=a83b8fe27021e6bc31e3f1563867732c218f49f5" ;
+			var url = "https://api.github.com/repos/sendoh-akira/sendoh-akira.github.io/issues/comments?client_id=266b9be6c70b2f0f984b&client_secret=0b4ba3192a5e4cd3eb6cf9c1371def5a9ac8b7b8" ;
 			
 			var  visitors = $('.ds-recent-visitors'); 
 			
@@ -493,7 +442,7 @@ table .table {
 						qc=qc+','+d.user.login;
 						//载入最新评论
 						
-						var issue_url = d.issue_url+"?client_id=6179bc18e56d3482381e&client_secret=a83b8fe27021e6bc31e3f1563867732c218f49f5";
+						var issue_url = d.issue_url+"?client_id=266b9be6c70b2f0f984b&client_secret=0b4ba3192a5e4cd3eb6cf9c1371def5a9ac8b7b8";
 						$.getJSON(issue_url+"&callback=?",function(r){
 							var issue = r.data;
 							var li = $('<li>').prop('style','font-size: 13px;list-style: none;line-height: 20px;');

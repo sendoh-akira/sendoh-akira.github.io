@@ -91,5 +91,7 @@ permalink: /pages/about.html
 
 
 <div>
-{% include duoshuo.html %}
+{% include gitment.html %}
 </div>
+
+<script type="text/javascript" src="{{ "/assets/js/echarts.min.js" | prepend: site.baseurl }}"></script>

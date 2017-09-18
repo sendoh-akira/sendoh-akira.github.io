@@ -1,6 +1,10 @@
 ---
 layout: default
 ---
+<link rel="stylesheet" href="{{ "/assets/js/prettify/prettify.css" | prepend: site.baseurl }}">
+<link rel="stylesheet" href="{{ "/assets/css/share.min.css" | prepend: site.baseurl }}">
+
+
 <div class="post">
 
   <header class="post-header">
@@ -19,7 +23,7 @@ layout: default
 	    {% endif %}
 
       <span  >
-        <a href="javascript:void(0);"><i style="color: rgba(0,0,0,0.6)"  title="下载" class="glyphicon glyphicon-download-alt jquery-word-export" ></i></a>
+        <a href="javascript:void(0);"><i style="color: rgba(0,0,0,0.6)" fileName="{{ page.title }}" title="下载" class="glyphicon glyphicon-download-alt jquery-word-export" ></i></a>
       </span>
 	  
 	  <span  style="float:right;">
@@ -54,3 +58,50 @@ layout: default
 	    </div>
 
   </div>
+<script>
+
+$(function(){
+
+	$.getScript("/assets/js/prettify/prettify.js",function(){
+		$("pre").addClass("prettyprint linenums");
+		prettyPrint();
+	});
+	
+	
+	
+	
+	$.getScript("/assets/js/FileSaver.js",function(){
+		$.getScript("/assets/js/jquery.wordexport.js",function(){
+			//导出页面内容
+			$("i.jquery-word-export").click(function(event) {
+				var title = $(this).attr("fileName");
+				$("article.post-content").wordExport(title);
+			});
+		});
+	});
+	
+	$.getScript("/assets/js/jquery.share.min.js");
+	
+
+	$(window).scroll(function() {
+		
+		var scrollTop = $(window).scrollTop();
+		
+		if ( scrollTop > 150) {
+			$("#backtotop").addClass("showme");
+		} else {
+			$("#backtotop").removeClass("showme");
+		}
+	});
+
+	$("#backtotop").click(function() {
+		$('body,html').animate({
+			scrollTop: 0
+		}, 400);
+		return false;
+	});
+	
+	
+})
+	
+</script>

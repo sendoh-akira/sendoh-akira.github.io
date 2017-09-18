@@ -3533,11 +3533,16 @@ var Gitment = function () {
 
       var id = this.id,
           owner = this.owner,
-          repo = this.repo;
+          repo = this.repo,
+		  client_id = this.oauth.client_id,
+		  client_secret = this.oauth.client_secret;
+		  
 
       return _utils.http.get('/repos/' + owner + '/' + repo + '/issues', {
         creator: owner,
-        labels: id
+        labels: id,
+		client_id:client_id,
+		client_secret:client_secret
       }).then(function (issues) {
         if (!issues.length) return Promise.reject(_constants.NOT_INITIALIZED_ERROR);
         _this7.state.meta = issues[0];
@@ -3550,9 +3555,10 @@ var Gitment = function () {
       var _this8 = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.state.currentPage;
-
+	  var client_id = this.oauth.client_id,
+		  client_secret = this.oauth.client_secret;
       return this.getIssue().then(function (issue) {
-        return _utils.http.get(issue.comments_url, { page: page, per_page: _this8.perPage }, '');
+        return _utils.http.get(issue.comments_url, { page: page, per_page: _this8.perPage,client_id:client_id,client_secret:client_secret }, '');
       }).then(function (comments) {
         _this8.state.comments = comments;
         return comments;
