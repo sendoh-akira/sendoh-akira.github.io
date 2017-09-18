@@ -808,7 +808,82 @@ table .table {
 </footer>
 
 
+	<script>
+		
+		$(function(){
+			loadGitment() ;
+		})
 	
+		function loadGitment() {
+
+			var url = "https://api.github.com/repos/sendoh-akira/sendoh-akira.github.io/issues/comments?client_id=6179bc18e56d3482381e&client_secret=a83b8fe27021e6bc31e3f1563867732c218f49f5" ;
+			
+			var  visitors = $('.ds-recent-visitors'); 
+			
+			var vdn =  $(visitors).attr('data-num-items');
+			
+			var comments = $('.ds-recent-comments');
+			
+			var cdn = $(comments).attr('data-num-items');
+			
+			$(comments).empty();
+			$(visitors).empty();
+			
+			$.getJSON(url+"&callback=?", function(result) {
+				var data = result.data ;
+				
+				//去除重复的访客记录。
+				var qc='';
+				if(data){
+					$.each(data, function(index, d) {
+						var user = d.user ;
+						if(user){
+							if(qc.indexOf(d.user.login)<0){
+							//载入最近访客
+							var vLi = $('<li>').prop('style','margin-bottom: 7px; margin-right: 3px;position: relative;');
+							var vA = $('<a>').prop('style','color: #1756a9;').prop('href','https://github.com/'+d.user.login).prop('target','_blank');
+							var vImg =$('<img>').prop('style','margin-left:8px;width: 44px;height: 44px;border-radius: 3px;-webkit-border-radius: 4px;').prop('src', d.user.avatar_url);
+							var vDate = '<span style="display: block;height: 20px;line-height: 20px;margin-top: 2px;">'+d.updated_at.substr(0,9)+'</span>';
+							vA.append(vImg).append(vDate);
+							vLi.append(vA).appendTo(visitors);
+						}							
+						qc=qc+','+d.user.login;
+						//载入最新评论
+						
+						var issue_url = d.issue_url+"?client_id=6179bc18e56d3482381e&client_secret=a83b8fe27021e6bc31e3f1563867732c218f49f5";
+						$.getJSON(issue_url+"&callback=?",function(r){
+							var issue = r.data;
+							var li = $('<li>').prop('style','font-size: 13px;list-style: none;line-height: 20px;');
+						
+							var liA = $('<a>').prop('style','display: block;padding: 5px;transition: all .3s ease-out;border-bottom: 1px solid #ddd; margin: 5px 0;').prop('href',issue.body).prop('target','_blank');
+							
+							
+							var liAAvatar = $('<div>').prop('style','float: left;');
+							var aimg = '<img alt="" src="'+d.user.avatar_url+'" style="border-radius: 50%;"  height="32" width="32">';
+							liAAvatar.append(aimg);
+							
+							var bauthor = '<p style="">'+d.user.login+' 在「'+issue.title+'」中说: '+'</p>';
+							var btext = '<p style="font-size: 12px;">'+d.body+'</p>';
+							var liABody = $('<div>').prop('style','margin-left: 40px;');
+							liABody.append(bauthor).append(btext);
+							
+							liA.append(liAAvatar).append(liABody);
+							
+							li.append(liA);
+							li.appendTo(comments);
+						})
+						
+						}
+						
+						
+					})
+				}
+			});
+
+
+		}
+	
+	</script>
   </body>
 
 </html>
