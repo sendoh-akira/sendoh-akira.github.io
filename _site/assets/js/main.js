@@ -1,7 +1,16 @@
 $(document).ready(function() {
 	
-	$(function() {
+	$("#cnzz_stat_icon_1260447200").bind("DOMNodeInserted",function(e){
+		var target = e.target;
+		if(target.innerHTML=='站长统计'){
+			$(target).remove();
+			$("#cnzz_stat_icon_1260447200").before('<span>Sendoh Akira</span>');
+		}
+		
+		
+	})
 	
+	$(function() {
 		$('.navbar-wrapper').stickUp();
 		$("a#single_image").fancybox();
 		$("a.group").fancybox({

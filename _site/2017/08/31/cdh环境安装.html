@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html>
-
+   <style>
+	.block {
+		position: relative;
+		background: #fff;
+		margin-bottom: 20px;
+		border-radius: 5px;
+	}
+	.block.widget {
+		transition: all .2s linear;
+	}
+   </style>
   <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -150,9 +160,18 @@ table .table {
 					</div>
 
 				</div>
-
-			
-
+				
+				<div class="recentuse">
+	 				<section id="text-4" class="block widget widget_text" style="position: relative; top: 0px; width: initial; animation: initial;">			<div class="textwidget"><div class="like-vote">
+						<p class="like-title">Do you like me?</p>
+						<div class="like-count">
+							<i class="fa fa-heart"></i><span>34519747</span>
+						</div>
+						</div></div>
+					</section>
+	 			</div>
+				
+				
 				<div class="tag-cloud-text">
 					<a href="/pages/tags.html" title="标签" class="pjaxlink"><p class="center">标签</p></a>
 				</div>
@@ -1480,8 +1499,10 @@ $(function(){
               
           </div>
       
-
-      <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260447200'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260447200%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+		
+	  
+	  <span id='cnzz_stat_icon_1260447200'></span>
+	  <script src="/assets/js/z_stat.js" type='text/javascript'></script>
     </div>
   </div>
 
@@ -1530,7 +1551,7 @@ $(function(){
   });
   </script>
 
-  <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  <script type="text/javascript" src="">
   </script>
 
   <script type="text/javascript" src="/assets/js/stickUp.min.js"></script>
@@ -1540,6 +1561,7 @@ $(function(){
   <script type="text/javascript" src="/assets/js/main.js"></script>
   <script src="/search/js/bootstrap3-typeahead.min.js"></script>
   <script src="/search/js/cb-search.js"></script>
+   
 
 
 </footer>

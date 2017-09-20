@@ -60,8 +60,10 @@
               {% endif %}
           </div>
       {% endif %}
-
-      <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260447200'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260447200%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+		
+	  
+	  <span id='cnzz_stat_icon_1260447200'></span>
+	  <script src="{{ "/assets/js/z_stat.js" | prepend: site.baseurl }}" type='text/javascript'></script>
     </div>
   </div>
 
@@ -110,7 +112,7 @@
   });
   </script>
 
-  <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  <script type="text/javascript" src="{{ "/assets/js/MathJax.js?config=TeX-MML-AM_CHTML | prepend: site.baseurl }}">
   </script>
 
   <script type="text/javascript" src="{{ "/assets/js/stickUp.min.js" | prepend: site.baseurl }}"></script>
@@ -120,6 +122,7 @@
   <script type="text/javascript" src="{{ "/assets/js/main.js" | prepend: site.baseurl }}"></script>
   <script src="{{ "/search/js/bootstrap3-typeahead.min.js" | prepend: site.baseurl }}"></script>
   <script src="{{ "/search/js/cb-search.js" | prepend: site.baseurl }}"></script>
+   
 
 
 </footer>

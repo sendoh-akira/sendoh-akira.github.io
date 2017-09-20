@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html>
-
+   <style>
+	.block {
+		position: relative;
+		background: #fff;
+		margin-bottom: 20px;
+		border-radius: 5px;
+	}
+	.block.widget {
+		transition: all .2s linear;
+	}
+   </style>
   {% include head.html %}
 
   <body>
@@ -25,9 +35,18 @@
 					</div>
 
 				</div>
-
-			
-
+				
+				<div class="recentuse">
+	 				<section id="text-4" class="block widget widget_text" style="position: relative; top: 0px; width: initial; animation: initial;">			<div class="textwidget"><div class="like-vote">
+						<p class="like-title">Do you like me?</p>
+						<div class="like-count">
+							<i class="fa fa-heart"></i><span>34519747</span>
+						</div>
+						</div></div>
+					</section>
+	 			</div>
+				
+				
 				<div class="tag-cloud-text">
 					<a href="{{site.baseurl}}/pages/tags.html" title="标签" class="pjaxlink"><p class="center">标签</p></a>
 				</div>
