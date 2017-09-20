@@ -161,13 +161,17 @@ table .table {
 
 				</div>
 				
-				<div class="recentuse">
-	 				<section id="text-4" class="block widget widget_text" style="position: relative; top: 0px; width: initial; animation: initial;">			<div class="textwidget"><div class="like-vote">
-						<p class="like-title">Do you like me?</p>
-						<div class="like-count">
-							<i class="fa fa-heart"></i><span>34519747</span>
+				<div class="recentuse" style="padding: 1em 1em;height:140px;">
+	 				<section id="text-4" class="block widget widget_text" style="position: relative; top: 0px; width: initial; animation: initial;">
+						<div class="textwidget">
+							<div class="like-vote">
+								<p class="like-title">Do you like me?</p>
+								<div class="like-count" >
+									<i class="fa fa-heart" ></i>
+									<span></span>
+								</div>
+							</div>
 						</div>
-						</div></div>
 					</section>
 	 			</div>
 				
@@ -497,6 +501,17 @@ table .table {
 		
 		$(function(){
 			loadGitment() ;
+			
+			 if ($('.like-vote').length) {
+				$.getJSON("https://api.prprpr.me/count/?id=sendoh-like&action=get", function (data) {
+					$('.like-vote span').html(data);
+				});
+				$('.like-vote').click(function () {
+					$.getJSON("https://api.prprpr.me/count/?id=sendoh-like&action=add", function (data) {
+						$('.like-vote span').html(data);
+					});
+				});
+			}
 		})
 	
 		function loadGitment() {
