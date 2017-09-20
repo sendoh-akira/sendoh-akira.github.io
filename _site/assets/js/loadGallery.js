@@ -16,7 +16,16 @@ $(function(){
 			loadGallery(obj,1);
 		}
 	});
+	
+	
+	$(document).on('pjax:complete', function() {
+		var galleryHidden = $("#galleryHidden").val();
 
+		if ("gallery" == galleryHidden) {
+			var obj = $('#selGallery');
+			loadGallery(obj,1);
+		};
+	});
 
 	$(window).scroll(function() {
 		
