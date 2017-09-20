@@ -6,6 +6,8 @@ $(document).ready(function() {
 		if(target.innerHTML=='站长统计'){
 			$(target).remove();
 			$("#cnzz_stat_icon_1260447200").before('<span>Sendoh Akira</span>');
+		}else{
+			target.href="javascript:void(0);";
 		}
 
 		if(cnzzCount>3){
